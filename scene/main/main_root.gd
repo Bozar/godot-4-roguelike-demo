@@ -28,18 +28,6 @@ const MAX_Y: int = 15
 
 const PC_TAG: StringName = &"pc"
 
-const MOVE_LEFT: StringName = &"move_left"
-const MOVE_RIGHT: StringName = &"move_right"
-const MOVE_UP: StringName = &"move_up"
-const MOVE_DOWN: StringName = &"move_down"
-
-const MOVE_INPUTS: Array[StringName] = [
-    MOVE_LEFT,
-    MOVE_RIGHT,
-    MOVE_UP,
-    MOVE_DOWN,
-]
-
 
 func _ready() -> void:
     RenderingServer.set_default_clear_color(PALETTE["BACKGROUND_YELLOW"])
@@ -49,7 +37,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-    for i: StringName in MOVE_INPUTS:
+    for i: StringName in InputTag.MOVE_INPUTS:
         if event.is_action_pressed(i):
             _move_pc(i)
 
@@ -103,12 +91,12 @@ func _move_pc(direction: StringName) -> void:
     var coord: Vector2i = _get_coord_from_sprite(pc)
 
     match direction:
-        MOVE_LEFT:
+        InputTag.MOVE_LEFT:
             coord += Vector2i.LEFT
-        MOVE_RIGHT:
+        InputTag.MOVE_RIGHT:
             coord += Vector2i.RIGHT
-        MOVE_UP:
+        InputTag.MOVE_UP:
             coord += Vector2i.UP
-        MOVE_DOWN:
+        InputTag.MOVE_DOWN:
             coord += Vector2i.DOWN
     pc.position = _get_position_from_coord(coord)
