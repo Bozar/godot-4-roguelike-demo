@@ -6,14 +6,7 @@ func _ready() -> void:
     RenderingServer.set_default_clear_color(
             Palette.get_color({}, MainTag.BACKGROUND, true))
     _create_pc()
-    # _move_pc(MOVE_DOWN)
     _create_floor()
-
-
-func _unhandled_input(event: InputEvent) -> void:
-    for i: StringName in InputTag.MOVE_INPUTS:
-        if event.is_action_pressed(i):
-            _move_pc(i)
 
 
 func _create_pc() -> void:
@@ -48,19 +41,3 @@ func _create_floor() -> void:
             new_floor.add_to_group(MainTag.GROUND)
             new_floor.add_to_group(SubTag.DUNGEON_FLOOR)
             add_child(new_floor)
-
-
-func _move_pc(direction: StringName) -> void:
-    var pc: Sprite2D = get_tree().get_first_node_in_group(SubTag.PC)
-    var coord: Vector2i = ConvertCoord.get_coord(pc)
-
-    match direction:
-        InputTag.MOVE_LEFT:
-            coord += Vector2i.LEFT
-        InputTag.MOVE_RIGHT:
-            coord += Vector2i.RIGHT
-        InputTag.MOVE_UP:
-            coord += Vector2i.UP
-        InputTag.MOVE_DOWN:
-            coord += Vector2i.DOWN
-    pc.position = ConvertCoord.get_position(coord)

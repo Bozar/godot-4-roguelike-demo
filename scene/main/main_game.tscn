@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=3 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_ed0ep"]
+[ext_resource type="Script" path="res://scene/main/player_input.gd" id="2_hj4ky"]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource("1_ed0ep")
+
+[node name="PlayerInput" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_hj4ky")
