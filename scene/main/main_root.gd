@@ -23,6 +23,9 @@ const START_Y: int = 54
 const STEP_X: int = 26
 const STEP_Y: int = 34
 
+const MAX_X: int = 21
+const MAX_Y: int = 15
+
 const PC_TAG: StringName = &"pc"
 
 const MOVE_LEFT: StringName = &"move_left"
@@ -42,6 +45,7 @@ func _ready() -> void:
     RenderingServer.set_default_clear_color(PALETTE["BACKGROUND_YELLOW"])
     _create_pc()
     # _move_pc(MOVE_DOWN)
+    _create_floor()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -66,6 +70,19 @@ func _create_pc() -> void:
         add_child(new_pc)
         # print(_get_coord_from_sprite(new_pc))
         new_position.x += 1
+
+
+func _create_floor() -> void:
+    var dungeon_floor: PackedScene = preload("res://sprite/dungeon_floor.tscn")
+    var new_floor: Sprite2D
+
+    for x: int in range(0, MAX_X):
+        for y: int in range(0, MAX_Y):
+            new_floor = dungeon_floor.instantiate()
+            new_floor.position = _get_position_from_coord(Vector2i(x, y))
+            # new_floor.modulate = PALETTE["DEBUG"]
+            new_floor.modulate = PALETTE["GREY"]
+            add_child(new_floor)
 
 
 func _get_position_from_coord(coord: Vector2i, \
