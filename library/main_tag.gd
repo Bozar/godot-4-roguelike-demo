@@ -1,6 +1,8 @@
 class_name MainTag
 
 
+const BACKGROUND: StringName = &"background"
+const GUI_TEXT: StringName = &"gui_text"
 
 const GROUND : StringName = &"ground"
 const TRAP : StringName = &"trap"

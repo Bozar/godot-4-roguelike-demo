@@ -2,25 +2,9 @@ class_name MainRoot
 extends Node2D
 
 
-# https://coolors.co/f8f9fa-e9ecef-dee2e6-ced4da-adb5bd-6c757d-495057-343a40-212529
-# https://coolors.co/d8f3dc-b7e4c7-95d5b2-74c69d-52b788-40916c-2d6a4f-1b4332-081c15
-# https://coolors.co/f8b945-dc8a14-b9690b-854e19-a03401
-const PALETTE: Dictionary = {
-    &"BACKGROUND_BLACK": "#212529",
-    &"BACKGROUND_YELLOW": "#FDF6E3",
-    &"LIGHT_GREY": "#ADB5BD",
-    &"GREEN": "#52B788",
-    &"DARK_GREEN": "#2D6A4F",
-    &"GREY": "#6C757D",
-    &"DARK_GREY": "#343A40",
-    &"ORANGE": "#F8B945",
-    &"DARK_ORANGE": "#854E19",
-    &"DEBUG": "#FE4A49",
-}
-
-
 func _ready() -> void:
-    RenderingServer.set_default_clear_color(PALETTE["BACKGROUND_YELLOW"])
+    RenderingServer.set_default_clear_color(
+            Palette.get_color({}, MainTag.BACKGROUND, true))
     _create_pc()
     # _move_pc(MOVE_DOWN)
     _create_floor()
@@ -38,7 +22,7 @@ func _create_pc() -> void:
     var new_pc: Sprite2D
     var new_position: Vector2i = Vector2i(0, 0)
 
-    for i: String in [PALETTE["GREEN"]]:
+    for i: String in [Palette.get_color({}, MainTag.ACTOR, true)]:
     # for i: StringName in PALETTE.keys():
         new_pc = pc.instantiate()
         new_pc.position = ConvertCoord.get_position(new_position)
@@ -60,7 +44,7 @@ func _create_floor() -> void:
             new_floor = dungeon_floor.instantiate()
             new_floor.position = ConvertCoord.get_position(Vector2i(x, y))
             # new_floor.modulate = PALETTE["DEBUG"]
-            new_floor.modulate = PALETTE["GREY"]
+            new_floor.modulate = Palette.get_color({}, MainTag.GROUND, true)
             new_floor.add_to_group(MainTag.GROUND)
             new_floor.add_to_group(SubTag.DUNGEON_FLOOR)
             add_child(new_floor)
