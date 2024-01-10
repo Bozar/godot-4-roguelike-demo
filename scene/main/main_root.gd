@@ -26,8 +26,6 @@ const STEP_Y: int = 34
 const MAX_X: int = 21
 const MAX_Y: int = 15
 
-const PC_TAG: StringName = &"pc"
-
 
 func _ready() -> void:
     RenderingServer.set_default_clear_color(PALETTE["BACKGROUND_YELLOW"])
@@ -54,7 +52,8 @@ func _create_pc() -> void:
         new_pc.position = _get_position_from_coord(new_position)
         new_pc.modulate = i
         # new_pc.modulate = PALETTE[i]
-        new_pc.add_to_group(PC_TAG)
+        new_pc.add_to_group(MainTag.ACTOR)
+        new_pc.add_to_group(SubTag.PC)
         add_child(new_pc)
         # print(_get_coord_from_sprite(new_pc))
         new_position.x += 1
@@ -70,6 +69,8 @@ func _create_floor() -> void:
             new_floor.position = _get_position_from_coord(Vector2i(x, y))
             # new_floor.modulate = PALETTE["DEBUG"]
             new_floor.modulate = PALETTE["GREY"]
+            new_floor.add_to_group(MainTag.GROUND)
+            new_floor.add_to_group(SubTag.DUNGEON_FLOOR)
             add_child(new_floor)
 
 
@@ -87,7 +88,7 @@ func _get_coord_from_sprite(sprite: Sprite2D) -> Vector2i:
 
 
 func _move_pc(direction: StringName) -> void:
-    var pc: Sprite2D = get_tree().get_first_node_in_group(PC_TAG)
+    var pc: Sprite2D = get_tree().get_first_node_in_group(SubTag.PC)
     var coord: Vector2i = _get_coord_from_sprite(pc)
 
     match direction:
