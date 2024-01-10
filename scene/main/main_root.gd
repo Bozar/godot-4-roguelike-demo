@@ -18,11 +18,6 @@ const PALETTE: Dictionary = {
     &"DEBUG": "#FE4A49",
 }
 
-const START_X: int = 50
-const START_Y: int = 54
-const STEP_X: int = 26
-const STEP_Y: int = 34
-
 
 func _ready() -> void:
     RenderingServer.set_default_clear_color(PALETTE["BACKGROUND_YELLOW"])
@@ -46,7 +41,7 @@ func _create_pc() -> void:
     for i: String in [PALETTE["GREEN"]]:
     # for i: StringName in PALETTE.keys():
         new_pc = pc.instantiate()
-        new_pc.position = _get_position_from_coord(new_position)
+        new_pc.position = ConvertCoord.get_position(new_position)
         new_pc.modulate = i
         # new_pc.modulate = PALETTE[i]
         new_pc.add_to_group(MainTag.ACTOR)
@@ -63,7 +58,7 @@ func _create_floor() -> void:
     for x: int in range(0, DungeonSize.MAX_X):
         for y: int in range(0, DungeonSize.MAX_Y):
             new_floor = dungeon_floor.instantiate()
-            new_floor.position = _get_position_from_coord(Vector2i(x, y))
+            new_floor.position = ConvertCoord.get_position(Vector2i(x, y))
             # new_floor.modulate = PALETTE["DEBUG"]
             new_floor.modulate = PALETTE["GREY"]
             new_floor.add_to_group(MainTag.GROUND)
@@ -71,22 +66,9 @@ func _create_floor() -> void:
             add_child(new_floor)
 
 
-func _get_position_from_coord(coord: Vector2i, \
-        offset: Vector2i = Vector2i(0, 0)) -> Vector2i:
-    var new_x: int = START_X + STEP_X * coord.x + offset.x
-    var new_y: int = START_Y + STEP_Y * coord.y + offset.y
-    return Vector2i(new_x, new_y)
-
-
-func _get_coord_from_sprite(sprite: Sprite2D) -> Vector2i:
-    var new_x: int = floor((sprite.position.x - START_X) / STEP_X)
-    var new_y: int = floor((sprite.position.y - START_Y) / STEP_Y)
-    return Vector2i(new_x, new_y)
-
-
 func _move_pc(direction: StringName) -> void:
     var pc: Sprite2D = get_tree().get_first_node_in_group(SubTag.PC)
-    var coord: Vector2i = _get_coord_from_sprite(pc)
+    var coord: Vector2i = ConvertCoord.get_coord(pc)
 
     match direction:
         InputTag.MOVE_LEFT:
@@ -97,4 +79,4 @@ func _move_pc(direction: StringName) -> void:
             coord += Vector2i.UP
         InputTag.MOVE_DOWN:
             coord += Vector2i.DOWN
-    pc.position = _get_position_from_coord(coord)
+    pc.position = ConvertCoord.get_position(coord)
