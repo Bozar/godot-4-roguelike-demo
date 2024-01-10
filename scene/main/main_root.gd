@@ -23,9 +23,6 @@ const START_Y: int = 54
 const STEP_X: int = 26
 const STEP_Y: int = 34
 
-const MAX_X: int = 21
-const MAX_Y: int = 15
-
 
 func _ready() -> void:
     RenderingServer.set_default_clear_color(PALETTE["BACKGROUND_YELLOW"])
@@ -63,8 +60,8 @@ func _create_floor() -> void:
     var dungeon_floor: PackedScene = preload("res://sprite/dungeon_floor.tscn")
     var new_floor: Sprite2D
 
-    for x: int in range(0, MAX_X):
-        for y: int in range(0, MAX_Y):
+    for x: int in range(0, DungeonSize.MAX_X):
+        for y: int in range(0, DungeonSize.MAX_Y):
             new_floor = dungeon_floor.instantiate()
             new_floor.position = _get_position_from_coord(Vector2i(x, y))
             # new_floor.modulate = PALETTE["DEBUG"]
