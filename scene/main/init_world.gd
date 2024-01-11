@@ -18,27 +18,16 @@ func _set_background_color() -> void:
 
 
 func _create_pc() -> void:
-    var pc: PackedScene = preload("res://sprite/pc.tscn")
-    var new_pc: Sprite2D
-    var new_position: Vector2i = Vector2i(0, 0)
-
-    new_pc = pc.instantiate()
-    new_pc.position = ConvertCoord.get_position(new_position)
-    new_pc.modulate = Palette.get_color({}, MainTag.ACTOR, true)
-    new_pc.add_to_group(MainTag.ACTOR)
-    new_pc.add_to_group(SubTag.PC)
+    var new_pc: Sprite2D = CreateSprite.create_actor(SubTag.PC, Vector2i(0, 0),
+            {})
     add_child(new_pc)
 
 
 func _create_floor() -> void:
-    var dungeon_floor: PackedScene = preload("res://sprite/dungeon_floor.tscn")
     var new_floor: Sprite2D
 
     for x: int in range(0, DungeonSize.MAX_X):
         for y: int in range(0, DungeonSize.MAX_Y):
-            new_floor = dungeon_floor.instantiate()
-            new_floor.position = ConvertCoord.get_position(Vector2i(x, y))
-            new_floor.modulate = Palette.get_color({}, MainTag.GROUND, true)
-            new_floor.add_to_group(MainTag.GROUND)
-            new_floor.add_to_group(SubTag.DUNGEON_FLOOR)
+            new_floor = CreateSprite.create_ground(SubTag.DUNGEON_FLOOR,
+                    Vector2i(x, y), {})
             add_child(new_floor)
