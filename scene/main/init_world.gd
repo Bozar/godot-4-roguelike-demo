@@ -13,13 +13,12 @@ func create_world() -> void:
 
 
 func _set_background_color() -> void:
-    RenderingServer.set_default_clear_color(
-            Palette.get_color({}, MainTag.BACKGROUND, true))
+    RenderingServer.set_default_clear_color(Palette.get_color(
+            MainTag.BACKGROUND, true))
 
 
 func _create_pc() -> void:
-    var new_pc: Sprite2D = CreateSprite.create_actor(SubTag.PC, Vector2i(0, 0),
-            {})
+    var new_pc: Sprite2D = CreateSprite.create_actor(SubTag.PC, Vector2i(0, 0))
     add_child(new_pc)
 
 
@@ -29,5 +28,5 @@ func _create_floor() -> void:
     for x: int in range(0, DungeonSize.MAX_X):
         for y: int in range(0, DungeonSize.MAX_Y):
             new_floor = CreateSprite.create_ground(SubTag.DUNGEON_FLOOR,
-                    Vector2i(x, y), {})
+                    Vector2i(x, y))
             add_child(new_floor)

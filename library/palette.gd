@@ -19,7 +19,6 @@ const DARK_ORANGE: String = "#854E19"
 
 const DEBUG: String = "#FE4A49"
 
-
 const DEFAULT_PALETTE: Dictionary = {
     MainTag.BACKGROUND: [BACKGROUND_YELLOW, BACKGROUND_YELLOW],
     MainTag.GUI_TEXT: [LIGHT_GREY, GREY],
@@ -31,11 +30,52 @@ const DEFAULT_PALETTE: Dictionary = {
     MainTag.INDICATOR: [GREY, GREY],
 }
 
+const HTML_COLOR_REGEX: String = "^#{0,1}([0-9A-Fa-f]{3}){1,2}$"
 
-# If `palette` has a vaild key, its value is assumed to be valid.
-static func get_color(palette: Dictionary, main_tag: StringName,
-        is_light_color: bool) -> String:
-    var colors: Array = palette.get(main_tag, DEFAULT_PALETTE[main_tag])
+
+# https://docs.godotengine.org/en/stable/tutorials/best_practices/autoloads_versus_internal_nodes.html
+static var _palette: Dictionary = {}
+
+static var _color_regex: RegEx = RegEx.new()
+static var _color_regex_compiled: bool = false
+
+
+static func get_color(main_tag: StringName, is_light_color: bool) -> String:
+    var colors: Array = _palette.get(main_tag, DEFAULT_PALETTE[main_tag])
     if is_light_color:
         return colors[0]
     return colors[1]
+
+
+static func set_palette(palette: Dictionary) -> void:
+    var colors: Array
+
+    _compile_color_regex()
+    for i: StringName in palette.keys():
+        if not palette[i] is Array:
+            continue
+        colors = palette[i]
+        if not _is_valid_color_array(colors):
+            continue
+        _palette[i] = palette[i]
+
+
+static func _is_valid_color_array(colors: Array) -> bool:
+    var color: String
+
+    if colors.size() < 2:
+        return false
+    for i: int in range(0, 2):
+        if not colors[i] is String:
+            return false
+        color = colors[i]
+        if _color_regex.search(color) == null:
+            return false
+    return true
+
+
+static func _compile_color_regex() -> void:
+    if _color_regex_compiled:
+        return
+    if _color_regex.compile(HTML_COLOR_REGEX) == OK:
+        _color_regex_compiled = true
