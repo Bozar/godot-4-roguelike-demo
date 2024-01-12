@@ -9,17 +9,11 @@ var _tagged_sprites: Array[TaggedSprite] = []
 
 
 func create_world() -> void:
-    _set_background_color()
     _create_pc()
     _create_floor()
 
     sprites_created.emit(_tagged_sprites)
     _tagged_sprites.clear()
-
-
-func _set_background_color() -> void:
-    RenderingServer.set_default_clear_color(Palette.get_color(
-            MainTag.BACKGROUND, true))
 
 
 func _create_pc() -> void:

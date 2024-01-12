@@ -34,21 +34,21 @@ const HTML_COLOR_REGEX: String = "^#{0,1}([0-9A-Fa-f]{3}){1,2}$"
 
 
 # https://docs.godotengine.org/en/stable/tutorials/best_practices/autoloads_versus_internal_nodes.html
-static var _palette: Dictionary = {}
-
 static var _color_regex: RegEx = RegEx.new()
 static var _color_regex_compiled: bool = false
 
 
-static func get_color(main_tag: StringName, is_light_color: bool) -> String:
-    var colors: Array = _palette.get(main_tag, DEFAULT_PALETTE[main_tag])
+static func get_color(palette: Dictionary, main_tag: StringName,
+        is_light_color: bool) -> String:
+    var colors: Array = palette.get(main_tag, DEFAULT_PALETTE[main_tag])
     if is_light_color:
         return colors[0]
     return colors[1]
 
 
-static func set_palette(palette: Dictionary) -> void:
+static func get_verified_palette(palette: Dictionary) -> Dictionary:
     var colors: Array
+    var verified_palettd: Dictionary = {}
 
     _compile_color_regex()
     for i: StringName in palette.keys():
@@ -57,7 +57,8 @@ static func set_palette(palette: Dictionary) -> void:
         colors = palette[i]
         if not _is_valid_color_array(colors):
             continue
-        _palette[i] = palette[i]
+        verified_palettd[i] = colors.duplicate()
+    return verified_palettd
 
 
 static func _is_valid_color_array(colors: Array) -> bool:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=6 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_ed0ep"]
 [ext_resource type="Script" path="res://scene/main/player_input.gd" id="2_hj4ky"]
 [ext_resource type="Script" path="res://scene/main/init_world.gd" id="3_mh0oq"]
 [ext_resource type="Script" path="res://scene/main/sprite_root.gd" id="4_sh4e3"]
+[ext_resource type="Script" path="res://scene/main/sprite_state.gd" id="5_wq28t"]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource("1_ed0ep")
@@ -19,3 +20,7 @@ script = ExtResource("2_hj4ky")
 [node name="SpriteRoot" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_sh4e3")
+
+[node name="SpriteState" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_wq28t")
