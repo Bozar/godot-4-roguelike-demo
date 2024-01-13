@@ -27,6 +27,12 @@ func get_sprites_by_tag(main_tag: StringName, sub_tag: StringName) -> Array:
     return ($SearchByTag as SearchByTag).get_sprites_by_tag(main_tag, sub_tag)
 
 
+func get_sprite_by_coord(main_tag: StringName, coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(main_tag)) -> Sprite2D:
+    return ($DungeonBoard as DungeonBoard).get_sprite_by_coord(main_tag,
+            coord, z_layer)
+
+
 func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
     # TODO: Verify palette in node `LoadSetting`.
     _palette = Palette.get_verified_palette(_palette)
@@ -37,3 +43,5 @@ func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
     for ts: TaggedSprite in sprites:
         ts.sprite.modulate = Palette.get_color(_palette, ts.main_tag, true)
         ($SpriteTag as SpriteTag).add_state(ts.sprite, ts.main_tag, ts.sub_tag)
+        if ts.main_tag != MainTag.INDICATOR:
+            ($DungeonBoard as DungeonBoard).add_state(ts.sprite, ts.main_tag)
