@@ -62,15 +62,12 @@ static func get_verified_palette(palette: Dictionary) -> Dictionary:
 
 
 static func _is_valid_color_array(colors: Array) -> bool:
-    var color: String
-
-    if colors.size() < 2:
+    if colors.size() != 2:
         return false
-    for i: int in range(0, 2):
-        if not colors[i] is String:
+    for i: Variant in colors:
+        if not i is String:
             return false
-        color = colors[i]
-        if _color_regex.search(color) == null:
+        if _color_regex.search(i as String) == null:
             return false
     return true
 
