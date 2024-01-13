@@ -23,6 +23,10 @@ func set_dark_color(sprite: Sprite2D) -> void:
     sprite.modulate = Palette.get_color(_palette, main_tag, false)
 
 
+func get_sprites_by_tag(main_tag: StringName, sub_tag: StringName) -> Array:
+    return (%SearchByTag as SearchByTag).get_sprites_by_tag(main_tag, sub_tag)
+
+
 func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
     # TODO: Verify palette in node `LoadSetting`.
     _palette = Palette.get_verified_palette(_palette)

@@ -14,7 +14,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _move_pc(direction: StringName) -> void:
-    var pc: Sprite2D = get_tree().get_first_node_in_group(SubTag.PC)
+    var pc: Sprite2D = (%SpriteState as SpriteState).get_sprites_by_tag("",
+            SubTag.PC)[0]
     var coord: Vector2i = ConvertCoord.get_coord(pc)
 
     match direction:
