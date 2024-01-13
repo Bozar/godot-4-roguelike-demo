@@ -1,7 +1,7 @@
-class_name ZIndex
+class_name ZLayer
 
 
-const Z_INDEXES: Dictionary = {
+const Z_LAYER: Dictionary = {
     MainTag.GROUND: 10,
     MainTag.BUILDING: 20,
     MainTag.TRAP: 30,
@@ -10,8 +10,8 @@ const Z_INDEXES: Dictionary = {
 }
 
 
-static func get_z_index(main_tag: StringName) -> int:
-    if Z_INDEXES.has(main_tag):
-        return Z_INDEXES[main_tag]
+static func get_z_layer(main_tag: StringName) -> int:
+    if Z_LAYER.has(main_tag):
+        return Z_LAYER[main_tag]
     push_error("Invalid main tag: %s" % main_tag)
     return 0
