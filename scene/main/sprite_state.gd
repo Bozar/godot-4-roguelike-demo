@@ -13,6 +13,16 @@ func get_sub_tag(sprite: Sprite2D) -> StringName:
     return (%SpriteTag as SpriteTag).get_sub_tag(sprite)
 
 
+func set_light_color(sprite: Sprite2D) -> void:
+    var main_tag: StringName = get_main_tag(sprite)
+    sprite.modulate = Palette.get_color(_palette, main_tag, true)
+
+
+func set_dark_color(sprite: Sprite2D) -> void:
+    var main_tag: StringName = get_main_tag(sprite)
+    sprite.modulate = Palette.get_color(_palette, main_tag, false)
+
+
 func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
     # TODO: Verify palette in node `LoadSetting`.
     _palette = Palette.get_verified_palette(_palette)
