@@ -12,15 +12,12 @@
 script = ExtResource("1_ed0ep")
 
 [node name="InitWorld" type="Node2D" parent="."]
-unique_name_in_owner = true
 script = ExtResource("3_mh0oq")
 
 [node name="PlayerInput" type="Node2D" parent="."]
-unique_name_in_owner = true
 script = ExtResource("2_hj4ky")
 
 [node name="SpriteRoot" type="Node2D" parent="."]
-unique_name_in_owner = true
 script = ExtResource("4_sh4e3")
 
 [node name="SpriteState" type="Node2D" parent="."]
@@ -28,9 +25,7 @@ unique_name_in_owner = true
 script = ExtResource("5_wq28t")
 
 [node name="SpriteTag" type="Node2D" parent="SpriteState"]
-unique_name_in_owner = true
 script = ExtResource("6_7tiyd")
 
 [node name="SearchByTag" type="Node2D" parent="SpriteState"]
-unique_name_in_owner = true
 script = ExtResource("7_0fiuc")

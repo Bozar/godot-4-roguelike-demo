@@ -14,6 +14,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _move_pc(direction: StringName) -> void:
+    # TODO: Turn SpriteState into a normal node.
     var pc: Sprite2D = (%SpriteState as SpriteState).get_sprites_by_tag("",
             SubTag.PC)[0]
     var coord: Vector2i = ConvertCoord.get_coord(pc)

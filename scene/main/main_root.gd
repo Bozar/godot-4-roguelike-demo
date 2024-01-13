@@ -5,8 +5,8 @@ extends Node2D
 func _ready() -> void:
     _connect_signals(SignalConnectionData.SIGNAL_CONNECTIONS)
 
-    (%InitWorld as InitWorld).create_world()
-    (%PlayerInput as PlayerInput).set_process_unhandled_input(true)
+    ($InitWorld as InitWorld).create_world()
+    ($PlayerInput as PlayerInput).set_process_unhandled_input(true)
 
 
 func _connect_signals(signal_connections: Dictionary) -> void:
@@ -22,9 +22,9 @@ func _connect_signals(signal_connections: Dictionary) -> void:
             target_nodes = signals_from_one_node[signal_name]
 
             for target_node: String in target_nodes:
-                source_signal = get_node("%" + source_node)[signal_name]
-                target_function = get_node("%" + target_node)[
-                        "_on_" + source_node + "_" + signal_name]
+                source_signal = get_node(source_node)[signal_name]
+                target_function = get_node(target_node)["_on_" + source_node
+                        + "_" + signal_name]
 
                 if source_signal.connect(target_function) == \
                         ERR_INVALID_PARAMETER:
