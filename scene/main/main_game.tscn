@@ -22,7 +22,6 @@ script = ExtResource("2_hj4ky")
 script = ExtResource("4_sh4e3")
 
 [node name="SpriteState" type="Node2D" parent="."]
-unique_name_in_owner = true
 script = ExtResource("5_wq28t")
 
 [node name="SpriteTag" type="Node2D" parent="SpriteState"]
