@@ -1,7 +1,6 @@
 class_name SignalConnectionData
 
 
-const INIT_WORLD: String = "InitWorld"
 const SPRITE_ROOT: String = "SpriteRoot"
 const SPRITE_STATE: String = "SpriteState"
 const PLAYER_INPUT: String = "PlayerInput"
@@ -23,11 +22,6 @@ const SIGNAL_PC_MOVED: String = "pc_moved"
 
 # {source_node: {signal_name: [target_node_1, ...]}, ...}
 const SIGNAL_CONNECTIONS: Dictionary = {
-    INIT_WORLD: {
-        SIGNAL_SPRITE_CREATED: [
-            SPRITE_ROOT, SPRITE_STATE, PC_ACTION,
-        ],
-    },
     PLAYER_INPUT: {
         SIGNAL_PC_MOVED: [
             PC_ACTION,
@@ -54,7 +48,7 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     },
     SPRITE_FACTORY: {
         SIGNAL_SPRITE_CREATED: [
-            SPRITE_STATE,
+            SPRITE_ROOT, SPRITE_STATE, PC_ACTION,
         ],
     },
 }

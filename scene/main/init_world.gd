@@ -2,40 +2,35 @@ class_name InitWorld
 extends Node2D
 
 
-signal sprite_created(sprites: Array[TaggedSprite])
-
-
 const INDICATOR_OFFSET: int = 32
 
 
-var _tagged_sprites: Array[TaggedSprite] = []
-
-
 func create_world() -> void:
+    var tagged_sprites: Array[TaggedSprite] = []
     var pc_coord: Vector2i
 
-    pc_coord = _create_pc()
-    _create_floor()
-    _create_indicator(pc_coord)
+    pc_coord = _create_pc(tagged_sprites)
+    _create_floor(tagged_sprites)
+    _create_indicator(pc_coord, tagged_sprites)
 
-    sprite_created.emit(_tagged_sprites)
-    _tagged_sprites.clear()
+    SpriteFactory.create_sprites(tagged_sprites)
 
 
-func _create_pc() -> Vector2i:
+func _create_pc(tagged_sprites: Array[TaggedSprite]) -> Vector2i:
     var pc_coord: Vector2i = Vector2i(0, 0)
-    _tagged_sprites.push_back(CreateSprite.create_actor(SubTag.PC, pc_coord))
+    tagged_sprites.push_back(CreateSprite.create_actor(SubTag.PC, pc_coord))
     return pc_coord
 
 
-func _create_floor() -> void:
+func _create_floor(tagged_sprites: Array[TaggedSprite]) -> void:
     for x: int in range(0, DungeonSize.MAX_X):
         for y: int in range(0, DungeonSize.MAX_Y):
-            _tagged_sprites.push_back(CreateSprite.create_ground(
+            tagged_sprites.push_back(CreateSprite.create_ground(
                     SubTag.DUNGEON_FLOOR, Vector2i(x, y)))
 
 
-func _create_indicator(coord: Vector2i) -> void:
+func _create_indicator(coord: Vector2i, tagged_sprites: Array[TaggedSprite]) \
+        -> void:
     var indicators: Dictionary = {
         SubTag.INDICATOR_TOP: [
             Vector2i(coord.x, 0), Vector2i(0, -INDICATOR_OFFSET)
@@ -54,5 +49,5 @@ func _create_indicator(coord: Vector2i) -> void:
     for i: StringName in indicators:
         new_coord = indicators[i][0]
         new_offset = indicators[i][1]
-        _tagged_sprites.push_back(CreateSprite.create(MainTag.INDICATOR,
+        tagged_sprites.push_back(CreateSprite.create(MainTag.INDICATOR,
                 i, new_coord, new_offset))

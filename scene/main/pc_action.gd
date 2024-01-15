@@ -8,7 +8,7 @@ var _indicator_bottom: Sprite2D
 var _indicator_left: Sprite2D
 
 
-func _on_InitWorld_sprite_created(sprites: Array[TaggedSprite]) -> void:
+func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
     for i:TaggedSprite in sprites:
         match i.sub_tag:
             SubTag.PC:
