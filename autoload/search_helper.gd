@@ -1,4 +1,4 @@
-# class_name SearchSprite
+# class_name SearchHelper
 extends Node2D
 
 

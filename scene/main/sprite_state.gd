@@ -25,12 +25,12 @@ func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
             _ref_DungeonBoard.add_state(ts.sprite, ts.main_tag)
 
 
-func _on_SearchSprite_searching_by_tag(search: SearchByTag) -> void:
+func _on_SearchHelper_searching_by_tag(search: SearchByTag) -> void:
     search.sprites = _ref_TagRepo.get_sprites_by_tag(search.main_tag,
             search.sub_tag)
 
 
-func _on_SearchSprite_searching_by_coord(search: SearchByCoord) -> void:
+func _on_SearchHelper_searching_by_coord(search: SearchByCoord) -> void:
     search.sprite = _ref_DungeonBoard.get_sprite_by_coord(search.main_tag,
             search.coord, search.z_layer)
 

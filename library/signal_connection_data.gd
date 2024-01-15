@@ -7,7 +7,7 @@ const SPRITE_STATE: String = "SpriteState"
 const PLAYER_INPUT: String = "PlayerInput"
 const PC_ACTION: String = "PcAction"
 
-const SEARCH_SPRITE: String = "/root/SearchSprite"
+const SEARCH_HELPER: String = "/root/SearchHelper"
 const MOVE_SPRITE: String = "/root/MoveSprite"
 
 
@@ -30,7 +30,7 @@ const SIGNAL_CONNECTIONS: Dictionary = {
             PC_ACTION,
         ],
     },
-    SEARCH_SPRITE: {
+    SEARCH_HELPER: {
         SIGNAL_SEARCHING_BY_COORD: [
             SPRITE_STATE,
         ],
