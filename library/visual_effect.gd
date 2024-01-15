@@ -20,3 +20,12 @@ static func set_background_color() -> void:
     var palette: Dictionary = {}
     RenderingServer.set_default_clear_color(Palette.get_color(palette,
             MainTag.BACKGROUND, true))
+
+
+static func set_indicator_color() -> void:
+    # TODO: Get palette from GameSetting node.
+    var palette: Dictionary = {}
+    var main_tag: StringName = MainTag.INDICATOR
+
+    for i: Sprite2D in SearchHelper.get_sprites_by_tag(main_tag, ""):
+        i.modulate = Palette.get_color(palette, main_tag, true)

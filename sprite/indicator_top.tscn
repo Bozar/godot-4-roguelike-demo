@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5m1rjhg2a3xi"]
+
+[ext_resource type="Texture2D" uid="uid://b87qfu2k8473y" path="res://resource/curses_vector_24x36.png" id="1_3y601"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8fmq"]
+atlas = ExtResource("1_3y601")
+region = Rect2(360, 36, 24, 36)
+
+[node name="IndicatorTop" type="Sprite2D"]
+
+[node name="default" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_k8fmq")
