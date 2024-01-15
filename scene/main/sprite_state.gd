@@ -6,14 +6,16 @@ extends Node2D
 @onready var _ref_DungeonBoard: DungeonBoard = $DungeonBoard
 
 
-func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
+func _on_InitWorld_sprite_created(sprites: Array[TaggedSprite]) -> void:
     for ts: TaggedSprite in sprites:
-        _ref_SpriteTag.add_state(ts.sprite, ts.main_tag, ts.sub_tag)
-        if ts.main_tag != MainTag.INDICATOR:
-            _ref_DungeonBoard.add_state(ts.sprite, ts.main_tag)
+        _add_state(ts)
 
         # TODO: Set color in PcFov node.
         VisualEffect.set_light_color(ts.sprite)
+
+
+func _on_SpriteFactory_sprite_created(tagged_sprite: TaggedSprite) -> void:
+    _add_state(tagged_sprite)
 
 
 func _on_SearchHelper_searching_by_tag(search: SearchByTag) -> void:
@@ -47,3 +49,11 @@ func _on_MoveSprite_sprite_swapped(this_sprite: Sprite2D,
                 [this_main_tag, that_main_tag])
         return
     _ref_DungeonBoard.swap_sprite(this_sprite, that_sprite, this_main_tag)
+
+
+func _add_state(tagged_sprite: TaggedSprite) -> void:
+    _ref_SpriteTag.add_state(tagged_sprite.sprite, tagged_sprite.main_tag,
+            tagged_sprite.sub_tag)
+    if tagged_sprite.main_tag != MainTag.INDICATOR:
+        _ref_DungeonBoard.add_state(tagged_sprite.sprite,
+                tagged_sprite.main_tag)

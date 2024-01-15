@@ -2,7 +2,7 @@ class_name InitWorld
 extends Node2D
 
 
-signal sprites_created(sprites: Array[TaggedSprite])
+signal sprite_created(sprites: Array[TaggedSprite])
 
 
 const INDICATOR_OFFSET: int = 32
@@ -18,7 +18,7 @@ func create_world() -> void:
     _create_floor()
     _create_indicator(pc_coord)
 
-    sprites_created.emit(_tagged_sprites)
+    sprite_created.emit(_tagged_sprites)
     _tagged_sprites.clear()
 
 

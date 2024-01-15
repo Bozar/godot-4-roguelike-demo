@@ -20,6 +20,7 @@ config/icon="res://resource/hammer_wrench.png"
 
 SearchHelper="*res://autoload/search_helper.gd"
 MoveSprite="*res://autoload/move_sprite.gd"
+SpriteFactory="*res://autoload/sprite_factory.gd"
 
 [debug]
 
