@@ -16,6 +16,7 @@ const SIGNAL_PC_MOVED: String = "pc_moved"
 const SIGNAL_SEARCHING_BY_TAG: String = "searching_by_tag"
 const SIGNAL_SEARCHING_BY_COORD: String = "searching_by_coord"
 const SIGNAL_SPRITE_MOVED: String = "sprite_moved"
+const SIGNAL_SEARCHING_BY_SPRITE: String = "searching_by_sprite"
 
 
 # {source_node: {signal_name: [target_node_1, ...]}, ...}
@@ -35,6 +36,9 @@ const SIGNAL_CONNECTIONS: Dictionary = {
             SPRITE_STATE,
         ],
         SIGNAL_SEARCHING_BY_TAG: [
+            SPRITE_STATE,
+        ],
+        SIGNAL_SEARCHING_BY_SPRITE: [
             SPRITE_STATE,
         ],
     },

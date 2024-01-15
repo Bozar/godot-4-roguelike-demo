@@ -35,6 +35,11 @@ func _on_SearchHelper_searching_by_coord(search: SearchByCoord) -> void:
             search.coord, search.z_layer)
 
 
+func _on_SearchHelper_searching_by_sprite(search: SearchBySprite) -> void:
+    search.main_tag = _ref_SpriteTag.get_main_tag(search.sprite)
+    search.sub_tag = _ref_SpriteTag.get_sub_tag(search.sprite)
+
+
 func _on_MoveSprite_sprite_moved(sprite: Sprite2D, coord: Vector2i,
         z_layer: int) -> void:
     _move_sprite(sprite, coord, z_layer)
