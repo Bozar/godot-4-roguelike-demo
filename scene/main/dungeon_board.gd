@@ -39,6 +39,26 @@ func get_sprite_by_coord(main_tag: StringName, coord: Vector2i,
     return null
 
 
+func move_sprite(sprite: Sprite2D, main_tag: StringName, coord: Vector2i,
+        z_layer: int) -> void:
+    remove_state(sprite, main_tag)
+    sprite.position = ConvertCoord.get_position(coord)
+    sprite.z_index = z_layer
+    add_state(sprite, main_tag)
+
+
+func swap_sprite(this_sprite: Sprite2D, that_sprite: Sprite2D,
+        main_tag: StringName) -> void:
+    var this_coord: Vector2i = ConvertCoord.get_coord(this_sprite)
+    var this_layer: int = this_sprite.z_index
+    var that_coord: Vector2i = ConvertCoord.get_coord(that_sprite)
+    var that_layer: int = that_sprite.z_index
+
+    move_sprite(this_sprite, main_tag, that_coord, 0)
+    move_sprite(that_sprite, main_tag, this_coord, this_layer)
+    move_sprite(this_sprite, main_tag, that_coord, that_layer)
+
+
 func _hash_sprite(sprite: Sprite2D, main_tag: StringName) -> int:
     if not HASHED_MAIN_TAGS.has(main_tag):
         push_error("Invalid main_tag: %s" % main_tag)

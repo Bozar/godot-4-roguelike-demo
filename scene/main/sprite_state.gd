@@ -33,13 +33,17 @@ func _on_SearchHelper_searching_by_sprite(search: SearchBySprite) -> void:
 
 func _on_MoveSprite_sprite_moved(sprite: Sprite2D, coord: Vector2i,
         z_layer: int) -> void:
-    _move_sprite(sprite, coord, z_layer)
-
-
-func _move_sprite(sprite: Sprite2D, coord: Vector2i, z_layer: int) -> void:
     var main_tag: StringName = _ref_SpriteTag.get_main_tag(sprite)
+    _ref_DungeonBoard.move_sprite(sprite, main_tag, coord, z_layer)
 
-    _ref_DungeonBoard.remove_state(sprite, main_tag)
-    sprite.position = ConvertCoord.get_position(coord)
-    sprite.z_index = z_layer
-    _ref_DungeonBoard.add_state(sprite, main_tag)
+
+func _on_MoveSprite_sprite_swapped(this_sprite: Sprite2D,
+        that_sprite: Sprite2D) -> void:
+    var this_main_tag: StringName = _ref_SpriteTag.get_main_tag(this_sprite)
+    var that_main_tag: StringName = _ref_SpriteTag.get_main_tag(that_sprite)
+
+    if this_main_tag != that_main_tag:
+        push_error("Main tags do not match: %s, %s." %
+                [this_main_tag, that_main_tag])
+        return
+    _ref_DungeonBoard.swap_sprite(this_sprite, that_sprite, this_main_tag)
