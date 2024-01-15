@@ -23,8 +23,8 @@ func _connect_signals(signal_connections: Dictionary) -> void:
 
             for target_node: String in target_nodes:
                 source_signal = get_node(source_node)[signal_name]
-                target_function = get_node(target_node)["_on_" + source_node
-                        + "_" + signal_name]
+                target_function = get_node(target_node)["_on_" +
+                        source_node.replace("/root/", "") + "_" + signal_name]
 
                 if source_signal.connect(target_function) == \
                         ERR_INVALID_PARAMETER:

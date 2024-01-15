@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 run/low_processor_mode=true
 config/icon="res://resource/hammer_wrench.png"
 
+[autoload]
+
+SearchSprite="*res://autoload/search_sprite.gd"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=1

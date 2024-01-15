@@ -7,7 +7,7 @@ var _pc: Sprite2D
 
 
 @onready var _ref_SpriteTag: SpriteTag = $SpriteTag
-# @onready var _ref_SearchByTag: SearchByTag = $SearchByTag
+@onready var _ref_TagRepo: TagRepo = $TagRepo
 @onready var _ref_DungeonBoard: DungeonBoard = $DungeonBoard
 
 
@@ -26,6 +26,16 @@ func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
             _ref_DungeonBoard.add_state(ts.sprite, ts.main_tag)
         if ts.sub_tag == SubTag.PC:
             _pc = ts.sprite
+
+
+func _on_SearchSprite_searching_by_tag(search: SearchByTag) -> void:
+    search.sprites = _ref_TagRepo.get_sprites_by_tag(search.main_tag,
+            search.sub_tag)
+
+
+func _on_SearchSprite_searching_by_coord(search: SearchByCoord) -> void:
+    search.sprite = _ref_DungeonBoard.get_sprite_by_coord(search.main_tag,
+            search.coord, search.z_layer)
 
 
 func _on_PlayerInput_pc_moved(direction: StringName) -> void:
