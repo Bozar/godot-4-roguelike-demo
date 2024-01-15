@@ -5,6 +5,7 @@ extends Node2D
 func _ready() -> void:
     _connect_signals(SignalConnectionData.SIGNAL_CONNECTIONS)
 
+    VisualEffect.set_background_color()
     ($InitWorld as InitWorld).create_world()
     ($PlayerInput as PlayerInput).set_process_unhandled_input(true)
 
