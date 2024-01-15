@@ -6,7 +6,6 @@ var _palette: Dictionary = {}
 
 
 @onready var _ref_SpriteTag: SpriteTag = $SpriteTag
-@onready var _ref_TagRepo: TagRepo = $TagRepo
 @onready var _ref_DungeonBoard: DungeonBoard = $DungeonBoard
 
 
@@ -26,7 +25,7 @@ func _on_InitWorld_sprites_created(sprites: Array[TaggedSprite]) -> void:
 
 
 func _on_SearchHelper_searching_by_tag(search: SearchByTag) -> void:
-    search.sprites = _ref_TagRepo.get_sprites_by_tag(search.main_tag,
+    search.sprites = _ref_SpriteTag.get_sprites_by_tag(search.main_tag,
             search.sub_tag)
 
 

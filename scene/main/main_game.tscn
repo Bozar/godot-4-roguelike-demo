@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=9 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_ed0ep"]
 [ext_resource type="Script" path="res://scene/main/player_input.gd" id="2_hj4ky"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scene/main/sprite_root.gd" id="4_sh4e3"]
 [ext_resource type="Script" path="res://scene/main/sprite_state.gd" id="5_wq28t"]
 [ext_resource type="Script" path="res://scene/main/sprite_tag.gd" id="6_7tiyd"]
-[ext_resource type="Script" path="res://scene/main/tag_repo.gd" id="7_0fiuc"]
 [ext_resource type="Script" path="res://scene/main/dungeon_board.gd" id="8_g8upp"]
 [ext_resource type="Script" path="res://scene/main/pc_action.gd" id="9_ewavl"]
 
@@ -27,9 +26,6 @@ script = ExtResource("5_wq28t")
 
 [node name="SpriteTag" type="Node2D" parent="SpriteState"]
 script = ExtResource("6_7tiyd")
-
-[node name="TagRepo" type="Node2D" parent="SpriteState"]
-script = ExtResource("7_0fiuc")
 
 [node name="DungeonBoard" type="Node2D" parent="SpriteState"]
 script = ExtResource("8_g8upp")
