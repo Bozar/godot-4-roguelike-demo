@@ -24,3 +24,12 @@ static func create_ground(sub_tag: StringName, coord: Vector2i) -> TaggedSprite:
 
 static func create_actor(sub_tag: StringName, coord: Vector2i) -> TaggedSprite:
     return create(MainTag.ACTOR, sub_tag, coord)
+
+
+static func create_building(sub_tag: StringName, coord: Vector2i) \
+        -> TaggedSprite:
+    return create(MainTag.BUILDING, sub_tag, coord)
+
+
+static func create_trap(sub_tag: StringName, coord: Vector2i) -> TaggedSprite:
+    return create(MainTag.TRAP, sub_tag, coord)
