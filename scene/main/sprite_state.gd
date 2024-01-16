@@ -9,6 +9,11 @@ var _indicators: Dictionary = {}
 @onready var _ref_DungeonBoard: DungeonBoard = $DungeonBoard
 
 
+func _ready() -> void:
+    _ref_SpriteTag._is_valid_sprite = _is_valid_sprite
+    _ref_DungeonBoard._is_valid_sprite = _is_valid_sprite
+
+
 func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
     for ts: TaggedSprite in sprites:
         _ref_SpriteTag.add_state(ts.sprite, ts.main_tag, ts.sub_tag)
@@ -27,8 +32,14 @@ func _on_SearchHelper_searching_by_tag(search: SearchByTag) -> void:
 
 
 func _on_SearchHelper_searching_by_coord(search: SearchByCoord) -> void:
-    search.sprite = _ref_DungeonBoard.get_sprite_by_coord(search.main_tag,
-            search.coord, search.z_layer)
+    var sprite: Sprite2D
+
+    if search.search_all:
+        search.sprites = _ref_DungeonBoard.get_sprites_by_coord(search.coord)
+    else:
+        sprite = _ref_DungeonBoard.get_sprite_by_coord(search.main_tag,
+                search.coord, search.z_layer)
+        search.sprites = [sprite]
 
 
 func _on_SearchHelper_searching_by_sprite(search: SearchBySprite) -> void:
@@ -53,4 +64,13 @@ func _on_MoveSprite_sprite_swapped(this_sprite: Sprite2D,
         push_error("Main tags do not match: %s, %s." %
                 [this_main_tag, that_main_tag])
         return
+
     _ref_DungeonBoard.swap_sprite(this_sprite, that_sprite, this_main_tag)
+    for i: Sprite2D in [this_sprite, that_sprite]:
+        if i.is_in_group(SubTag.PC):
+            _ref_DungeonBoard.move_indicator(ConvertCoord.get_coord(i),
+                    _indicators)
+
+
+func _is_valid_sprite(sprite: Sprite2D) -> bool:
+    return not sprite.is_queued_for_deletion()

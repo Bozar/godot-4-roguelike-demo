@@ -8,6 +8,7 @@ const NO_SUB_TAG: String = "%s does not have a sub tag."
 
 var _main_tags: Dictionary = {}
 var _sub_tags: Dictionary = {}
+var _is_valid_sprite: Callable
 
 
 func add_state(sprite: Sprite2D, main_tag: StringName, sub_tag: StringName) \
@@ -56,7 +57,7 @@ func get_sprites_by_tag(main_tag: StringName, sub_tag: StringName) -> Array:
     else:
         sprites = get_tree().get_nodes_in_group(sub_tag)
         sprites = ArrayHelper.map(sprites, _has_main_tag, [main_tag])
-    sprites = sprites.filter(_is_not_queued_for_deletion)
+    sprites = sprites.filter(_is_valid_sprite)
     return sprites
 
 
@@ -65,7 +66,3 @@ func _has_main_tag(sprite: Sprite2D, filter_args: Array) -> bool:
     if main_tag == "":
         return true
     return sprite.is_in_group(main_tag)
-
-
-func _is_not_queued_for_deletion(sprite: Sprite2D) -> bool:
-    return not sprite.is_queued_for_deletion()

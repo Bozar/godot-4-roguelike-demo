@@ -15,33 +15,60 @@ const INDICATOR_AXES: Dictionary = {
 }
 
 
-var _hashed_sprites: Dictionary = {}
+# {
+#    hashed_coord_1: {hashed_sprite_1: sprite_1, ...},
+# ...
+# }
+var _dungeon_sprites: Dictionary = {}
+var _is_valid_sprite: Callable
 
 
 func add_state(sprite: Sprite2D, main_tag: StringName) -> void:
-    var hash_value: int = _hash_sprite(sprite, main_tag)
+    var coord: Vector2i = ConvertCoord.get_coord(sprite)
+    var z_layer: int = sprite.z_index
+    var hashed_coord: int = _hash_coord(coord)
+    var hashed_sprite: int = _hash_sprite(main_tag, z_layer)
+    var sprites: Dictionary
 
-    if _hashed_sprites.has(hash_value):
-        push_error("Hash collide: %d, %s." % [hash_value, sprite.name])
-        return
-    _hashed_sprites[hash_value] = sprite
+    if _dungeon_sprites.has(hashed_coord):
+        sprites = _dungeon_sprites[hashed_coord]
+        if sprites.has(hashed_sprite):
+            push_error("Hash collide: %d-%d, %s." %
+                    [hashed_coord, hashed_sprite, sprite.name])
+            return
+    else:
+        _dungeon_sprites[hashed_coord] = {}
+    _dungeon_sprites[hashed_coord][hashed_sprite] = sprite
 
 
 func remove_state(sprite: Sprite2D, main_tag: StringName) -> void:
-    var hash_value: int = _hash_sprite(sprite, main_tag)
+    var coord: Vector2i = ConvertCoord.get_coord(sprite)
+    var z_layer: int = sprite.z_index
+    var hashed_coord: int = _hash_coord(coord)
+    var hashed_sprite: int = _hash_sprite(main_tag, z_layer)
+    var sprites: Dictionary = _dungeon_sprites.get(hashed_coord, {})
 
-    if not _hashed_sprites.erase(hash_value):
-        push_warning("Sprite not hashed: %d, %s." % [hash_value, sprite.name])
+    if not sprites.erase(hashed_sprite):
+        push_warning("Sprite not hashed: %d-%d, %s." %
+                [hashed_coord, hashed_sprite, sprite.name])
+    _set_visibility(coord)
 
 
 func get_sprite_by_coord(main_tag: StringName, coord: Vector2i,
         z_layer: int = ZLayer.get_z_layer(main_tag)) -> Sprite2D:
-    var hash_value: int = _get_hash_value(main_tag, coord, z_layer)
-    var sprite: Sprite2D = _hashed_sprites.get(hash_value, null)
-
-    if (sprite != null) and (not sprite.is_queued_for_deletion()):
-        return sprite
+    for i: Sprite2D in get_sprites_by_coord(coord):
+        if i.is_in_group(main_tag) and (i.z_index == z_layer):
+            return i
     return null
+
+
+func get_sprites_by_coord(coord: Vector2i) -> Array:
+    var hashed_coord: int = _hash_coord(coord)
+    var sprites: Dictionary = _dungeon_sprites.get(hashed_coord, {})
+
+    if sprites.is_empty():
+        return []
+    return sprites.values().filter(_is_valid_sprite)
 
 
 func move_sprite(sprite: Sprite2D, main_tag: StringName, coord: Vector2i,
@@ -76,19 +103,17 @@ func move_indicator(coord: Vector2i, indicators: Dictionary) -> void:
         sprite.position[axis] = ConvertCoord.get_position(coord)[axis]
 
 
-func _hash_sprite(sprite: Sprite2D, main_tag: StringName) -> int:
+# YY-XX: coord.y - coord.x
+func _hash_coord(coord: Vector2i) -> int:
+    return floor(coord.x + coord.y * pow(10, 2))
+
+
+# M-ZZ: hashed_main_tag - z_layer
+func _hash_sprite(main_tag: StringName, z_layer: int) -> int:
     if not HASHED_MAIN_TAGS.has(main_tag):
         push_error("Invalid main_tag: %s" % main_tag)
         return -1
 
-    var coord: Vector2i = ConvertCoord.get_coord(sprite)
-    var z_layer: int = sprite.z_index
-    return _get_hash_value(main_tag, coord, z_layer)
-
-
-# M-ZZ-YY-XX: hashed_main_tag - z_layer - coord.y - coord.x
-func _get_hash_value(main_tag: StringName, coord: Vector2i, z_layer: int) \
-        -> int:
     var hashed_main_tag: int = HASHED_MAIN_TAGS[main_tag]
-    return floor(coord.x + coord.y * pow(10, 2) + z_layer * pow(10, 4) \
-            + hashed_main_tag * pow(10, 6))
+    return floor(z_layer + hashed_main_tag * pow(10, 2))
+
