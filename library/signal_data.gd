@@ -1,4 +1,4 @@
-class_name SignalConnectionData
+class_name SignalData
 
 
 const SPRITE_ROOT: String = "SpriteRoot"

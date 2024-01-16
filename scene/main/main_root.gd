@@ -2,11 +2,15 @@ class_name MainRoot
 extends Node2D
 
 
-func _ready() -> void:
-    _connect_signals(SignalConnectionData.SIGNAL_CONNECTIONS)
+@onready var _ref_InitWorld: InitWorld = $InitWorld
+@onready var _ref_PlayerInput: PlayerInput = $PlayerInput
 
-    ($InitWorld as InitWorld).create_world()
-    ($PlayerInput as PlayerInput).set_process_unhandled_input(true)
+
+func _ready() -> void:
+    _connect_signals(SignalData.SIGNAL_CONNECTIONS)
+
+    _ref_InitWorld.create_world()
+    _ref_PlayerInput.set_process_unhandled_input(true)
 
     VisualEffect.set_background_color()
     VisualEffect.set_indicator_color()
