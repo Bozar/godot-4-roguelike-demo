@@ -24,4 +24,14 @@ func _on_PlayerInput_pc_moved(direction: StringName) -> void:
             coord += Vector2i.UP
         InputTag.MOVE_DOWN:
             coord += Vector2i.DOWN
+
+    if not _is_reachable(coord):
+        return
     MoveSprite.move(_pc, coord)
+    # TODO: Emit a signal to end PC's turn.
+
+
+func _is_reachable(coord: Vector2i) -> bool:
+    if DungeonSize.is_insided_dungeon(coord):
+        return true
+    return false
