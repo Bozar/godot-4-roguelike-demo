@@ -2,6 +2,9 @@ class_name SpriteState
 extends Node2D
 
 
+var _indicators: Dictionary = {}
+
+
 @onready var _ref_SpriteTag: SpriteTag = $SpriteTag
 @onready var _ref_DungeonBoard: DungeonBoard = $DungeonBoard
 
@@ -9,7 +12,9 @@ extends Node2D
 func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
     for ts: TaggedSprite in sprites:
         _ref_SpriteTag.add_state(ts.sprite, ts.main_tag, ts.sub_tag)
-        if ts.main_tag != MainTag.INDICATOR:
+        if ts.main_tag == MainTag.INDICATOR:
+            _indicators[ts.sub_tag] = ts.sprite
+        else:
             _ref_DungeonBoard.add_state(ts.sprite, ts.main_tag)
 
         # TODO: Set color in PcFov node.
@@ -35,6 +40,8 @@ func _on_MoveSprite_sprite_moved(sprite: Sprite2D, coord: Vector2i,
         z_layer: int) -> void:
     var main_tag: StringName = _ref_SpriteTag.get_main_tag(sprite)
     _ref_DungeonBoard.move_sprite(sprite, main_tag, coord, z_layer)
+    if sprite.is_in_group(SubTag.PC):
+        _ref_DungeonBoard.move_indicator(coord, _indicators)
 
 
 func _on_MoveSprite_sprite_swapped(this_sprite: Sprite2D,

@@ -3,10 +3,15 @@ extends Node2D
 
 
 const HASHED_MAIN_TAGS: Dictionary = {
-    MainTag.GROUND: 0,
-    MainTag.BUILDING: 1,
-    MainTag.TRAP: 2,
-    MainTag.ACTOR: 3,
+    MainTag.GROUND: 1,
+    MainTag.BUILDING: 2,
+    MainTag.TRAP: 3,
+    MainTag.ACTOR: 4,
+}
+const INDICATOR_AXES: Dictionary = {
+    SubTag.INDICATOR_TOP: &"x",
+    SubTag.INDICATOR_BOTTOM: &"x",
+    SubTag.INDICATOR_LEFT: &"y",
 }
 
 
@@ -57,6 +62,18 @@ func swap_sprite(this_sprite: Sprite2D, that_sprite: Sprite2D,
     move_sprite(this_sprite, main_tag, that_coord, 0)
     move_sprite(that_sprite, main_tag, this_coord, this_layer)
     move_sprite(this_sprite, main_tag, that_coord, that_layer)
+
+
+func move_indicator(coord: Vector2i, indicators: Dictionary) -> void:
+    var sprite: Sprite2D
+    var axis: StringName
+
+    for i: StringName in INDICATOR_AXES:
+        if not indicators.has(i):
+            continue
+        sprite = indicators[i]
+        axis = INDICATOR_AXES[i]
+        sprite.position[axis] = ConvertCoord.get_position(coord)[axis]
 
 
 func _hash_sprite(sprite: Sprite2D, main_tag: StringName) -> int:
