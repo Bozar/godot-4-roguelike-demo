@@ -39,6 +39,7 @@ func add_state(sprite: Sprite2D, main_tag: StringName) -> void:
     else:
         _dungeon_sprites[hashed_coord] = {}
     _dungeon_sprites[hashed_coord][hashed_sprite] = sprite
+    _set_visibility(coord)
 
 
 func remove_state(sprite: Sprite2D, main_tag: StringName) -> void:
@@ -116,4 +117,18 @@ func _hash_sprite(main_tag: StringName, z_layer: int) -> int:
 
     var hashed_main_tag: int = HASHED_MAIN_TAGS[main_tag]
     return floor(z_layer + hashed_main_tag * pow(10, 2))
+
+
+func _set_visibility(coord: Vector2i) -> void:
+    var sprites: Array = get_sprites_by_coord(coord)
+    var sprite: Sprite2D
+
+    sprites.sort_custom(_sort_by_layer)
+    for i: int in range(0, sprites.size()):
+        sprite = sprites[i]
+        sprite.visible = (i == sprites.size() - 1)
+
+
+func _sort_by_layer(this_sprite: Sprite2D, that_sprite: Sprite2D) -> bool:
+    return this_sprite.z_index < that_sprite.z_index
 
