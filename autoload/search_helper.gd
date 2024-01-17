@@ -15,7 +15,6 @@ func get_sprites_by_tag(main_tag: StringName, sub_tag: StringName) -> Array:
     search.sub_tag = sub_tag
 
     searching_by_tag.emit(search)
-    search.search_is_completed()
     return search.sprites
 
 
@@ -28,7 +27,6 @@ func get_sprite_by_coord(main_tag: StringName, coord: Vector2i,
     search.z_layer = z_layer
 
     searching_by_coord_tag.emit(search)
-    search.search_is_completed()
     return search.sprite
 
 
@@ -38,7 +36,6 @@ func get_sprites_by_coord(coord: Vector2i) -> Array:
     search.coord = coord
 
     searching_by_coord.emit(search)
-    search.search_is_completed()
     return search.sprites
 
 
@@ -48,7 +45,6 @@ func get_main_tag(sprite: Sprite2D) -> StringName:
     search.sprite = sprite
 
     searching_by_sprite.emit(search)
-    search.search_is_completed()
     return search.main_tag
 
 
@@ -58,5 +54,4 @@ func get_sub_tag(sprite: Sprite2D) -> StringName:
     search.sprite = sprite
 
     searching_by_sprite.emit(search)
-    search.search_is_completed()
     return search.sub_tag
