@@ -26,6 +26,16 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
         VisualEffect.set_light_color(ts.sprite)
 
 
+func _on_SpriteFactory_sprite_removed(sprites: Array[Sprite2D]) -> void:
+    var main_tag: StringName
+
+    for i: Sprite2D in sprites:
+        main_tag = _ref_SpriteTag.get_main_tag(i)
+
+        _ref_SpriteTag.remove_state(i)
+        _ref_DungeonBoard.remove_state(i, main_tag)
+
+
 func _on_SearchHelper_searching_by_tag(search: SearchKeyword) -> void:
     search.sprites = _ref_SpriteTag.get_sprites_by_tag(search.main_tag,
             search.sub_tag)

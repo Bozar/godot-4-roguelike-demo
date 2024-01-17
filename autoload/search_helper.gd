@@ -75,3 +75,18 @@ func has_trap_at_coord(coord: Vector2i,
 func has_actor_at_coord(coord: Vector2i,
         z_layer: int = ZLayer.get_z_layer(MainTag.ACTOR)) -> bool:
     return has_sprite_at_coord(MainTag.ACTOR, coord, z_layer)
+
+
+func get_building_by_coord(coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(MainTag.BUILDING)) -> Sprite2D:
+    return get_sprite_by_coord(MainTag.BUILDING, coord, z_layer)
+
+
+func get_trap_by_coord(coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(MainTag.TRAP)) -> Sprite2D:
+    return get_sprite_by_coord(MainTag.TRAP, coord, z_layer)
+
+
+func get_actor_by_coord(coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(MainTag.ACTOR)) -> Sprite2D:
+    return get_sprite_by_coord(MainTag.ACTOR, coord, z_layer)

@@ -15,7 +15,10 @@ const SIGNAL_SEARCHING_BY_TAG: String = "searching_by_tag"
 const SIGNAL_SEARCHING_BY_COORD: String = "searching_by_coord"
 const SIGNAL_SEARCHING_BY_COORD_TAG: String = "searching_by_coord_tag"
 const SIGNAL_SEARCHING_BY_SPRITE: String = "searching_by_sprite"
+
 const SIGNAL_SPRITE_CREATED: String = "sprite_created"
+const SIGNAL_SPRITE_REMOVED: String = "sprite_removed"
+
 const SIGNAL_SPRITE_MOVED: String = "sprite_moved"
 const SIGNAL_SPRITE_SWAPPED: String = "sprite_swapped"
 const SIGNAL_PC_MOVED: String = "pc_moved"
@@ -53,6 +56,9 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     SPRITE_FACTORY: {
         SIGNAL_SPRITE_CREATED: [
             SPRITE_ROOT, SPRITE_STATE, PC_ACTION,
+        ],
+        SIGNAL_SPRITE_REMOVED: [
+            SPRITE_ROOT, SPRITE_STATE,
         ],
     },
 }

@@ -46,7 +46,8 @@ func _is_reachable(coord: Vector2i) -> bool:
 
 
 func _pick_ammo(coord: Vector2i) -> void:
-    print("Ammo: %d, %d" % [coord.x, coord.y])
+    SpriteFactory.remove_sprite(SearchHelper.get_trap_by_coord(coord))
+    MoveSprite.move(_pc, coord)
 
 
 func _hit_grunt(coord: Vector2i) -> void:
