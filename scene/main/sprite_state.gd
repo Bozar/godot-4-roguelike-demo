@@ -26,23 +26,21 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
         VisualEffect.set_light_color(ts.sprite)
 
 
-func _on_SearchHelper_searching_by_tag(search: SearchByTag) -> void:
+func _on_SearchHelper_searching_by_tag(search: SearchKeyword) -> void:
     search.sprites = _ref_SpriteTag.get_sprites_by_tag(search.main_tag,
             search.sub_tag)
 
 
-func _on_SearchHelper_searching_by_coord(search: SearchByCoord) -> void:
-    var sprite: Sprite2D
-
-    if search.search_all:
-        search.sprites = _ref_DungeonBoard.get_sprites_by_coord(search.coord)
-    else:
-        sprite = _ref_DungeonBoard.get_sprite_by_coord(search.main_tag,
-                search.coord, search.z_layer)
-        search.sprites = [sprite]
+func _on_SearchHelper_searching_by_coord(search: SearchKeyword) -> void:
+    search.sprites = _ref_DungeonBoard.get_sprites_by_coord(search.coord)
 
 
-func _on_SearchHelper_searching_by_sprite(search: SearchBySprite) -> void:
+func _on_SearchHelper_searching_by_coord_tag(search: SearchKeyword) -> void:
+    search.sprite = _ref_DungeonBoard.get_sprite_by_coord(search.main_tag,
+            search.coord, search.z_layer)
+
+
+func _on_SearchHelper_searching_by_sprite(search: SearchKeyword) -> void:
     search.main_tag = _ref_SpriteTag.get_main_tag(search.sprite)
     search.sub_tag = _ref_SpriteTag.get_sub_tag(search.sprite)
 

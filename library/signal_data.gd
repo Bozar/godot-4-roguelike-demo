@@ -13,6 +13,7 @@ const SPRITE_FACTORY: String = "/root/SpriteFactory"
 
 const SIGNAL_SEARCHING_BY_TAG: String = "searching_by_tag"
 const SIGNAL_SEARCHING_BY_COORD: String = "searching_by_coord"
+const SIGNAL_SEARCHING_BY_COORD_TAG: String = "searching_by_coord_tag"
 const SIGNAL_SEARCHING_BY_SPRITE: String = "searching_by_sprite"
 const SIGNAL_SPRITE_CREATED: String = "sprite_created"
 const SIGNAL_SPRITE_MOVED: String = "sprite_moved"
@@ -35,6 +36,9 @@ const SIGNAL_CONNECTIONS: Dictionary = {
             SPRITE_STATE,
         ],
         SIGNAL_SEARCHING_BY_SPRITE: [
+            SPRITE_STATE,
+        ],
+        SIGNAL_SEARCHING_BY_COORD_TAG: [
             SPRITE_STATE,
         ],
     },
