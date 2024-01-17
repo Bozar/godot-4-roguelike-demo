@@ -55,3 +55,23 @@ func get_sub_tag(sprite: Sprite2D) -> StringName:
 
     searching_by_sprite.emit(search)
     return search.sub_tag
+
+
+func has_sprite_at_coord(main_tag: StringName, coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(main_tag)) -> bool:
+    return get_sprite_by_coord(main_tag, coord, z_layer) != null
+
+
+func has_building_at_coord(coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(MainTag.BUILDING)) -> bool:
+    return has_sprite_at_coord(MainTag.BUILDING, coord, z_layer)
+
+
+func has_trap_at_coord(coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(MainTag.TRAP)) -> bool:
+    return has_sprite_at_coord(MainTag.TRAP, coord, z_layer)
+
+
+func has_actor_at_coord(coord: Vector2i,
+        z_layer: int = ZLayer.get_z_layer(MainTag.ACTOR)) -> bool:
+    return has_sprite_at_coord(MainTag.ACTOR, coord, z_layer)

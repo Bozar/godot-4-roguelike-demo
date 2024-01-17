@@ -27,6 +27,14 @@ func _on_PlayerInput_pc_moved(direction: StringName) -> void:
 
     if not _is_reachable(coord):
         return
+    elif SearchHelper.has_building_at_coord(coord):
+        return
+    elif SearchHelper.has_trap_at_coord(coord):
+        _pick_ammo(coord)
+        return
+    elif SearchHelper.has_actor_at_coord(coord):
+        _hit_grunt(coord)
+        return
     MoveSprite.move(_pc, coord)
     # TODO: Emit a signal to end PC's turn.
 
@@ -35,3 +43,11 @@ func _is_reachable(coord: Vector2i) -> bool:
     if DungeonSize.is_insided_dungeon(coord):
         return true
     return false
+
+
+func _pick_ammo(coord: Vector2i) -> void:
+    print("Ammo: %d, %d" % [coord.x, coord.y])
+
+
+func _hit_grunt(coord: Vector2i) -> void:
+    print("Grunt: %d, %d" % [coord.x, coord.y])
