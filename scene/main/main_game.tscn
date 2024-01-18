@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=10 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_ed0ep"]
 [ext_resource type="Script" path="res://scene/main/player_input.gd" id="2_hj4ky"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scene/main/sprite_state.gd" id="5_wq28t"]
 [ext_resource type="Script" path="res://scene/main/sprite_tag.gd" id="6_7tiyd"]
 [ext_resource type="Script" path="res://scene/main/dungeon_board.gd" id="8_g8upp"]
+[ext_resource type="Theme" uid="uid://bkqmmahujknn0" path="res://resource/default_theme.tres" id="9_cjp20"]
 [ext_resource type="Script" path="res://scene/main/pc_action.gd" id="9_ewavl"]
 
 [node name="MainRoot" type="Node2D"]
@@ -32,3 +33,27 @@ script = ExtResource("8_g8upp")
 
 [node name="PcAction" type="Node2D" parent="."]
 script = ExtResource("9_ewavl")
+
+[node name="Sidebar" type="MarginContainer" parent="."]
+offset_left = 600.0
+offset_right = 800.0
+offset_bottom = 600.0
+theme = ExtResource("9_cjp20")
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="SidebarVBox" type="VBoxContainer" parent="Sidebar"]
+layout_mode = 2
+
+[node name="GameStateLabel" type="Label" parent="Sidebar/SidebarVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Hello world"
+
+[node name="FootnoteLabel" type="Label" parent="Sidebar/SidebarVBox"]
+layout_mode = 2
+text = "Bottom
+bottom 2
+bottom 3"
+horizontal_alignment = 2
