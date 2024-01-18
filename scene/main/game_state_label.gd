@@ -8,7 +8,7 @@ func init_label() -> void:
 
 
 func update_label() -> void:
-    var ammo: String = "Ammo: %d" % [PcStateHelper.ammo]
+    var ammo: String = "Ammo: %d" % [PcActionHelper.ammo]
     var enemy: String = "Enemy: %d" % [0]
 
     text = "%s\n%s" % [ammo, enemy]

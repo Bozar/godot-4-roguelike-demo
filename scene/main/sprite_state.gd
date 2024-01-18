@@ -7,7 +7,6 @@ var _indicators: Dictionary = {}
 
 @onready var _ref_SpriteTag: SpriteTag = $SpriteTag
 @onready var _ref_DungeonBoard: DungeonBoard = $DungeonBoard
-@onready var _ref_PcState: PcState = $PcState
 
 
 func _ready() -> void:
@@ -57,11 +56,6 @@ func _on_SearchHelper_searching_by_coord_tag(search: SearchKeyword) -> void:
 func _on_SearchHelper_searching_by_sprite(search: SearchKeyword) -> void:
     search.main_tag = _ref_SpriteTag.get_main_tag(search.sprite)
     search.sub_tag = _ref_SpriteTag.get_sub_tag(search.sprite)
-    search.search_is_completed()
-
-
-func _on_PcStateHelper_searching_pc_state(search: SearchKeyword) -> void:
-    search.pc_state = _ref_PcState
     search.search_is_completed()
 
 
