@@ -31,6 +31,11 @@ var sprites: Array:
         if _search_is_completed:
             return
         sprites = value
+var pc_state: PcState:
+    set(value):
+        if _search_is_completed:
+            return
+        pc_state = value
 
 
 var _search_is_completed: bool = false

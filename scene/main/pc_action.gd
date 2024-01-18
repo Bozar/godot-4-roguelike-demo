@@ -35,8 +35,10 @@ func _on_PlayerInput_pc_moved(direction: StringName) -> void:
     elif SearchHelper.has_actor_at_coord(coord):
         _hit_grunt(coord)
         return
+
     MoveSprite.move(_pc, coord)
-    # TODO: Emit a signal to end PC's turn.
+    PcStateHelper.ammo -= 1
+    ScheduleHelper.end_turn()
 
 
 func _is_reachable(coord: Vector2i) -> bool:
@@ -47,7 +49,9 @@ func _is_reachable(coord: Vector2i) -> bool:
 
 func _pick_ammo(coord: Vector2i) -> void:
     SpriteFactory.remove_sprite(SearchHelper.get_trap_by_coord(coord))
+    PcStateHelper.ammo += GameData.MAX_AMMO
     MoveSprite.move(_pc, coord)
+    ScheduleHelper.end_turn()
 
 
 func _hit_grunt(coord: Vector2i) -> void:

@@ -9,3 +9,7 @@ extends CustomMarginContainer
 func init_gui() -> void:
     _ref_GameStateLabel.init_label()
     _ref_FootnoteLabel.init_label()
+
+
+func _on_ScheduleHelper_turn_ended() -> void:
+    _ref_GameStateLabel.update_label()
