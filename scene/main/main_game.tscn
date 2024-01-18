@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=13 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_ed0ep"]
 [ext_resource type="Script" path="res://scene/main/player_input.gd" id="2_hj4ky"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://scene/main/dungeon_board.gd" id="8_g8upp"]
 [ext_resource type="Theme" uid="uid://bkqmmahujknn0" path="res://resource/default_theme.tres" id="9_cjp20"]
 [ext_resource type="Script" path="res://scene/main/pc_action.gd" id="9_ewavl"]
+[ext_resource type="Script" path="res://scene/main/sidebar.gd" id="10_0leyt"]
+[ext_resource type="Script" path="res://scene/main/game_state_label.gd" id="10_mas04"]
+[ext_resource type="Script" path="res://scene/main/footnote_label.gd" id="11_xdhx6"]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource("1_ed0ep")
@@ -39,9 +42,10 @@ offset_left = 600.0
 offset_right = 800.0
 offset_bottom = 600.0
 theme = ExtResource("9_cjp20")
-theme_override_constants/margin_top = 15
+theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+script = ExtResource("10_0leyt")
 
 [node name="SidebarVBox" type="VBoxContainer" parent="Sidebar"]
 layout_mode = 2
@@ -49,11 +53,9 @@ layout_mode = 2
 [node name="GameStateLabel" type="Label" parent="Sidebar/SidebarVBox"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Hello world"
+script = ExtResource("10_mas04")
 
 [node name="FootnoteLabel" type="Label" parent="Sidebar/SidebarVBox"]
 layout_mode = 2
-text = "Bottom
-bottom 2
-bottom 3"
 horizontal_alignment = 2
+script = ExtResource("11_xdhx6")

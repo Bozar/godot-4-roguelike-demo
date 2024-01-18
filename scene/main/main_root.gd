@@ -4,6 +4,7 @@ extends Node2D
 
 @onready var _ref_InitWorld: InitWorld = $InitWorld
 @onready var _ref_PlayerInput: PlayerInput = $PlayerInput
+@onready var _ref_Sidebar: CustomMarginContainer = $Sidebar
 
 
 func _ready() -> void:
@@ -11,6 +12,7 @@ func _ready() -> void:
 
     _ref_InitWorld.create_world()
     _ref_PlayerInput.set_process_unhandled_input(true)
+    _ref_Sidebar.init_gui()
 
     VisualEffect.set_background_color()
     VisualEffect.set_indicator_color()
