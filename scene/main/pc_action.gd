@@ -93,11 +93,13 @@ func _aim(pc: Sprite2D) -> void:
 
 
 func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
-    var target: Vector2i = CastRay.get_coords(ConvertCoord.get_coord(pc), coord,
-            _block_shoot_ray, [], true, true).back()
+    var coords: Array = CastRay.get_coords(ConvertCoord.get_coord(pc), coord,
+            _block_shoot_ray, [], true, true)
+    var target: Vector2i
     var actor: Sprite2D
 
-    if target != null:
+    if not coords.is_empty():
+        target = coords.back()
         actor = SearchHelper.get_actor_by_coord(target)
         if actor != null:
             _kill_grunt(actor, target)
