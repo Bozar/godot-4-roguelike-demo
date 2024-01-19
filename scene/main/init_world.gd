@@ -67,5 +67,12 @@ func _create_trap(tagged_sprites: Array[TaggedSprite]) -> void:
 
 
 func _create_actor(tagged_sprites: Array[TaggedSprite]) -> void:
-    tagged_sprites.push_back(CreateSprite.create_actor(SubTag.GRUNT,
-            Vector2i(4, 2)))
+    var coords: Array[Vector2i] = [
+        Vector2i(4, 2),
+        Vector2i(3, 2),
+        Vector2i(0, 2),
+        Vector2i(2, 1),
+    ]
+
+    for i: Vector2i in coords:
+        tagged_sprites.push_back(CreateSprite.create_actor(SubTag.GRUNT, i))

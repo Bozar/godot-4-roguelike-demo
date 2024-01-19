@@ -45,22 +45,16 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
 
     if _is_aiming:
         _shoot(_pc, coord)
-    elif not _is_reachable(coord):
+    elif not DungeonSize.is_insided_dungeon(coord):
         return
     elif SearchHelper.has_building_at_coord(coord):
         return
     elif SearchHelper.has_trap_at_coord(coord):
         _pick_ammo(coord)
     elif SearchHelper.has_actor_at_coord(coord):
-        _hit_grunt(coord)
+        _hit_back(_pc, coord)
     else:
         _move(_pc, coord)
-
-
-func _is_reachable(coord: Vector2i) -> bool:
-    if DungeonSize.is_insided_dungeon(coord):
-        return true
-    return false
 
 
 func _pick_ammo(coord: Vector2i) -> void:
@@ -70,8 +64,18 @@ func _pick_ammo(coord: Vector2i) -> void:
     ScheduleHelper.end_turn()
 
 
-func _hit_grunt(coord: Vector2i) -> void:
-    print("Grunt: %d, %d" % [coord.x, coord.y])
+func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
+    var coords: Array = CastRay.get_coords(ConvertCoord.get_coord(pc), coord,
+            _block_hit_ray, [], true, false)
+    var target: Vector2i = coords.back()
+    var actor: Sprite2D = SearchHelper.get_actor_by_coord(coord)
+
+    if _is_impassable(target):
+        target = coords[-2]
+        _kill_grunt(actor, target)
+    else:
+        MoveSprite.move(actor, target)
+    ScheduleHelper.end_turn()
 
 
 func _move(pc: Sprite2D, coord: Vector2i) -> void:
@@ -89,7 +93,48 @@ func _aim(pc: Sprite2D) -> void:
 
 
 func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
-    print(coord)
+    var target: Vector2i = CastRay.get_coords(ConvertCoord.get_coord(pc), coord,
+            _block_shoot_ray, [], true, true).back()
+    var actor: Sprite2D
+
+    if target != null:
+        actor = SearchHelper.get_actor_by_coord(target)
+        if actor != null:
+            _kill_grunt(actor, target)
     ammo -= 1
     _aim(pc)
     ScheduleHelper.end_turn()
+
+
+func _is_impassable(coord: Vector2i) -> bool:
+    if not DungeonSize.is_insided_dungeon(coord):
+        return true
+    elif SearchHelper.has_building_at_coord(coord):
+        return true
+    elif SearchHelper.has_actor_at_coord(coord):
+        return true
+    return false
+
+
+func _block_shoot_ray(_from_coord: Vector2i, to_coord: Vector2i,
+        _opt_args: Array) -> bool:
+    return _is_impassable(to_coord)
+
+
+func _block_hit_ray(from_coord: Vector2i, to_coord: Vector2i,
+        _opt_args: Array) -> bool:
+    var ray_length_squared: int = (from_coord - to_coord).length_squared()
+
+    if SearchHelper.has_trap_at_coord(to_coord):
+        SpriteFactory.remove_sprite(SearchHelper.get_trap_by_coord(to_coord))
+
+    if ray_length_squared == 1:
+        return false
+    elif ray_length_squared  > (GameData.HIT_BACK ** 2):
+        return true
+    return _block_shoot_ray(from_coord, to_coord, _opt_args)
+
+
+func _kill_grunt(actor: Sprite2D, coord: Vector2i) -> void:
+    SpriteFactory.remove_sprite(actor)
+    SpriteFactory.create_trap(SubTag.AMMO, coord)
