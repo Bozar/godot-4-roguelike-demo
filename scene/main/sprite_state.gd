@@ -53,7 +53,7 @@ func _on_SearchHelper_searching_by_coord_tag(search: SearchKeyword) -> void:
     search.search_is_completed()
 
 
-func _on_SearchHelper_searching_by_sprite(search: SearchKeyword) -> void:
+func _on_SearchHelper_searching_by_id(search: SearchKeyword) -> void:
     search.main_tag = _ref_SpriteTag.get_main_tag(search.sprite)
     search.sub_tag = _ref_SpriteTag.get_sub_tag(search.sprite)
     search.search_is_completed()

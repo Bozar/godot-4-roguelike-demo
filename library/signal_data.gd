@@ -17,7 +17,7 @@ const SCHEDULE_HELPER: String = "/root/ScheduleHelper"
 const SIGNAL_SEARCHING_BY_TAG: String = "searching_by_tag"
 const SIGNAL_SEARCHING_BY_COORD: String = "searching_by_coord"
 const SIGNAL_SEARCHING_BY_COORD_TAG: String = "searching_by_coord_tag"
-const SIGNAL_SEARCHING_BY_SPRITE: String = "searching_by_sprite"
+const SIGNAL_SEARCHING_BY_ID: String = "searching_by_id"
 
 const SIGNAL_SEARCHING_PC_ACTION: String = "searching_pc_action"
 
@@ -45,7 +45,7 @@ const SIGNAL_CONNECTIONS: Dictionary = {
         SIGNAL_SEARCHING_BY_TAG: [
             SPRITE_STATE,
         ],
-        SIGNAL_SEARCHING_BY_SPRITE: [
+        SIGNAL_SEARCHING_BY_ID: [
             SPRITE_STATE,
         ],
         SIGNAL_SEARCHING_BY_COORD_TAG: [

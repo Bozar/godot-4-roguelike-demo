@@ -13,14 +13,13 @@ var _is_valid_sprite: Callable
 
 func add_state(sprite: Sprite2D, main_tag: StringName, sub_tag: StringName) \
         -> void:
-    var id: int = sprite.get_instance_id()
-
+    var id: int = _get_id(sprite)
     _main_tags[id] = main_tag
     _sub_tags[id] = sub_tag
 
 
 func remove_state(sprite: Sprite2D) -> void:
-    var id: int = sprite.get_instance_id()
+    var id: int = _get_id(sprite)
 
     if not _main_tags.erase(id):
         push_error(NO_MAIN_TAG % sprite.name)
@@ -29,7 +28,7 @@ func remove_state(sprite: Sprite2D) -> void:
 
 
 func get_main_tag(sprite: Sprite2D) -> StringName:
-    var id: int = sprite.get_instance_id()
+    var id: int = _get_id(sprite)
 
     if _main_tags.has(id):
         return _main_tags[id]
@@ -38,7 +37,7 @@ func get_main_tag(sprite: Sprite2D) -> StringName:
 
 
 func get_sub_tag(sprite: Sprite2D) -> StringName:
-    var id: int = sprite.get_instance_id()
+    var id: int = _get_id(sprite)
 
     if _sub_tags.has(id):
         return _sub_tags[id]
@@ -66,3 +65,7 @@ func _has_main_tag(sprite: Sprite2D, filter_args: Array) -> bool:
     if main_tag == "":
         return true
     return sprite.is_in_group(main_tag)
+
+
+func _get_id(sprite: Sprite2D) -> int:
+    return sprite.get_instance_id()

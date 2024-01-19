@@ -5,7 +5,7 @@ extends Node2D
 signal searching_by_tag(search_by_tag: SearchKeyword)
 signal searching_by_coord_tag(search_by_coord: SearchKeyword)
 signal searching_by_coord(search_by_coord: SearchKeyword)
-signal searching_by_sprite(search_by_sprite: SearchKeyword)
+signal searching_by_id(search_by_sprite: SearchKeyword)
 
 
 func get_sprites_by_tag(main_tag: StringName, sub_tag: StringName) -> Array:
@@ -44,7 +44,7 @@ func get_main_tag(sprite: Sprite2D) -> StringName:
 
     search.sprite = sprite
 
-    searching_by_sprite.emit(search)
+    searching_by_id.emit(search)
     return search.main_tag
 
 
@@ -53,7 +53,7 @@ func get_sub_tag(sprite: Sprite2D) -> StringName:
 
     search.sprite = sprite
 
-    searching_by_sprite.emit(search)
+    searching_by_id.emit(search)
     return search.sub_tag
 
 
