@@ -26,7 +26,7 @@ const SIGNAL_SPRITE_REMOVED: String = "sprite_removed"
 
 const SIGNAL_SPRITE_MOVED: String = "sprite_moved"
 const SIGNAL_SPRITE_SWAPPED: String = "sprite_swapped"
-const SIGNAL_PC_MOVED: String = "pc_moved"
+const SIGNAL_ACTION_PRESSED: String = "action_pressed"
 
 const SIGNAL_TURN_ENDED: String = "turn_ended"
 
@@ -34,7 +34,7 @@ const SIGNAL_TURN_ENDED: String = "turn_ended"
 # {source_node: {signal_name: [target_node_1, ...]}, ...}
 const SIGNAL_CONNECTIONS: Dictionary = {
     PLAYER_INPUT: {
-        SIGNAL_PC_MOVED: [
+        SIGNAL_ACTION_PRESSED: [
             PC_ACTION,
         ],
     },
