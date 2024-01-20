@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://dxqi1vxpowcf3"]
+
+[node name="Timer" type="Sprite2D"]
+visible = false
