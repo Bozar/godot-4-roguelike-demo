@@ -5,14 +5,17 @@ extends Node2D
 @onready var _ref_InitWorld: InitWorld = $InitWorld
 @onready var _ref_PlayerInput: PlayerInput = $PlayerInput
 @onready var _ref_Sidebar: CustomMarginContainer = $Sidebar
+@onready var _ref_Schedule: Schedule = $Schedule
 
 
 func _ready() -> void:
     _connect_signals(SignalData.SIGNAL_CONNECTIONS)
 
+    _ref_Schedule.init_schedule()
     _ref_InitWorld.create_world()
     _ref_PlayerInput.set_process_unhandled_input(true)
     _ref_Sidebar.init_gui()
+    _ref_Schedule.start_first_turn()
 
     VisualEffect.set_background_color()
     VisualEffect.set_indicator_color()

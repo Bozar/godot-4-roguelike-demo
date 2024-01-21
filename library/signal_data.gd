@@ -6,6 +6,7 @@ const SPRITE_STATE: String = "SpriteState"
 const PLAYER_INPUT: String = "PlayerInput"
 const PC_ACTION: String = "PcAction"
 const SIDEBAR: String = "Sidebar"
+const SCHEDULE: String = "Schedule"
 
 const SEARCH_HELPER: String = "/root/SearchHelper"
 const PC_ACTION_HELPER: String = "/root/PcActionHelper"
@@ -62,10 +63,10 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     },
     SPRITE_FACTORY: {
         SIGNAL_SPRITE_CREATED: [
-            SPRITE_ROOT, SPRITE_STATE, PC_ACTION,
+            SPRITE_ROOT, SPRITE_STATE, PC_ACTION, SCHEDULE,
         ],
         SIGNAL_SPRITE_REMOVED: [
-            SPRITE_ROOT, SPRITE_STATE,
+            SPRITE_ROOT, SPRITE_STATE, SCHEDULE,
         ],
     },
     PC_ACTION_HELPER: {
