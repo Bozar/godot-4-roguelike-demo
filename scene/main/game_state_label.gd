@@ -9,6 +9,7 @@ func init_label() -> void:
 
 func update_label() -> void:
     var ammo: String = "Ammo: %d" % [PcActionHelper.ammo]
-    var enemy: String = "Enemy: %d" % [0]
+    var enemy: String = "Enemy: %d-%d" % [PcActionHelper.enemy_count,
+            PcActionHelper.progress_bar]
 
     text = "%s\n%s" % [ammo, enemy]

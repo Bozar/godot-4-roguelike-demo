@@ -11,5 +11,6 @@ func init_gui() -> void:
     _ref_FootnoteLabel.init_label()
 
 
-func _on_ScheduleHelper_turn_ended() -> void:
-    _ref_GameStateLabel.update_label()
+func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
+    if sprite.is_in_group(SubTag.PC):
+        _ref_GameStateLabel.update_label()

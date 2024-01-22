@@ -77,12 +77,12 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     },
     SCHEDULE_HELPER: {
         SIGNAL_TURN_ENDED: [
-            SIDEBAR, SCHEDULE,
+            SCHEDULE,
         ],
     },
     SCHEDULE: {
         SIGNAL_TURN_STARTED: [
-            PLAYER_INPUT,
+            PLAYER_INPUT, SIDEBAR,
         ],
     },
 }

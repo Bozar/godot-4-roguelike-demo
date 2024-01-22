@@ -7,8 +7,20 @@ var ammo: int:
         ammo = max(min(value, GameData.MAX_AMMO), GameData.MIN_AMMO)
 
 
+var enemy_count: int:
+    get:
+        return _enemy_count
+
+
+var progress_bar: int:
+    get:
+        return _progress_bar
+
+
 var _pc: Sprite2D
 var _is_aiming: bool = false
+var _enemy_count: int = GameData.MIN_ENEMY_COUNT
+var _progress_bar: int = GameData.MIN_PROGRESS_BAR
 
 
 func _ready() -> void:
@@ -60,6 +72,7 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
 func _pick_ammo(coord: Vector2i) -> void:
     SpriteFactory.remove_sprite(SearchHelper.get_trap_by_coord(coord))
     ammo += GameData.MAGAZINE
+    _subtract_progress_bar()
     MoveSprite.move(_pc, coord)
     ScheduleHelper.end_turn()
 
@@ -75,10 +88,12 @@ func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
         _kill_grunt(actor, target)
     else:
         MoveSprite.move(actor, target)
+    _subtract_progress_bar()
     ScheduleHelper.end_turn()
 
 
 func _move(pc: Sprite2D, coord: Vector2i) -> void:
+    _subtract_progress_bar()
     MoveSprite.move(pc, coord)
     ScheduleHelper.end_turn()
 
@@ -105,6 +120,7 @@ func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
             _kill_grunt(actor, target)
     ammo -= 1
     _aim(pc)
+    _subtract_progress_bar()
     ScheduleHelper.end_turn()
 
 
@@ -140,3 +156,18 @@ func _block_hit_ray(from_coord: Vector2i, to_coord: Vector2i,
 func _kill_grunt(actor: Sprite2D, coord: Vector2i) -> void:
     SpriteFactory.remove_sprite(actor)
     SpriteFactory.create_trap(SubTag.AMMO, coord)
+    _add_enemy_count()
+
+
+func _add_enemy_count() -> void:
+    _enemy_count = min(enemy_count + 1, GameData.MAX_ENEMY_COUNT)
+    _progress_bar = GameData.MAX_PROGRES_BAR + 1
+
+
+func _subtract_progress_bar() -> void:
+    if _progress_bar > GameData.MIN_PROGRESS_BAR:
+        _progress_bar -= 1
+    if _progress_bar == GameData.MIN_PROGRESS_BAR:
+        _enemy_count = max(enemy_count - 1, GameData.MIN_ENEMY_COUNT)
+        if _enemy_count > GameData.MIN_ENEMY_COUNT:
+            _progress_bar = GameData.MAX_PROGRES_BAR
