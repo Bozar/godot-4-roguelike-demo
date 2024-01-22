@@ -11,7 +11,6 @@ extends Node2D
 func _ready() -> void:
     _connect_signals(SignalData.SIGNAL_CONNECTIONS)
 
-    _ref_Schedule.init_schedule()
     _ref_InitWorld.create_world()
     _ref_PlayerInput.set_process_unhandled_input(true)
     _ref_Sidebar.init_gui()

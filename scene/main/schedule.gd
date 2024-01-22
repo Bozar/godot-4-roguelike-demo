@@ -3,23 +3,15 @@ extends Node2D
 
 
 var _linked_sprites: Dictionary = {}
+var _anchor_id: int
 var _next_id: int
-var _global_timer: Sprite2D
-
-
-func init_schedule() -> void:
-    var tagged_timer: TaggedSprite = CreateSprite.create(MainTag.INDICATOR,
-            SubTag.TIMER, Vector2i(0, 0))
-    var id: int = tagged_timer.sprite.get_instance_id()
-
-    _global_timer = tagged_timer.sprite
-    _linked_sprites[id] = LinkedSprite.new(_global_timer, id, id)
-    SpriteFactory.create_sprites([tagged_timer])
 
 
 func start_first_turn() -> void:
     var pc_sprite: Sprite2D = SearchHelper.get_sprites_by_tag("", SubTag.PC)[0]
-    _next_id = pc_sprite.get_instance_id()
+    var pc_id: int = pc_sprite.get_instance_id()
+    _next_id = pc_id
+    _anchor_id = pc_id
     #TODO: Emit a signal.
 
 
@@ -36,17 +28,13 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
             MainTag.ACTOR:
                 _insert_linked_sprite(i.sprite)
             MainTag.INDICATOR:
-                if (i.sprite == _global_timer):
-                    continue
-                elif i.sub_tag == SubTag.TIMER:
+                if i.sub_tag == SubTag.TIMER:
                     _insert_linked_sprite(i.sprite)
 
 
 func _on_SpriteFactory_sprite_removed(sprites: Array[Sprite2D]) -> void:
     for i: Sprite2D in sprites:
-        if _has_sprite(i):
-            _remove_linked_sprite(i)
-    print_linked_sprites()
+        _remove_linked_sprite(i)
 
 
 func _insert_linked_sprite(new_sprite: Sprite2D, before_this: Sprite2D = null) \
@@ -54,10 +42,14 @@ func _insert_linked_sprite(new_sprite: Sprite2D, before_this: Sprite2D = null) \
     if _has_sprite(new_sprite):
         push_error("Duplicated linked sprite: %s." % [new_sprite.name])
         return
+    elif _linked_sprites.is_empty():
+        _init_linked_list(new_sprite)
+        return
 
-    var next_sprite: Sprite2D = _get_valid_sprite(before_this)
-    var next_linked: LinkedSprite = _get_linked_sprite(next_sprite)
-    var previous_linked: LinkedSprite = _linked_sprites[next_linked.previous_id]
+    var next_sprite: Sprite2D = _get_anchor_sprite(before_this)
+    var next_linked: LinkedSprite = _get_linked_by_sprite(next_sprite)
+    var previous_linked: LinkedSprite = _get_linked_by_id(
+            next_linked.previous_id)
     var new_linked: LinkedSprite = LinkedSprite.new(new_sprite,
             next_linked.previous_id, previous_linked.next_id)
 
@@ -68,43 +60,62 @@ func _insert_linked_sprite(new_sprite: Sprite2D, before_this: Sprite2D = null) \
 
 func _append_linked_sprite(new_sprite: Sprite2D, after_this: Sprite2D = null) \
         -> void:
-    var previous_sprite: Sprite2D = _get_valid_sprite(after_this)
-    var previous_linked: LinkedSprite = _get_linked_sprite(previous_sprite)
-    var next_linked: LinkedSprite = _linked_sprites[previous_linked.next_id]
+    var previous_sprite: Sprite2D = _get_anchor_sprite(after_this)
+    var previous_linked: LinkedSprite = _get_linked_by_sprite(previous_sprite)
+    var next_linked: LinkedSprite = _get_linked_by_id(previous_linked.next_id)
     _insert_linked_sprite(new_sprite, next_linked.sprite)
 
 
 func _remove_linked_sprite(sprite: Sprite2D) -> void:
-    var linked: LinkedSprite = _get_linked_sprite(sprite)
-    var previous_linked: LinkedSprite = _linked_sprites[linked.previous_id]
-    var next_linked: LinkedSprite = _linked_sprites[linked.next_id]
+    var linked: LinkedSprite = _get_linked_by_sprite(sprite)
+    if linked == null:
+        return
+
+    var previous_linked: LinkedSprite = _get_linked_by_id(linked.previous_id)
+    var next_linked: LinkedSprite = _get_linked_by_id(linked.next_id)
     var __: int
 
     if _next_id == linked.self_id:
         _next_id = linked.next_id
+    if _anchor_id == linked.self_id:
+        _anchor_id = linked.next_id
     previous_linked.next_id = linked.next_id
     next_linked.previous_id = linked.previous_id
     __ = _linked_sprites.erase(linked.self_id)
 
 
-func _get_linked_sprite(sprite: Sprite2D) -> LinkedSprite:
-    var linked: LinkedSprite = _linked_sprites.get(sprite.get_instance_id(),
-            null)
-    if linked == null:
-        push_error("Sprite not found: %s." % [sprite.name])
-    return linked
+func _init_linked_list(sprite: Sprite2D) -> void:
+    var id: int = sprite.get_instance_id()
+    _linked_sprites[id] = LinkedSprite.new(sprite, id, id)
+    _anchor_id = id
 
 
-func _get_valid_sprite(sprite: Sprite2D) -> Sprite2D:
-    return _global_timer if (sprite == null) else sprite
+func _get_linked_by_id(id: int) -> LinkedSprite:
+    return _linked_sprites.get(id, null)
+
+
+func _get_linked_by_sprite(sprite: Sprite2D) -> LinkedSprite:
+    if sprite == null:
+        return null
+    return _get_linked_by_id(sprite.get_instance_id())
 
 
 func _has_sprite(sprite: Sprite2D) -> bool:
-    return _linked_sprites.has(sprite.get_instance_id())
+    return _get_linked_by_sprite(sprite) != null
+
+
+func _get_anchor_sprite(sprite: Sprite2D) -> Sprite2D:
+    if _has_sprite(sprite):
+        return sprite
+
+    var linked: LinkedSprite = _get_linked_by_id(_anchor_id)
+    if linked == null:
+        return null
+    return linked.sprite
 
 
 func _point_to_next_sprite() -> Sprite2D:
-    var linked: LinkedSprite = _linked_sprites[_next_id]
+    var linked: LinkedSprite = _get_linked_by_id(_next_id)
     _next_id = linked.next_id
     return linked.sprite
 
