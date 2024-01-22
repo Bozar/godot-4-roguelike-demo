@@ -2,6 +2,9 @@ class_name Schedule
 extends Node2D
 
 
+signal turn_started(sprite: Sprite2D)
+
+
 var _linked_sprites: Dictionary = {}
 var _anchor_id: int
 var _next_id: int
@@ -12,7 +15,7 @@ func start_first_turn() -> void:
     var pc_id: int = pc_sprite.get_instance_id()
     _next_id = pc_id
     _anchor_id = pc_id
-    #TODO: Emit a signal.
+    turn_started.emit(_point_to_next_sprite())
 
 
 func print_linked_sprites() -> void:
@@ -35,6 +38,10 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
 func _on_SpriteFactory_sprite_removed(sprites: Array[Sprite2D]) -> void:
     for i: Sprite2D in sprites:
         _remove_linked_sprite(i)
+
+
+func _on_ScheduleHelper_turn_ended() -> void:
+    turn_started.emit(_point_to_next_sprite())
 
 
 func _insert_linked_sprite(new_sprite: Sprite2D, before_this: Sprite2D = null) \

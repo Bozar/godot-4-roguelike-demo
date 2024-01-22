@@ -18,6 +18,13 @@ func _unhandled_input(event: InputEvent) -> void:
         action_pressed.emit(InputTag.AIM)
 
 
+func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
+    set_process_unhandled_input(sprite.is_in_group(SubTag.PC))
+    # TODO: Let NpcAction node call this function.
+    if not sprite.is_in_group(SubTag.PC):
+        ScheduleHelper.end_turn()
+
+
 func _is_move_input(event: InputEvent, out_input_tag: Array) -> bool:
     for i: StringName in InputTag.MOVE_INPUTS:
         if event.is_action_pressed(i):

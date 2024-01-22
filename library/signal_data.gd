@@ -30,6 +30,7 @@ const SIGNAL_SPRITE_SWAPPED: String = "sprite_swapped"
 const SIGNAL_ACTION_PRESSED: String = "action_pressed"
 
 const SIGNAL_TURN_ENDED: String = "turn_ended"
+const SIGNAL_TURN_STARTED: String = "turn_started"
 
 
 # {source_node: {signal_name: [target_node_1, ...]}, ...}
@@ -76,7 +77,12 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     },
     SCHEDULE_HELPER: {
         SIGNAL_TURN_ENDED: [
-            SIDEBAR,
+            SIDEBAR, SCHEDULE,
+        ],
+    },
+    SCHEDULE: {
+        SIGNAL_TURN_STARTED: [
+            PLAYER_INPUT,
         ],
     },
 }
