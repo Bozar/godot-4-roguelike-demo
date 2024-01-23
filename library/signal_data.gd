@@ -82,7 +82,7 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     },
     SCHEDULE: {
         SIGNAL_TURN_STARTED: [
-            PLAYER_INPUT, SIDEBAR,
+            PLAYER_INPUT, SIDEBAR, PC_ACTION,
         ],
     },
 }

@@ -22,6 +22,8 @@ var _is_aiming: bool = false
 var _enemy_count: int = GameData.MIN_ENEMY_COUNT
 var _progress_bar: int = GameData.MIN_PROGRESS_BAR
 
+@onready var _ref_PcFov: PcFov = $PcFov
+
 
 func _ready() -> void:
     ammo = GameData.MIN_AMMO
@@ -69,6 +71,11 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
         _move(_pc, coord)
 
 
+func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
+    if sprite.is_in_group(SubTag.PC):
+        _ref_PcFov.render_fov(_is_aiming, true)
+
+
 func _pick_ammo(coord: Vector2i) -> void:
     SpriteFactory.remove_sprite(SearchHelper.get_trap_by_coord(coord))
     ammo += GameData.MAGAZINE
@@ -99,12 +106,19 @@ func _move(pc: Sprite2D, coord: Vector2i) -> void:
 
 
 func _aim(pc: Sprite2D) -> void:
+    var render_fov: bool = true
+
     if _is_aiming:
         VisualEffect.switch_sprite(pc, VisualTag.DEFAULT)
         _is_aiming = false
     elif ammo > GameData.MIN_AMMO:
         VisualEffect.switch_sprite(pc, VisualTag.ACTIVE)
         _is_aiming = true
+    else:
+        render_fov = false
+
+    if render_fov:
+        _ref_PcFov.render_fov(_is_aiming, false)
 
 
 func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
