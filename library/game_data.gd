@@ -14,3 +14,5 @@ const MIN_PROGRESS_BAR: int = 0
 const MAX_PROGRES_BAR: int = 5
 
 const PC_SIGHT_RANGE: int = 5
+const PC_AIM_RANGE: int = 7
+const CROSS_FOV_WIDTH: int = 0
