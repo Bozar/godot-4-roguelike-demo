@@ -42,3 +42,12 @@ static func get_diamond_coords(center: Vector2i, max_range: int) -> Array:
             if (x != 0) and (y != 0):
                 coords.push_back(get_mirror_coord(coord, center))
     return coords
+
+
+static func get_range(this_coord: Vector2i, that_coord: Vector2i) -> int:
+    return abs(this_coord.x - that_coord.x) + abs(this_coord.y - that_coord.y)
+
+
+static func is_in_range(this_coord: Vector2i, that_coord: Vector2i,
+        max_range: int) -> bool:
+    return get_range(this_coord, that_coord) <= max_range
