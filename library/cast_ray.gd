@@ -43,6 +43,6 @@ static func trim_coords(coords: Array, trim_head: bool, trim_tail: bool) \
         trimmed = trimmed.slice(1)
     if trim_tail and (trimmed.size() > 0):
         coord = trimmed.back()
-        if not DungeonSize.is_insided_dungeon(coord):
+        if not DungeonSize.is_in_dungeon(coord):
             trimmed = trimmed.slice(0, -1)
     return trimmed

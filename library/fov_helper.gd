@@ -2,12 +2,8 @@ class_name FovHelper
 
 
 static func is_in_sight(coord: Vector2i, fov_map: Dictionary) -> bool:
-    var column: Array
-
-    if fov_map.has(coord.x):
-        column = fov_map[coord.x]
-        if (coord.y >= 0) and (coord.y < column.size()):
-            return column[coord.y]
+    if Map2D.is_in_map(coord, fov_map):
+        return fov_map[coord.x][coord.y]
     return false
 
 
@@ -39,12 +35,10 @@ static func set_visibility(coord: Vector2i, fov_map: Dictionary,
             VisualEffect.set_visibility(i, false)
         if column[coord.y]:
             while true:
-                if sprites.is_empty():
-                    break
                 sprite = sprites.pop_back()
-                if FovHelper._match_tag(sprite, memory_tags):
+                if (sprite == null) or FovHelper._match_tag(sprite,
+                        memory_tags):
                     break
-                sprite = null
             if sprite != null:
                 VisualEffect.set_dark_color(sprite)
                 VisualEffect.set_visibility(sprite, true)

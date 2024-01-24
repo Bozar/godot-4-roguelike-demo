@@ -60,7 +60,7 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
 
     if _is_aiming:
         _shoot(_pc, coord)
-    elif not DungeonSize.is_insided_dungeon(coord):
+    elif not DungeonSize.is_in_dungeon(coord):
         return
     elif SearchHelper.has_building_at_coord(coord):
         return
@@ -140,7 +140,7 @@ func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
 
 
 func _is_impassable(coord: Vector2i) -> bool:
-    if not DungeonSize.is_insided_dungeon(coord):
+    if not DungeonSize.is_in_dungeon(coord):
         return true
     elif SearchHelper.has_building_at_coord(coord):
         return true

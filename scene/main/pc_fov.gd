@@ -16,8 +16,8 @@ var _pc: Sprite2D
 
 
 func _ready() -> void:
-    _fov_map = DungeonSize.init_map(false)
-    _memory_map = DungeonSize.init_map(false)
+    _fov_map = Map2D.init_map(false)
+    _memory_map = Map2D.init_map(false)
 
 
 func render_fov(is_aiming: bool) -> void:
