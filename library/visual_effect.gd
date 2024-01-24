@@ -42,3 +42,7 @@ static func switch_sprite(sprite: Sprite2D, visual_tag: StringName) -> void:
             i.visible = false
     if not has_switched:
         push_error("Invalid visual tag: %s, %s." % [sprite, visual_tag])
+
+
+static func set_visibility(sprite: Sprite2D, is_visible: bool) -> void:
+    sprite.visible = is_visible

@@ -24,3 +24,17 @@ static func iterate_dungeon(handler: Callable, handler_args: Array) -> void:
             coord.x = x
             coord.y = y
             handler.call(coord, handler_args)
+
+
+static func init_map(value: Variant = null, max_x: int = DungeonSize.MAX_X,
+        max_y: int = DungeonSize.MAX_Y) -> Dictionary:
+    var map: Dictionary = {}
+    var column: Array
+    var __: int
+
+    for x: int in range(0, max_x):
+        column = []
+        __ = column.resize(max_y)
+        column.fill(value)
+        map[x] = column
+    return map

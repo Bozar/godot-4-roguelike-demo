@@ -12,3 +12,5 @@ const MAX_ENEMY_COUNT: int = 9
 
 const MIN_PROGRESS_BAR: int = 0
 const MAX_PROGRES_BAR: int = 5
+
+const PC_SIGHT_RANGE: int = 5

@@ -33,6 +33,7 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
     for i:TaggedSprite in sprites:
         if i.sub_tag == SubTag.PC:
             _pc = i.sprite
+            _ref_PcFov._pc = _pc
             break
 
 
@@ -73,7 +74,7 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
 
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
     if sprite.is_in_group(SubTag.PC):
-        _ref_PcFov.render_fov(_is_aiming, true)
+        _ref_PcFov.render_fov(_is_aiming)
 
 
 func _pick_ammo(coord: Vector2i) -> void:
@@ -118,7 +119,7 @@ func _aim(pc: Sprite2D) -> void:
         render_fov = false
 
     if render_fov:
-        _ref_PcFov.render_fov(_is_aiming, false)
+        _ref_PcFov.render_fov(_is_aiming)
 
 
 func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
