@@ -2,71 +2,72 @@ class_name CrossFov
 
 
 # is_obstacle(from_coord: Vector2i, to_coord: Vector2i, opt_args: Array) -> bool
-static func get_fov_map(source: Vector2i, sight_ranges: SightRanges,
+static func get_fov_map(source: Vector2i, fov_data: FovData,
         is_obstacle: Callable, is_obstacle_args: Array,
         out_fov_map: Dictionary) -> void:
-    var up_left: Vector2i = source
-    var down_right: Vector2i = source
-    var coords: Array
-    var coord: Vector2i
-    var __: int
+    var up_left: Vector2i = Vector2i(0, 0)
+    var down_right: Vector2i = Vector2i(0, 0)
 
     Map2D.reset_map(false, out_fov_map)
 
-    coords = CastRay.get_coords(source, source + Vector2i.UP, is_obstacle,
-            is_obstacle_args, true, false)
+    up_left.y = _get_end_point(source, Vector2i.UP, fov_data.up,
+            is_obstacle, is_obstacle_args).y
+    up_left.x = _get_end_point(source, Vector2i.LEFT, fov_data.left,
+            is_obstacle, is_obstacle_args).x
 
-    if coords.size() > sight_ranges.up:
-        __ = coords.resize(sight_ranges.up)
+    down_right.y = _get_end_point(source, Vector2i.DOWN, fov_data.down,
+            is_obstacle, is_obstacle_args).y
+    down_right.x = _get_end_point(source, Vector2i.RIGHT, fov_data.right,
+            is_obstacle, is_obstacle_args).x
+
+    CrossFov._set_fov_map(source, fov_data.half_width, up_left, down_right,
+            out_fov_map)
+
+
+static func _get_end_point(source: Vector2i, direction: Vector2i,
+        sight_range: int, is_obstacle: Callable, is_obstacle_args: Array) \
+        -> Vector2i:
+    var coords: Array
+
+    coords = CastRay.get_coords(source, source + direction, CrossFov._block_ray,
+            [sight_range, is_obstacle, is_obstacle_args], true, false)
     if coords.is_empty():
-        coord = source
-    else:
-        coord = coords.pop_back()
-    up_left.y = coord.y
+        return source
+    return coords.pop_back()
 
-    coords = CastRay.get_coords(source, source + Vector2i.LEFT, is_obstacle,
-            is_obstacle_args, true, false)
-    if coords.size() > sight_ranges.left:
-        __ = coords.resize(sight_ranges.left)
-    if coords.is_empty():
-        coord = source
-    else:
-        coord = coords.pop_back()
-    up_left.x = coord.x
 
-    coords = CastRay.get_coords(source, source + Vector2i.DOWN, is_obstacle,
-            is_obstacle_args, true, false)
-    if coords.size() > sight_ranges.down:
-        __ = coords.resize(sight_ranges.down)
-    if coords.is_empty():
-        coord = source
-    else:
-        coord = coords.pop_back()
-    down_right.y = coord.y
+static func _block_ray(from_coord: Vector2i, to_coord: Vector2i, args: Array) \
+        -> bool:
+    var sight_range: int = args[0]
+    var is_obstacle: Callable = args[1]
+    var is_obstacle_args: Array = args[2]
 
-    coords = CastRay.get_coords(source, source + Vector2i.RIGHT, is_obstacle,
-            is_obstacle_args, true, false)
-    if coords.size() > sight_ranges.right:
-        __ = coords.resize(sight_ranges.right)
-    if coords.is_empty():
-        coord = source
-    else:
-        coord = coords.pop_back()
-    down_right.x = coord.x
+    if ConvertCoord.get_range(from_coord, to_coord) >= sight_range:
+        return true
+    return is_obstacle.call(from_coord, to_coord, is_obstacle_args)
 
-    for x: int in range(source.x - sight_ranges.half_width,
-            source.x + sight_ranges.half_width + 1):
+
+static func _set_fov_map(source: Vector2i, half_width: int, up_left: Vector2i,
+        down_right: Vector2i, out_fov_map: Dictionary) -> void:
+    var x_left: int = source.x - half_width
+    var x_right: int = source.x + half_width
+    var y_up: int = source.y - half_width
+    var y_down: int = source.y + half_width
+    var coord: Vector2i = Vector2i(0, 0)
+
+    for x: int in range(up_left.x, down_right.x + 1):
         for y: int in range(up_left.y, down_right.y + 1):
-            if Map2D.is_in_map(Vector2i(x, y), out_fov_map):
+            coord.x = x
+            coord.y = y
+            if (x >= x_left) and (x <= x_right) and Map2D.is_in_map(coord,
+                    out_fov_map):
                 out_fov_map[x][y] = true
-    for y: int in range(source.y - sight_ranges.half_width,
-            source.y + sight_ranges.half_width + 1):
-        for x: int in range(up_left.x, down_right.x + 1):
-            if Map2D.is_in_map(Vector2i(x, y), out_fov_map):
+            elif (y >= y_up) and (y <= y_down) and Map2D.is_in_map(coord,
+                    out_fov_map):
                 out_fov_map[x][y] = true
 
 
-class SightRanges:
+class FovData:
     var half_width: int:
         get:
             return _half_width

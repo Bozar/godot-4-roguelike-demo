@@ -13,13 +13,13 @@ const MEMORY_TAGS: Array = [
 var _fov_map: Dictionary
 var _memory_map: Dictionary
 var _pc: Sprite2D
-var _cross_fov_sight_ranges: CrossFov.SightRanges
+var _cross_fov_data: CrossFov.FovData
 
 
 func _ready() -> void:
     _fov_map = Map2D.init_map(false)
     _memory_map = Map2D.init_map(false)
-    _cross_fov_sight_ranges = CrossFov.SightRanges.new(
+    _cross_fov_data = CrossFov.FovData.new(
         GameData.CROSS_FOV_WIDTH,
         GameData.PC_AIM_RANGE,
         GameData.PC_AIM_RANGE,
@@ -35,8 +35,8 @@ func render_fov(is_aiming: bool) -> void:
     var pc_coord: Vector2i = ConvertCoord.get_coord(_pc)
 
     if is_aiming:
-        CrossFov.get_fov_map(pc_coord, _cross_fov_sight_ranges,
-                _block_cross_fov_ray, [], _fov_map)
+        CrossFov.get_fov_map(pc_coord, _cross_fov_data, _block_cross_fov_ray,
+                [], _fov_map)
     else:
         DiamondFov.get_fov_map(pc_coord, GameData.PC_SIGHT_RANGE, _fov_map)
     # DungeonSize.iterate_dungeon(_set_color, [_fov_map])
