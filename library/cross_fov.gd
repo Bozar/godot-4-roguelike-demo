@@ -2,9 +2,10 @@ class_name CrossFov
 
 
 # is_obstacle(from_coord: Vector2i, to_coord: Vector2i, opt_args: Array) -> bool
-static func get_fov_map(source: Vector2i, fov_data: FovData,
+static func get_fov_map(source: Vector2i, sight_range: int,
         is_obstacle: Callable, is_obstacle_args: Array,
-        out_fov_map: Dictionary) -> void:
+        out_fov_map: Dictionary, fov_data: FovData = FovData.new(0,
+        sight_range, sight_range, sight_range, sight_range)) -> void:
     var up_left: Vector2i = Vector2i(0, 0)
     var down_right: Vector2i = Vector2i(0, 0)
 
