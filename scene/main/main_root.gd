@@ -6,11 +6,14 @@ extends Node2D
 @onready var _ref_PlayerInput: PlayerInput = $PlayerInput
 @onready var _ref_Sidebar: CustomMarginContainer = $Sidebar
 @onready var _ref_Schedule: Schedule = $Schedule
+@onready var _ref_RandomNumber: RandomNumber = $RandomNumber
 
 
 func _ready() -> void:
     _connect_signals(SignalData.SIGNAL_CONNECTIONS)
 
+    # TODO: Get seed from user settings.
+    _ref_RandomNumber.set_initial_seed(0)
     _ref_InitWorld.create_world()
     _ref_PlayerInput.set_process_unhandled_input(true)
     _ref_Sidebar.init_gui()
