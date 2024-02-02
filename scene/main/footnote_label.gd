@@ -2,6 +2,28 @@ class_name FootnoteLabel
 extends CustomLabel
 
 
+const VERSION: String = "1.2.3"
+const HELP: String = "Help: C"
+
+
 func init_label() -> void:
     _set_font_color(false)
-    text = "1.2.3\nHelp: C\n123-456-789"
+    text = "%s\n%s\n%s" % [_get_version(), _get_help(), _get_seed()]
+
+
+func _get_version() -> String:
+    return VERSION
+
+
+func _get_help() -> String:
+    return HELP
+
+
+func _get_seed() -> String:
+    var str_seed: String = "%d" % RandomNumberHelper.get_seed()
+    var seed_length: int = str_seed.length()
+    var head: String = str_seed.substr(0, 3)
+    var body: String = ("-" + str_seed.substr(3, 3)) if seed_length > 2 else ""
+    var tail: String = ("-" + str_seed.substr(6)) if seed_length > 5 else ""
+
+    return "%s%s%s" % [head, body, tail]
