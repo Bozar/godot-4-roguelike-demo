@@ -24,6 +24,7 @@ SpriteFactory="*res://autoload/sprite_factory.gd"
 PcActionHelper="*res://autoload/pc_action_helper.gd"
 ScheduleHelper="*res://autoload/schedule_helper.gd"
 RandomNumberHelper="*res://autoload/random_number_helper.gd"
+ActorActionHelper="*res://autoload/actor_action_helper.gd"
 
 [debug]
 

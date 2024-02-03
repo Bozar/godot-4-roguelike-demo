@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=17 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_ed0ep"]
 [ext_resource type="Script" path="res://scene/main/player_input.gd" id="2_hj4ky"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scene/main/game_state_label.gd" id="10_mas04"]
 [ext_resource type="Script" path="res://scene/main/footnote_label.gd" id="11_xdhx6"]
 [ext_resource type="Script" path="res://scene/main/random_number.gd" id="15_6fnbo"]
+[ext_resource type="Script" path="res://scene/main/actor_action.gd" id="16_f0ejp"]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource("1_ed0ep")
@@ -71,3 +72,6 @@ script = ExtResource("11_xdhx6")
 
 [node name="RandomNumber" type="Node2D" parent="."]
 script = ExtResource("15_6fnbo")
+
+[node name="ActorAction" type="Node2D" parent="."]
+script = ExtResource("16_f0ejp")

@@ -8,9 +8,11 @@ const PC_ACTION: String = "PcAction"
 const SIDEBAR: String = "Sidebar"
 const SCHEDULE: String = "Schedule"
 const RANDOM_NUMBER: String = "RandomNumber"
+const ACTOR_ACTION: String = "ActorAction"
 
 const SEARCH_HELPER: String = "/root/SearchHelper"
 const PC_ACTION_HELPER: String = "/root/PcActionHelper"
+const ACTOR_ACTION_HELPER: String = "/root/ActorActionHelper"
 const MOVE_SPRITE: String = "/root/MoveSprite"
 const SPRITE_FACTORY: String = "/root/SpriteFactory"
 const SCHEDULE_HELPER: String = "/root/ScheduleHelper"
@@ -22,6 +24,7 @@ const SIGNAL_SEARCHING_BY_COORD_TAG: String = "searching_by_coord_tag"
 const SIGNAL_SEARCHING_BY_ID: String = "searching_by_id"
 
 const SIGNAL_SEARCHING_PC_ACTION: String = "searching_pc_action"
+const SIGNAL_SEARCHING_ACTOR_ACTION: String = "searching_actor_action"
 const SIGNAL_SEARCHING_RANDOM_NUMBER: String = "searching_random_number"
 
 const SIGNAL_SPRITE_CREATED: String = "sprite_created"
@@ -66,10 +69,10 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     },
     SPRITE_FACTORY: {
         SIGNAL_SPRITE_CREATED: [
-            SPRITE_ROOT, SPRITE_STATE, PC_ACTION, SCHEDULE,
+            SPRITE_ROOT, SPRITE_STATE, PC_ACTION, SCHEDULE, ACTOR_ACTION,
         ],
         SIGNAL_SPRITE_REMOVED: [
-            SPRITE_ROOT, SPRITE_STATE, SCHEDULE,
+            SPRITE_ROOT, SPRITE_STATE, SCHEDULE, ACTOR_ACTION,
         ],
     },
     PC_ACTION_HELPER: {
@@ -84,12 +87,17 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     },
     SCHEDULE: {
         SIGNAL_TURN_STARTED: [
-            PLAYER_INPUT, SIDEBAR, PC_ACTION,
+            PLAYER_INPUT, SIDEBAR, PC_ACTION, ACTOR_ACTION,
         ],
     },
     RANDOM_NUMBER_HELPER: {
         SIGNAL_SEARCHING_RANDOM_NUMBER: [
             RANDOM_NUMBER,
+        ],
+    },
+    ACTOR_ACTION_HELPER: {
+        SIGNAL_SEARCHING_ACTOR_ACTION: [
+            ACTOR_ACTION,
         ],
     },
 }

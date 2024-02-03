@@ -96,6 +96,7 @@ func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
         _kill_grunt(actor, target)
     else:
         MoveSprite.move(actor, target)
+        ActorActionHelper.hit_actor(actor)
     _subtract_progress_bar()
     ScheduleHelper.end_turn()
 
