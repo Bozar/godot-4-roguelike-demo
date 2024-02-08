@@ -2,22 +2,16 @@ class_name MainRoot
 extends Node2D
 
 
-@onready var _ref_InitWorld: InitWorld = $InitWorld
-@onready var _ref_PlayerInput: PlayerInput = $PlayerInput
-@onready var _ref_Sidebar: CustomMarginContainer = $Sidebar
-@onready var _ref_Schedule: Schedule = $Schedule
-@onready var _ref_RandomNumber: RandomNumber = $RandomNumber
-
-
 func _ready() -> void:
-    _connect_signals(SignalData.SIGNAL_CONNECTIONS)
+    _connect_signals(NodeReference.SIGNAL_CONNECTIONS)
+    _connect_nodes(NodeReference.NODE_CONNECTIONS)
 
     # TODO: Get seed from user settings.
-    _ref_RandomNumber.set_initial_seed(0)
-    _ref_InitWorld.create_world()
-    _ref_PlayerInput.set_process_unhandled_input(true)
-    _ref_Sidebar.init_gui()
-    _ref_Schedule.start_first_turn()
+    ($RandomNumber as RandomNumber).set_initial_seed(0)
+    ($InitWorld as InitWorld).create_world()
+    ($PlayerInput as PlayerInput).set_process_unhandled_input(true)
+    ($Sidebar as Sidebar).init_gui()
+    ($Schedule as Schedule).start_first_turn()
 
     VisualEffect.set_background_color()
     VisualEffect.set_indicator_color()
@@ -38,9 +32,21 @@ func _connect_signals(signal_connections: Dictionary) -> void:
             for target_node: String in target_nodes:
                 source_signal = get_node(source_node)[signal_name]
                 target_function = get_node(target_node)["_on_" +
-                        source_node.replace("/root/", "") + "_" + signal_name]
+                        Array(source_node.split("/")).pop_back() + "_" +
+                        signal_name]
 
                 if source_signal.connect(target_function) == \
                         ERR_INVALID_PARAMETER:
                     push_error("Signal error: %s -> %s, %s." %
                             [source_node, target_node, signal_name])
+
+
+func _connect_nodes(node_connections: Dictionary) -> void:
+    var source_reference: String
+    var target_nodes: Array
+
+    for source_node: String in node_connections.keys():
+        source_reference = "_ref_" + Array(source_node.split("/")).pop_back()
+        target_nodes = node_connections[source_node]
+        for target_node: String in target_nodes:
+            get_node(target_node)[source_reference] = get_node(source_node)

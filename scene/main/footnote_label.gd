@@ -6,6 +6,9 @@ const VERSION: String = "1.2.3"
 const HELP: String = "Help: C"
 
 
+var _ref_RandomNumber: RandomNumber
+
+
 func init_label() -> void:
     _set_font_color(false)
     text = "%s\n%s\n%s" % [_get_version(), _get_help(), _get_seed()]
@@ -20,7 +23,7 @@ func _get_help() -> String:
 
 
 func _get_seed() -> String:
-    var str_seed: String = "%d" % RandomNumberHelper.get_seed()
+    var str_seed: String = "%d" % _ref_RandomNumber.get_seed()
     var seed_length: int = str_seed.length()
     var head: String = str_seed.substr(0, 3)
     var body: String = ("-" + str_seed.substr(3, 3)) if seed_length > 2 else ""

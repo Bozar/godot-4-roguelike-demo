@@ -25,9 +25,3 @@ func set_initial_seed(input_seed: int) -> void:
         new_seed = _rng.randi()
     _rng.seed = new_seed
     print("Seed: %d" % new_seed)
-
-
-func _on_RandomNumberHelper_searching_random_number(search: SearchKeyword) \
-        -> void:
-    search.random_number = self
-    search.search_is_completed()

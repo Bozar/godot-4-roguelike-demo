@@ -31,21 +31,6 @@ var sprites: Array:
         if _search_is_completed:
             return
         sprites = value
-var pc_action: PcAction:
-    set(value):
-        if _search_is_completed:
-            return
-        pc_action = value
-var random_number: RandomNumber:
-    set(value):
-        if _search_is_completed:
-            return
-        random_number = value
-var actor_action: ActorAction:
-    set(value):
-        if _search_is_completed:
-            return
-        actor_action = value
 
 
 var _search_is_completed: bool = false

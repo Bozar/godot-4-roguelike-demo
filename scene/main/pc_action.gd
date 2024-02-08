@@ -17,6 +17,8 @@ var progress_bar: int:
         return _progress_bar
 
 
+var _ref_ActorAction: ActorAction
+
 var _pc: Sprite2D
 var _is_aiming: bool = false
 var _enemy_count: int = GameData.MIN_ENEMY_COUNT
@@ -35,11 +37,6 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
             _pc = i.sprite
             _ref_PcFov._pc = _pc
             break
-
-
-func _on_PcActionHelper_searching_pc_action(search: SearchKeyword) -> void:
-    search.pc_action = self
-    search.search_is_completed()
 
 
 func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
@@ -96,7 +93,7 @@ func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
         _kill_grunt(actor, target)
     else:
         MoveSprite.move(actor, target)
-        ActorActionHelper.hit_actor(actor)
+        _ref_ActorAction.hit_actor(actor)
     _subtract_progress_bar()
     ScheduleHelper.end_turn()
 

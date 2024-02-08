@@ -21,10 +21,7 @@ config/icon="res://resource/hammer_wrench.png"
 SearchHelper="*res://autoload/search_helper.gd"
 MoveSprite="*res://autoload/move_sprite.gd"
 SpriteFactory="*res://autoload/sprite_factory.gd"
-PcActionHelper="*res://autoload/pc_action_helper.gd"
 ScheduleHelper="*res://autoload/schedule_helper.gd"
-RandomNumberHelper="*res://autoload/random_number_helper.gd"
-ActorActionHelper="*res://autoload/actor_action_helper.gd"
 
 [debug]
 

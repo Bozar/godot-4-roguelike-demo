@@ -15,12 +15,6 @@ func hit_actor(sprite: Sprite2D) -> void:
     VisualEffect.switch_sprite(sprite, VisualTag.PASSIVE)
 
 
-func _on_ActorActionHelper_searching_actor_action(search: SearchKeyword) \
-        -> void:
-    search.actor_action = self
-    search.search_is_completed()
-
-
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
     var actor_state: ActorState = _get_actor_state(sprite)
     var actor_coord: Vector2i = ConvertCoord.get_coord(sprite)
