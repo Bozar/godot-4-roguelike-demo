@@ -60,11 +60,11 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
         _shoot(_pc, coord)
     elif not DungeonSize.is_in_dungeon(coord):
         return
-    elif SearchHelper.has_building_at_coord(coord):
+    elif SpriteStateHelper.has_building_at_coord(coord):
         return
-    elif SearchHelper.has_trap_at_coord(coord):
+    elif SpriteStateHelper.has_trap_at_coord(coord):
         _pick_ammo(coord)
-    elif SearchHelper.has_actor_at_coord(coord):
+    elif SpriteStateHelper.has_actor_at_coord(coord):
         _hit_back(_pc, coord)
     else:
         _move(_pc, coord)
@@ -76,7 +76,7 @@ func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
 
 
 func _pick_ammo(coord: Vector2i) -> void:
-    SpriteFactory.remove_sprite(SearchHelper.get_trap_by_coord(coord))
+    SpriteFactory.remove_sprite(SpriteStateHelper.get_trap_by_coord(coord))
     ammo += GameData.MAGAZINE
     _subtract_progress_bar()
     MoveSprite.move(_pc, coord)
@@ -87,7 +87,7 @@ func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
     var coords: Array = CastRay.get_coords(ConvertCoord.get_coord(pc), coord,
             _block_hit_ray, [], true, false)
     var target: Vector2i = coords.back()
-    var actor: Sprite2D = SearchHelper.get_actor_by_coord(coord)
+    var actor: Sprite2D = SpriteStateHelper.get_actor_by_coord(coord)
 
     if _is_impassable(target):
         target = coords[-2]
@@ -129,7 +129,7 @@ func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
 
     if not coords.is_empty():
         target = coords.back()
-        actor = SearchHelper.get_actor_by_coord(target)
+        actor = SpriteStateHelper.get_actor_by_coord(target)
         if actor != null:
             _kill_grunt(actor, target)
     ammo -= 1
@@ -141,9 +141,9 @@ func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
 func _is_impassable(coord: Vector2i) -> bool:
     if not DungeonSize.is_in_dungeon(coord):
         return true
-    elif SearchHelper.has_building_at_coord(coord):
+    elif SpriteStateHelper.has_building_at_coord(coord):
         return true
-    elif SearchHelper.has_actor_at_coord(coord):
+    elif SpriteStateHelper.has_actor_at_coord(coord):
         return true
     return false
 
@@ -157,8 +157,8 @@ func _block_hit_ray(from_coord: Vector2i, to_coord: Vector2i,
         _opt_args: Array) -> bool:
     var ray_length_squared: int = (from_coord - to_coord).length_squared()
 
-    if SearchHelper.has_trap_at_coord(to_coord):
-        SpriteFactory.remove_sprite(SearchHelper.get_trap_by_coord(to_coord))
+    if SpriteStateHelper.has_trap_at_coord(to_coord):
+        SpriteFactory.remove_sprite(SpriteStateHelper.get_trap_by_coord(to_coord))
 
     if ray_length_squared == 1:
         return false

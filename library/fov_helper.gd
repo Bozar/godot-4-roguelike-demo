@@ -9,17 +9,17 @@ static func is_in_sight(coord: Vector2i, fov_map: Dictionary) -> bool:
 
 static func set_color(coord: Vector2i, fov_map: Dictionary) -> void:
     if FovHelper.is_in_sight(coord, fov_map):
-        for i: Sprite2D in SearchHelper.get_sprites_by_coord(coord):
+        for i: Sprite2D in SpriteStateHelper.get_sprites_by_coord(coord):
             VisualEffect.set_light_color(i)
     else:
-        for i: Sprite2D in SearchHelper.get_sprites_by_coord(coord):
+        for i: Sprite2D in SpriteStateHelper.get_sprites_by_coord(coord):
             VisualEffect.set_dark_color(i)
 
 
 static func set_visibility(coord: Vector2i, fov_map: Dictionary,
         memory_map: Dictionary, memory_tags: Array) -> void:
     var column: Array = memory_map[coord.x]
-    var sprites: Array = SearchHelper.get_sprites_by_coord(coord)
+    var sprites: Array = SpriteStateHelper.get_sprites_by_coord(coord)
     var sprite: Sprite2D
 
     sprites.sort_custom(FovHelper._sort_by_z_index)

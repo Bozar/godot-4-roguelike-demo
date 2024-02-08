@@ -14,6 +14,27 @@ func _ready() -> void:
     _ref_DungeonBoard._is_valid_sprite = _is_valid_sprite
 
 
+func get_sprites_by_tag(main_tag: StringName, sub_tag: StringName) -> Array:
+    return _ref_SpriteTag.get_sprites_by_tag(main_tag, sub_tag)
+
+
+func get_sprite_by_coord(main_tag: StringName, coord: Vector2i, z_layer: int) \
+        -> Sprite2D:
+    return _ref_DungeonBoard.get_sprite_by_coord(main_tag, coord, z_layer)
+
+
+func get_sprites_by_coord(coord: Vector2i) -> Array:
+    return _ref_DungeonBoard.get_sprites_by_coord(coord)
+
+
+func get_main_tag(sprite: Sprite2D) -> StringName:
+    return _ref_SpriteTag.get_main_tag(sprite)
+
+
+func get_sub_tag(sprite: Sprite2D) -> StringName:
+    return _ref_SpriteTag.get_sub_tag(sprite)
+
+
 func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
     for ts: TaggedSprite in sprites:
         _ref_SpriteTag.add_state(ts.sprite, ts.main_tag, ts.sub_tag)
@@ -34,29 +55,6 @@ func _on_SpriteFactory_sprite_removed(sprites: Array[Sprite2D]) -> void:
 
         _ref_SpriteTag.remove_state(i)
         _ref_DungeonBoard.remove_state(i, main_tag)
-
-
-func _on_SearchHelper_searching_by_tag(search: SearchKeyword) -> void:
-    search.sprites = _ref_SpriteTag.get_sprites_by_tag(search.main_tag,
-            search.sub_tag)
-    search.search_is_completed()
-
-
-func _on_SearchHelper_searching_by_coord(search: SearchKeyword) -> void:
-    search.sprites = _ref_DungeonBoard.get_sprites_by_coord(search.coord)
-    search.search_is_completed()
-
-
-func _on_SearchHelper_searching_by_coord_tag(search: SearchKeyword) -> void:
-    search.sprite = _ref_DungeonBoard.get_sprite_by_coord(search.main_tag,
-            search.coord, search.z_layer)
-    search.search_is_completed()
-
-
-func _on_SearchHelper_searching_by_id(search: SearchKeyword) -> void:
-    search.main_tag = _ref_SpriteTag.get_main_tag(search.sprite)
-    search.sub_tag = _ref_SpriteTag.get_sub_tag(search.sprite)
-    search.search_is_completed()
 
 
 func _on_MoveSprite_sprite_moved(sprite: Sprite2D, coord: Vector2i,

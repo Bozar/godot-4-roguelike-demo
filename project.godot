@@ -18,9 +18,9 @@ config/icon="res://resource/hammer_wrench.png"
 
 [autoload]
 
-SearchHelper="*res://autoload/search_helper.gd"
 MoveSprite="*res://autoload/move_sprite.gd"
 SpriteFactory="*res://autoload/sprite_factory.gd"
+SpriteStateHelper="*res://autoload/sprite_state_helper.gd"
 
 [debug]
 

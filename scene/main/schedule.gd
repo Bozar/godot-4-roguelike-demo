@@ -11,7 +11,7 @@ var _next_id: int
 
 
 func start_first_turn() -> void:
-    var pc_sprite: Sprite2D = SearchHelper.get_sprites_by_tag("", SubTag.PC)[0]
+    var pc_sprite: Sprite2D = SpriteStateHelper.get_sprites_by_tag("", SubTag.PC)[0]
     var pc_id: int = pc_sprite.get_instance_id()
     _next_id = pc_id
     _anchor_id = pc_id

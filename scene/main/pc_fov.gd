@@ -73,6 +73,6 @@ func _set_visibility(coord: Vector2i, args: Array) -> void:
 func _block_cross_fov_ray(_pc_coord: Vector2i, coord: Vector2i, _args: Array) \
         -> bool:
     if DungeonSize.is_in_dungeon(coord):
-        return SearchHelper.has_building_at_coord(coord) \
-                or SearchHelper.has_actor_at_coord(coord)
+        return SpriteStateHelper.has_building_at_coord(coord) \
+                or SpriteStateHelper.has_actor_at_coord(coord)
     return true
