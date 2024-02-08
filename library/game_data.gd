@@ -18,3 +18,5 @@ const PC_AIM_RANGE: int = 7
 const CROSS_FOV_WIDTH: int = 0
 
 const HIT_DAMAGE: int = 2
+
+const NPC_SIGHT_RANGE: int = 10
