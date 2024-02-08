@@ -18,6 +18,7 @@ var progress_bar: int:
 
 
 var _ref_ActorAction: ActorAction
+var _ref_Schedule: Schedule
 
 var _pc: Sprite2D
 var _is_aiming: bool = false
@@ -79,7 +80,7 @@ func _pick_ammo(coord: Vector2i) -> void:
     ammo += GameData.MAGAZINE
     _subtract_progress_bar()
     MoveSprite.move(_pc, coord)
-    ScheduleHelper.end_turn()
+    _ref_Schedule.start_next_turn()
 
 
 func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
@@ -95,13 +96,13 @@ func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
         MoveSprite.move(actor, target)
         _ref_ActorAction.hit_actor(actor)
     _subtract_progress_bar()
-    ScheduleHelper.end_turn()
+    _ref_Schedule.start_next_turn()
 
 
 func _move(pc: Sprite2D, coord: Vector2i) -> void:
     _subtract_progress_bar()
     MoveSprite.move(pc, coord)
-    ScheduleHelper.end_turn()
+    _ref_Schedule.start_next_turn()
 
 
 func _aim(pc: Sprite2D) -> void:
@@ -134,7 +135,7 @@ func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
     ammo -= 1
     _aim(pc)
     _subtract_progress_bar()
-    ScheduleHelper.end_turn()
+    _ref_Schedule.start_next_turn()
 
 
 func _is_impassable(coord: Vector2i) -> bool:

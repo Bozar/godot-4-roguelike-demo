@@ -15,7 +15,6 @@ const GAME_STATE_LABEL: String = "Sidebar/SidebarVBox/GameStateLabel"
 const SEARCH_HELPER: String = "/root/SearchHelper"
 const MOVE_SPRITE: String = "/root/MoveSprite"
 const SPRITE_FACTORY: String = "/root/SpriteFactory"
-const SCHEDULE_HELPER: String = "/root/ScheduleHelper"
 
 const SIGNAL_SEARCHING_BY_TAG: String = "searching_by_tag"
 const SIGNAL_SEARCHING_BY_COORD: String = "searching_by_coord"
@@ -46,6 +45,9 @@ const NODE_CONNECTIONS: Dictionary = {
     ],
     PC_ACTION: [
         GAME_STATE_LABEL,
+    ],
+    SCHEDULE: [
+        PC_ACTION, PLAYER_INPUT,
     ],
 }
 
@@ -85,11 +87,6 @@ const SIGNAL_CONNECTIONS: Dictionary = {
         ],
         SIGNAL_SPRITE_REMOVED: [
             SPRITE_ROOT, SPRITE_STATE, SCHEDULE, ACTOR_ACTION,
-        ],
-    },
-    SCHEDULE_HELPER: {
-        SIGNAL_TURN_ENDED: [
-            SCHEDULE,
         ],
     },
     SCHEDULE: {
