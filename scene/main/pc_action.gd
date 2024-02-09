@@ -62,10 +62,12 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
         return
     elif SpriteStateHelper.has_building_at_coord(coord):
         return
-    elif SpriteStateHelper.has_trap_at_coord(coord):
-        _pick_ammo(coord)
+    # If there is a trap under an actor, hit back the actor rather than pick up
+    # the ammo.
     elif SpriteStateHelper.has_actor_at_coord(coord):
         _hit_back(_pc, coord)
+    elif SpriteStateHelper.has_trap_at_coord(coord):
+        _pick_ammo(coord)
     else:
         _move(_pc, coord)
 
