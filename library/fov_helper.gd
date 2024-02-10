@@ -2,7 +2,7 @@ class_name FovHelper
 
 
 static func is_in_sight(coord: Vector2i, fov_map: Dictionary) -> bool:
-    if Map2D.is_in_map(coord, fov_map):
+    if Map2D.is_in_map(fov_map, coord):
         return fov_map[coord.x][coord.y]
     return false
 

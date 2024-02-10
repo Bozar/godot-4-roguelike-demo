@@ -9,7 +9,7 @@ static func get_fov_map(source: Vector2i, sight_range: int, half_width: int,
     var up_left: Vector2i = Vector2i(0, 0)
     var down_right: Vector2i = Vector2i(0, 0)
 
-    Map2D.reset_map(false, out_fov_map)
+    Map2D.reset_map(out_fov_map, false)
 
     up_left.y = _get_end_point(source, Vector2i.UP, fov_data.up,
             is_obstacle, is_obstacle_args).y
@@ -60,11 +60,11 @@ static func _set_fov_map(source: Vector2i, half_width: int, up_left: Vector2i,
         for y: int in range(up_left.y, down_right.y + 1):
             coord.x = x
             coord.y = y
-            if (x >= x_left) and (x <= x_right) and Map2D.is_in_map(coord,
-                    out_fov_map):
+            if (x >= x_left) and (x <= x_right) and Map2D.is_in_map(out_fov_map,
+                    coord):
                 out_fov_map[x][y] = true
-            elif (y >= y_up) and (y <= y_down) and Map2D.is_in_map(coord,
-                    out_fov_map):
+            elif (y >= y_up) and (y <= y_down) and Map2D.is_in_map(out_fov_map,
+                    coord):
                 out_fov_map[x][y] = true
 
 

@@ -40,7 +40,7 @@ static var _fov_data: FovData = FovData.new()
 static func get_fov_map(source: Vector2i, sight_range: int,
         is_obstacle: Callable, is_obstacle_args: Array, out_fov_map: Dictionary,
         fov_data: FovData = ShadowCastFov._fov_data) -> void:
-    Map2D.reset_map(false, out_fov_map)
+    Map2D.reset_map(out_fov_map, false)
     out_fov_map[source.x][source.y] = true
 
     for i: StringName in OCTANT_NAMES:
@@ -73,7 +73,7 @@ static func _set_octant_map(source: Vector2i, sight_range: int,
             coord = ShadowCastFov._convert_coord(source, x, y, octant_name)
             # coord.x = source.x + x
             # coord.y = source.y + y
-            if not Map2D.is_in_map(coord, out_fov_map):
+            if not Map2D.is_in_map(out_fov_map, coord):
                 continue
             # The current row or column is always visible.
             out_fov_map[coord.x][coord.y] = true
