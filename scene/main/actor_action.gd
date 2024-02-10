@@ -2,8 +2,12 @@ class_name ActorAction
 extends Node2D
 
 
+var _ref_Schedule: Schedule
+var _ref_RandomNumber: RandomNumber
+
 var _pc: Sprite2D
 var _actor_states: Dictionary = {}
+var _map_2d: Dictionary = Map2D.init_map(DijkstraPathfinding.UNKNOWN)
 
 
 func hit_actor(sprite: Sprite2D) -> void:
@@ -28,6 +32,7 @@ func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
         VisualEffect.switch_sprite(sprite, VisualTag.DEFAULT)
     actor_state.hit_damage -= 1
     if actor_state.hit_damage > 0:
+        _ref_Schedule.start_next_turn()
         return
 
     # TODO: Boss can always see PC.
@@ -37,6 +42,8 @@ func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
     elif distanct_to_pc <= GameData.NPC_SIGHT_RANGE:
         _approach_pc(sprite, pc_coord)
     # TODO: Move towards gunshot location.
+    _ref_Schedule.start_next_turn()
+    return
 
 
 func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
@@ -82,5 +89,31 @@ func _hit_pc() -> void:
 
 
 func _approach_pc(sprite: Sprite2D, pc_coord: Vector2i) -> void:
-    print("Approach: %s, %s." % [sprite.name, pc_coord])
-    pass
+    var npc_coord: Vector2i = ConvertCoord.get_coord(sprite)
+    var end_point: Array = [pc_coord]
+    var target_coords: Array
+    var move_to: Vector2i
+    var trap: Sprite2D
+
+    DijkstraPathfinding.set_obstacle_map(_map_2d, _is_obstacle, [])
+
+    _map_2d[pc_coord.x][pc_coord.y] = DijkstraPathfinding.DESTINATION
+    DijkstraPathfinding.set_distance_map(_map_2d, end_point)
+
+    target_coords = DijkstraPathfinding.get_coords(_map_2d, npc_coord, 1)
+    if target_coords.is_empty():
+        return
+
+    if target_coords.size() > 1:
+        ArrayHelper.shuffle(target_coords, _ref_RandomNumber)
+    move_to = target_coords[0]
+    MoveSprite.move(sprite, move_to)
+
+    trap = SpriteStateHelper.get_trap_by_coord(move_to)
+    if trap != null:
+        SpriteFactory.remove_sprite(trap)
+
+
+func _is_obstacle(coord: Vector2i, _opt_args: Array) -> bool:
+    return SpriteStateHelper.has_building_at_coord(coord) or \
+            SpriteStateHelper.has_actor_at_coord(coord)

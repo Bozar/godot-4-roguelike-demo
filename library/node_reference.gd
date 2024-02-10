@@ -32,13 +32,13 @@ const NODE_CONNECTIONS: Dictionary = {
         PC_ACTION,
     ],
     RANDOM_NUMBER: [
-        FOOTNOTE_LABEL,
+        FOOTNOTE_LABEL, ACTOR_ACTION,
     ],
     PC_ACTION: [
         GAME_STATE_LABEL,
     ],
     SCHEDULE: [
-        PC_ACTION, PLAYER_INPUT,
+        PC_ACTION, ACTOR_ACTION,
     ],
     SPRITE_STATE: [
         SEARCH_HELPER,

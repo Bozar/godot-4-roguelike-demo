@@ -5,9 +5,6 @@ extends Node2D
 signal action_pressed(input_tag: InputTag)
 
 
-var _ref_Schedule: Schedule
-
-
 func _ready() -> void:
     set_process_unhandled_input(false)
 
@@ -23,9 +20,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
     set_process_unhandled_input(sprite.is_in_group(SubTag.PC))
-    # TODO: Let NpcAction node call this function.
-    if not sprite.is_in_group(SubTag.PC):
-        _ref_Schedule.start_next_turn()
 
 
 func _is_move_input(event: InputEvent, out_input_tag: Array) -> bool:
