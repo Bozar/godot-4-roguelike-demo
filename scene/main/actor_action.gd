@@ -4,6 +4,7 @@ extends Node2D
 
 var _ref_Schedule: Schedule
 var _ref_RandomNumber: RandomNumber
+var _ref_PcAction: PcAction
 
 var _pc: Sprite2D
 var _actor_states: Dictionary = {}
@@ -41,7 +42,8 @@ func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
         _hit_pc()
     elif distanct_to_pc <= GameData.NPC_SIGHT_RANGE:
         _approach_pc(sprite, pc_coord)
-    # TODO: Move towards gunshot location.
+    elif _ref_PcAction.alert_duration > 0:
+        _approach_pc(sprite, _ref_PcAction.alert_coord)
     _ref_Schedule.start_next_turn()
     return
 
@@ -63,7 +65,7 @@ func _on_SpriteFactory_sprite_removed(sprites: Array[Sprite2D]) -> void:
     var id: int
 
     for i: Sprite2D in sprites:
-        if not i.is_in_group(MainTag.ACTOR):
+        if not _is_npc(i):
             continue
         id = i.get_instance_id()
         if not _actor_states.erase(id):
@@ -71,7 +73,7 @@ func _on_SpriteFactory_sprite_removed(sprites: Array[Sprite2D]) -> void:
 
 
 func _get_actor_state(sprite: Sprite2D) -> ActorState:
-    if (not sprite.is_in_group(MainTag.ACTOR)) or sprite.is_in_group(SubTag.PC):
+    if not _is_npc(sprite):
         return
 
     var id: int = sprite.get_instance_id()
@@ -117,3 +119,8 @@ func _approach_pc(sprite: Sprite2D, pc_coord: Vector2i) -> void:
 func _is_obstacle(coord: Vector2i, _opt_args: Array) -> bool:
     return SpriteStateHelper.has_building_at_coord(coord) or \
             SpriteStateHelper.has_actor_at_coord(coord)
+
+
+func _is_npc(sprite: Sprite2D) -> bool:
+    return sprite.is_in_group(MainTag.ACTOR) and \
+            (not sprite.is_in_group(SubTag.PC))

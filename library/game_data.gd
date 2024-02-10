@@ -20,3 +20,4 @@ const CROSS_FOV_WIDTH: int = 0
 const HIT_DAMAGE: int = 2
 
 const NPC_SIGHT_RANGE: int = 10
+const MAX_ALERT_DURATION: int = 5

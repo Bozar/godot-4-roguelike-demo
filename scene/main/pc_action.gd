@@ -3,8 +3,8 @@ extends Node2D
 
 
 var ammo: int:
-    set(value):
-        ammo = max(min(value, GameData.MAX_AMMO), GameData.MIN_AMMO)
+    get:
+        return _ammo
 
 
 var enemy_count: int:
@@ -17,19 +17,28 @@ var progress_bar: int:
         return _progress_bar
 
 
+var alert_duration: int:
+    get:
+        return _alert_duration
+
+
+var alert_coord: Vector2i:
+    get:
+        return _alert_coord
+
+
 var _ref_ActorAction: ActorAction
 var _ref_Schedule: Schedule
 
 var _pc: Sprite2D
 var _is_aiming: bool = false
+var _ammo: int = GameData.MIN_AMMO
 var _enemy_count: int = GameData.MIN_ENEMY_COUNT
 var _progress_bar: int = GameData.MIN_PROGRESS_BAR
+var _alert_duration: int = 0
+var _alert_coord: Vector2i
 
 @onready var _ref_PcFov: PcFov = $PcFov
-
-
-func _ready() -> void:
-    ammo = GameData.MIN_AMMO
 
 
 func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
@@ -73,16 +82,17 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
 
 
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
-    if sprite.is_in_group(SubTag.PC):
-        _ref_PcFov.render_fov(_is_aiming)
+    if not sprite.is_in_group(SubTag.PC):
+        return
+    _ref_PcFov.render_fov(_is_aiming)
+    _alert_duration = max(0, _alert_duration - 1)
 
 
 func _pick_ammo(coord: Vector2i) -> void:
     SpriteFactory.remove_sprite(SpriteStateHelper.get_trap_by_coord(coord))
-    ammo += GameData.MAGAZINE
-    _subtract_progress_bar()
+    _ammo = _get_valid_ammo(_ammo + GameData.MAGAZINE)
     MoveSprite.move(_pc, coord)
-    _ref_Schedule.start_next_turn()
+    _end_turn()
 
 
 func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
@@ -97,14 +107,12 @@ func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
     else:
         MoveSprite.move(actor, target)
         _ref_ActorAction.hit_actor(actor)
-    _subtract_progress_bar()
-    _ref_Schedule.start_next_turn()
+    _end_turn()
 
 
 func _move(pc: Sprite2D, coord: Vector2i) -> void:
-    _subtract_progress_bar()
     MoveSprite.move(pc, coord)
-    _ref_Schedule.start_next_turn()
+    _end_turn()
 
 
 func _aim(pc: Sprite2D) -> void:
@@ -134,10 +142,10 @@ func _shoot(pc: Sprite2D, coord: Vector2i) -> void:
         actor = SpriteStateHelper.get_actor_by_coord(target)
         if actor != null:
             _kill_grunt(actor, target)
-    ammo -= 1
+    _ammo = _get_valid_ammo(_ammo - 1)
+    _alert_npc(pc)
     _aim(pc)
-    _subtract_progress_bar()
-    _ref_Schedule.start_next_turn()
+    _end_turn()
 
 
 func _is_impassable(coord: Vector2i) -> bool:
@@ -187,3 +195,17 @@ func _subtract_progress_bar() -> void:
         _enemy_count = max(enemy_count - 1, GameData.MIN_ENEMY_COUNT)
         if _enemy_count > GameData.MIN_ENEMY_COUNT:
             _progress_bar = GameData.MAX_PROGRES_BAR
+
+
+func _end_turn() -> void:
+    _subtract_progress_bar()
+    _ref_Schedule.start_next_turn()
+
+
+func _alert_npc(pc: Sprite2D) -> void:
+    _alert_duration = GameData.MAX_ALERT_DURATION
+    _alert_coord = ConvertCoord.get_coord(pc)
+
+
+func _get_valid_ammo(new_ammo: int) -> int:
+    return max(min(new_ammo, GameData.MAX_AMMO), GameData.MIN_AMMO)

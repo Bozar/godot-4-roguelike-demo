@@ -35,7 +35,7 @@ const NODE_CONNECTIONS: Dictionary = {
         FOOTNOTE_LABEL, ACTOR_ACTION,
     ],
     PC_ACTION: [
-        GAME_STATE_LABEL,
+        GAME_STATE_LABEL, ACTOR_ACTION,
     ],
     SCHEDULE: [
         PC_ACTION, ACTOR_ACTION,
