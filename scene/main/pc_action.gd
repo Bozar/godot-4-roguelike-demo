@@ -29,6 +29,7 @@ var alert_coord: Vector2i:
 
 var _ref_ActorAction: ActorAction
 var _ref_Schedule: Schedule
+var _ref_SpriteState: SpriteState
 
 var _pc: Sprite2D
 var _is_aiming: bool = false
@@ -91,7 +92,7 @@ func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
 func _pick_ammo(coord: Vector2i) -> void:
     SpriteFactory.remove_sprite(SpriteStateHelper.get_trap_by_coord(coord))
     _ammo = _get_valid_ammo(_ammo + GameData.MAGAZINE)
-    MoveSprite.move(_pc, coord)
+    _ref_SpriteState.move_sprite(_pc, coord)
     _end_turn()
 
 
@@ -105,13 +106,13 @@ func _hit_back(pc: Sprite2D, coord: Vector2i) -> void:
         target = coords[-2]
         _kill_grunt(actor, target)
     else:
-        MoveSprite.move(actor, target)
+        _ref_SpriteState.move_sprite(actor, target)
         _ref_ActorAction.hit_actor(actor)
     _end_turn()
 
 
 func _move(pc: Sprite2D, coord: Vector2i) -> void:
-    MoveSprite.move(pc, coord)
+    _ref_SpriteState.move_sprite(pc, coord)
     _end_turn()
 
 

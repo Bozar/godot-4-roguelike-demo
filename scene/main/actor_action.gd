@@ -5,6 +5,7 @@ extends Node2D
 var _ref_Schedule: Schedule
 var _ref_RandomNumber: RandomNumber
 var _ref_PcAction: PcAction
+var _ref_SpriteState: SpriteState
 
 var _pc: Sprite2D
 var _actor_states: Dictionary = {}
@@ -109,7 +110,7 @@ func _approach_pc(sprite: Sprite2D, pc_coord: Vector2i) -> void:
     if target_coords.size() > 1:
         ArrayHelper.shuffle(target_coords, _ref_RandomNumber)
     move_to = target_coords[0]
-    MoveSprite.move(sprite, move_to)
+    _ref_SpriteState.move_sprite(sprite, move_to)
 
     trap = SpriteStateHelper.get_trap_by_coord(move_to)
     if trap != null:

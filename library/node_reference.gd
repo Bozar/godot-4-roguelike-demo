@@ -13,7 +13,6 @@ const FOOTNOTE_LABEL: String = "Sidebar/SidebarVBox/FootnoteLabel"
 const GAME_STATE_LABEL: String = "Sidebar/SidebarVBox/GameStateLabel"
 
 const SEARCH_HELPER: String = "/root/SpriteStateHelper"
-const MOVE_SPRITE: String = "/root/MoveSprite"
 const SPRITE_FACTORY: String = "/root/SpriteFactory"
 
 const SIGNAL_SPRITE_CREATED: String = "sprite_created"
@@ -41,7 +40,7 @@ const NODE_CONNECTIONS: Dictionary = {
         PC_ACTION, ACTOR_ACTION,
     ],
     SPRITE_STATE: [
-        SEARCH_HELPER,
+        SEARCH_HELPER, PC_ACTION, ACTOR_ACTION,
     ],
 }
 
@@ -51,14 +50,6 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     PLAYER_INPUT: {
         SIGNAL_ACTION_PRESSED: [
             PC_ACTION,
-        ],
-    },
-    MOVE_SPRITE: {
-        SIGNAL_SPRITE_MOVED: [
-            SPRITE_STATE,
-        ],
-        SIGNAL_SPRITE_SWAPPED: [
-            SPRITE_STATE,
         ],
     },
     SPRITE_FACTORY: {
