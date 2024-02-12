@@ -9,6 +9,7 @@ const SIDEBAR: String = "Sidebar"
 const SCHEDULE: String = "Schedule"
 const RANDOM_NUMBER: String = "RandomNumber"
 const ACTOR_ACTION: String = "ActorAction"
+const GAME_PROGRESS: String = "GameProgress"
 const FOOTNOTE_LABEL: String = "Sidebar/SidebarVBox/FootnoteLabel"
 const GAME_STATE_LABEL: String = "Sidebar/SidebarVBox/GameStateLabel"
 
@@ -21,6 +22,7 @@ const SIGNAL_SPRITE_REMOVED: String = "sprite_removed"
 const SIGNAL_SPRITE_MOVED: String = "sprite_moved"
 const SIGNAL_SPRITE_SWAPPED: String = "sprite_swapped"
 const SIGNAL_ACTION_PRESSED: String = "action_pressed"
+const SIGNAL_GAME_OVER: String = "game_over"
 
 const SIGNAL_TURN_STARTED: String = "turn_started"
 
@@ -41,6 +43,9 @@ const NODE_CONNECTIONS: Dictionary = {
     ],
     SPRITE_STATE: [
         SEARCH_HELPER, PC_ACTION, ACTOR_ACTION,
+    ],
+    GAME_PROGRESS: [
+        PC_ACTION, ACTOR_ACTION,
     ],
 }
 
@@ -63,6 +68,11 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     SCHEDULE: {
         SIGNAL_TURN_STARTED: [
             PLAYER_INPUT, SIDEBAR, PC_ACTION, ACTOR_ACTION,
+        ],
+    },
+    GAME_PROGRESS: {
+        SIGNAL_GAME_OVER: [
+            SCHEDULE, PC_ACTION, PLAYER_INPUT, SIDEBAR,
         ],
     },
 }

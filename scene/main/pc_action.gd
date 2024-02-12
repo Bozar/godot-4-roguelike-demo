@@ -30,6 +30,7 @@ var alert_coord: Vector2i:
 var _ref_ActorAction: ActorAction
 var _ref_Schedule: Schedule
 var _ref_SpriteState: SpriteState
+var _ref_GameProgress: GameProgress
 
 var _pc: Sprite2D
 var _is_aiming: bool = false
@@ -87,6 +88,12 @@ func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
         return
     _ref_PcFov.render_fov(_is_aiming)
     _alert_duration = max(0, _alert_duration - 1)
+
+
+func _on_GameProgress_game_over(player_win: bool) -> void:
+    _ref_PcFov.render_fov(_is_aiming)
+    if not player_win:
+        VisualEffect.set_dark_color(_pc)
 
 
 func _pick_ammo(coord: Vector2i) -> void:

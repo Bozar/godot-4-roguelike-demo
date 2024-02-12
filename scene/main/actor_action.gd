@@ -6,6 +6,7 @@ var _ref_Schedule: Schedule
 var _ref_RandomNumber: RandomNumber
 var _ref_PcAction: PcAction
 var _ref_SpriteState: SpriteState
+var _ref_GameProgress: GameProgress
 
 var _pc: Sprite2D
 var _actor_states: Dictionary = {}
@@ -86,9 +87,7 @@ func _get_actor_state(sprite: Sprite2D) -> ActorState:
 
 
 func _hit_pc() -> void:
-    # TODO: End game.
-    print("hit")
-    pass
+    _ref_GameProgress.game_over.emit(false)
 
 
 func _approach_pc(sprite: Sprite2D, pc_coord: Vector2i) -> void:

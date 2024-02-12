@@ -8,10 +8,12 @@ signal turn_started(sprite: Sprite2D)
 var _linked_sprites: Dictionary = {}
 var _anchor_id: int
 var _next_id: int
+var _game_over: bool = false
 
 
 func start_first_turn() -> void:
-    var pc_sprite: Sprite2D = SpriteStateHelper.get_sprites_by_tag("", SubTag.PC)[0]
+    var pc_sprite: Sprite2D = SpriteStateHelper.get_sprites_by_tag("",
+            SubTag.PC)[0]
     var pc_id: int = pc_sprite.get_instance_id()
     _next_id = pc_id
     _anchor_id = pc_id
@@ -19,6 +21,8 @@ func start_first_turn() -> void:
 
 
 func start_next_turn() -> void:
+    if _game_over:
+        return
     turn_started.emit(_point_to_next_sprite())
 
 
@@ -42,6 +46,10 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
 func _on_SpriteFactory_sprite_removed(sprites: Array[Sprite2D]) -> void:
     for i: Sprite2D in sprites:
         _remove_linked_sprite(i)
+
+
+func _on_GameProgress_game_over(_player_win: bool) -> void:
+    _game_over = true
 
 
 func _insert_linked_sprite(new_sprite: Sprite2D, before_this: Sprite2D = null) \
