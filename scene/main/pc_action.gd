@@ -207,7 +207,10 @@ func _subtract_progress_bar() -> void:
 
 func _end_turn() -> void:
     _subtract_progress_bar()
-    _ref_Schedule.start_next_turn()
+    if _enemy_count >= GameData.MAX_ENEMY_COUNT:
+        _ref_GameProgress.game_over.emit(true)
+    else:
+        _ref_Schedule.start_next_turn()
 
 
 func _alert_npc(pc: Sprite2D) -> void:

@@ -2,8 +2,8 @@ class_name GameStateLabel
 extends CustomLabel
 
 
-const YOU_WIN: String = "You win."
-const YOU_LOSE: String = "You lose."
+const YOU_WIN: String = "\n\nYou win.\n[Space]"
+const YOU_LOSE: String = "\n\nYou lose.\n[Space]"
 
 
 var game_over: bool = false
@@ -20,11 +20,11 @@ func init_label() -> void:
 
 func update_label() -> void:
     var ammo: String = "Ammo: %d" % [_ref_PcAction.ammo]
-    var enemy: String = "Enemy: %d-%d" % [_ref_PcAction.enemy_count,
+    var enemy: String = "\nEnemy: %d-%d" % [_ref_PcAction.enemy_count,
             _ref_PcAction.progress_bar]
     var end_game: String = ""
 
     if game_over:
-        end_game = "\n\n" + (YOU_WIN if player_win else YOU_LOSE)
+        end_game = YOU_WIN if player_win else YOU_LOSE
 
-    text = "%s\n%s%s" % [ammo, enemy, end_game]
+    text = "%s%s%s" % [ammo, enemy, end_game]
