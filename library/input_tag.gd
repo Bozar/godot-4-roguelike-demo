@@ -7,6 +7,7 @@ const MOVE_UP: StringName = &"move_up"
 const MOVE_DOWN: StringName = &"move_down"
 
 const AIM: StringName = &"aim"
+const START_GAME: StringName = &"start_game"
 
 
 const MOVE_INPUTS: Array[StringName] = [

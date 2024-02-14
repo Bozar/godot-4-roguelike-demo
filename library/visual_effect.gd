@@ -22,15 +22,6 @@ static func set_background_color() -> void:
             MainTag.BACKGROUND, true))
 
 
-static func set_indicator_color() -> void:
-    # TODO: Get palette from GameSetting node.
-    var palette: Dictionary = {}
-    var main_tag: StringName = MainTag.INDICATOR
-
-    for i: Sprite2D in SpriteStateHelper.get_sprites_by_tag(main_tag, ""):
-        i.modulate = Palette.get_color(palette, main_tag, true)
-
-
 static func switch_sprite(sprite: Sprite2D, visual_tag: StringName) -> void:
     var has_switched: bool = false
 

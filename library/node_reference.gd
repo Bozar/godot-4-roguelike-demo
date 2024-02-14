@@ -10,6 +10,8 @@ const SCHEDULE: String = "Schedule"
 const RANDOM_NUMBER: String = "RandomNumber"
 const ACTOR_ACTION: String = "ActorAction"
 const GAME_PROGRESS: String = "GameProgress"
+const NEW_GAME: String = "NewGame"
+const INIT_WORLD: String = "InitWorld"
 const FOOTNOTE_LABEL: String = "Sidebar/SidebarVBox/FootnoteLabel"
 const GAME_STATE_LABEL: String = "Sidebar/SidebarVBox/GameStateLabel"
 
@@ -33,19 +35,28 @@ const NODE_CONNECTIONS: Dictionary = {
         PC_ACTION,
     ],
     RANDOM_NUMBER: [
-        FOOTNOTE_LABEL, ACTOR_ACTION,
+        FOOTNOTE_LABEL, ACTOR_ACTION, NEW_GAME,
     ],
     PC_ACTION: [
         GAME_STATE_LABEL, ACTOR_ACTION,
     ],
     SCHEDULE: [
-        PC_ACTION, ACTOR_ACTION,
+        PC_ACTION, ACTOR_ACTION, NEW_GAME,
     ],
     SPRITE_STATE: [
         SEARCH_HELPER, PC_ACTION, ACTOR_ACTION,
     ],
     GAME_PROGRESS: [
         PC_ACTION, ACTOR_ACTION,
+    ],
+    NEW_GAME: [
+        PLAYER_INPUT,
+    ],
+    INIT_WORLD: [
+        NEW_GAME,
+    ],
+    SIDEBAR: [
+        NEW_GAME,
     ],
 }
 

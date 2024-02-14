@@ -6,16 +6,6 @@ func _ready() -> void:
     _connect_signals(NodeReference.SIGNAL_CONNECTIONS)
     _connect_nodes(NodeReference.NODE_CONNECTIONS)
 
-    # TODO: Get seed from user settings.
-    ($RandomNumber as RandomNumber).set_initial_seed(0)
-    ($InitWorld as InitWorld).create_world()
-    ($PlayerInput as PlayerInput).set_process_unhandled_input(true)
-    ($Sidebar as Sidebar).init_gui()
-    ($Schedule as Schedule).start_first_turn()
-
-    VisualEffect.set_background_color()
-    VisualEffect.set_indicator_color()
-
 
 func _connect_signals(signal_connections: Dictionary) -> void:
     var signals_from_one_node: Dictionary
