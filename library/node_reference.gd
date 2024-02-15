@@ -12,6 +12,7 @@ const ACTOR_ACTION: String = "ActorAction"
 const GAME_PROGRESS: String = "GameProgress"
 const NEW_GAME: String = "NewGame"
 const INIT_WORLD: String = "InitWorld"
+const SPLASH_SCREEN: String = "SplashScreen"
 const FOOTNOTE_LABEL: String = "Sidebar/SidebarVBox/FootnoteLabel"
 const GAME_STATE_LABEL: String = "Sidebar/SidebarVBox/GameStateLabel"
 
@@ -62,7 +63,7 @@ const NODE_CONNECTIONS: Dictionary = {
 const SIGNAL_CONNECTIONS: Dictionary = {
     PLAYER_INPUT: {
         SIGNAL_ACTION_PRESSED: [
-            PC_ACTION, NEW_GAME,
+            PC_ACTION, NEW_GAME, SPLASH_SCREEN,
         ],
     },
     SPRITE_FACTORY: {
