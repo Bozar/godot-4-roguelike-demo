@@ -12,7 +12,12 @@ func _ready() -> void:
     VisualEffect.set_background_color()
 
 
-func start_game() -> void:
+func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
+    if input_tag == InputTag.START_GAME:
+        _start_game()
+
+
+func _start_game() -> void:
     # TODO: Get seed from user settings.
     _ref_RandomNumber.set_initial_seed(0)
     _ref_InitWorld.create_world()

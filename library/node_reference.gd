@@ -49,9 +49,6 @@ const NODE_CONNECTIONS: Dictionary = {
     GAME_PROGRESS: [
         PC_ACTION, ACTOR_ACTION,
     ],
-    NEW_GAME: [
-        PLAYER_INPUT,
-    ],
     INIT_WORLD: [
         NEW_GAME,
     ],
@@ -65,7 +62,7 @@ const NODE_CONNECTIONS: Dictionary = {
 const SIGNAL_CONNECTIONS: Dictionary = {
     PLAYER_INPUT: {
         SIGNAL_ACTION_PRESSED: [
-            PC_ACTION,
+            PC_ACTION, NEW_GAME,
         ],
     },
     SPRITE_FACTORY: {

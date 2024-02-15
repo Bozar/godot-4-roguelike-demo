@@ -52,21 +52,24 @@ func _on_SpriteFactory_sprite_created(sprites: Array[TaggedSprite]) -> void:
 
 
 func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
-    var coord: Vector2i = ConvertCoord.get_coord(_pc)
+    var coord: Vector2i
 
     match input_tag:
         InputTag.AIM:
             _aim(_pc)
             return
         InputTag.MOVE_LEFT:
-            coord += Vector2i.LEFT
+            coord = Vector2i.LEFT
         InputTag.MOVE_RIGHT:
-            coord += Vector2i.RIGHT
+            coord = Vector2i.RIGHT
         InputTag.MOVE_UP:
-            coord += Vector2i.UP
+            coord = Vector2i.UP
         InputTag.MOVE_DOWN:
-            coord += Vector2i.DOWN
+            coord = Vector2i.DOWN
+        _:
+            return
 
+    coord += ConvertCoord.get_coord(_pc)
     if _is_aiming:
         _shoot(_pc, coord)
     elif not DungeonSize.is_in_dungeon(coord):

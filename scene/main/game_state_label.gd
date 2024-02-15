@@ -20,7 +20,7 @@ func init_label() -> void:
 
 func update_label() -> void:
     var ammo: String = "Ammo: %d" % [_ref_PcAction.ammo]
-    var enemy: String = "\nEnemy: %d-%d" % [_ref_PcAction.enemy_count,
+    var enemy: String = "\nCombo: %d-%d" % [_ref_PcAction.enemy_count,
             _ref_PcAction.progress_bar]
     var end_game: String = ""
 
