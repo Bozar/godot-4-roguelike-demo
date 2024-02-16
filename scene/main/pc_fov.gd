@@ -52,9 +52,9 @@ func render_fov(is_aiming: bool) -> void:
         ShadowCastFov.get_fov_map(pc_coord, GameData.PC_SIGHT_RANGE,
                 _block_cross_fov_ray, [], _fov_map, _shadow_cast_fov_data)
         # DiamondFov.get_fov_map(pc_coord, GameData.PC_SIGHT_RANGE, _fov_map)
-    # DungeonSize.iterate_dungeon(_set_color, [_fov_map])
-    DungeonSize.iterate_dungeon(_set_visibility, [_fov_map, _memory_map,
-            MEMORY_TAGS])
+    DungeonSize.iterate_dungeon(_set_color, [_fov_map])
+    # DungeonSize.iterate_dungeon(_set_visibility, [_fov_map, _memory_map,
+    #         MEMORY_TAGS])
 
 
 func _set_color(coord: Vector2i, args: Array) -> void:

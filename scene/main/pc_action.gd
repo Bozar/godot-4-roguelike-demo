@@ -89,6 +89,7 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
     if not sprite.is_in_group(SubTag.PC):
         return
+    _ref_GameProgress.try_respawn_npc(_pc)
     _ref_PcFov.render_fov(_is_aiming)
     _alert_duration = max(0, _alert_duration - 1)
 

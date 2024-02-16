@@ -10,6 +10,9 @@ const HIT_BACK: int = 1
 const MIN_ENEMY_COUNT: int = 0
 const MAX_ENEMY_COUNT: int = 9
 
+const MAX_RESPAWN_DURATION: int = 3
+const MIN_DISTANCE_TO_PC: int = 7
+
 const MIN_PROGRESS_BAR: int = 0
 const MAX_PROGRES_BAR: int = 5
 
