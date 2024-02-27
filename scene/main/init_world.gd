@@ -4,7 +4,7 @@ extends Node2D
 
 const INDICATOR_OFFSET: int = 32
 
-const PATH_TO_PREFAB: StringName = "resource/dungeon_prefab/dungeon.txt"
+const PATH_TO_PREFAB: StringName = "resource/dungeon_prefab/l_block.txt"
 
 const WALL_CHAR: StringName = "#"
 const TRAP_CHAR: StringName = "?"
@@ -34,21 +34,30 @@ func _create_from_file(tagged_sprites: Array[TaggedSprite]) -> void:
     if not parsed.parse_success:
         return
 
-    var row: String
+    var packed_prefab: DungeonPrefab.PackedPrefab = DungeonPrefab.get_prefab(
+            parsed.output_line,
+            [
+                # DungeonPrefab.VERTICAL_FLIP,
+                # DungeonPrefab.HORIZONTAL_FLIP,
+                # DungeonPrefab.ROTATE_RIGHT,
+            ])
+    var new_x: int
+    var new_y: int
 
-    for y: int in parsed.output_line.keys():
-        row = parsed.output_line[y]
-        for x: int in range(0, row.length()):
-            match row[x]:
+    for y: int in range(0, packed_prefab.max_y):
+        for x: int in range(0, packed_prefab.max_x):
+            new_x = x + 3
+            new_y = y + 3
+            match packed_prefab.prefab[x][y]:
                 WALL_CHAR:
                     tagged_sprites.push_back(CreateSprite.create_building(
-                            SubTag.WALL, Vector2i(x, y)))
+                            SubTag.WALL, Vector2i(new_x, new_y)))
                 GRUNT_CHAR:
                     tagged_sprites.push_back(CreateSprite.create_actor(
-                            SubTag.GRUNT, Vector2i(x, y)))
+                            SubTag.GRUNT, Vector2i(new_x, new_y)))
                 TRAP_CHAR:
                     tagged_sprites.push_back(CreateSprite.create_trap(
-                            SubTag.AMMO, Vector2i(x, y)))
+                            SubTag.AMMO, Vector2i(new_x, new_y)))
 
 
 func _create_floor(tagged_sprites: Array[TaggedSprite]) -> void:
