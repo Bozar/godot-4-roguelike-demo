@@ -4,11 +4,19 @@ extends Node2D
 
 const INDICATOR_OFFSET: int = 32
 
-const PATH_TO_PREFAB: StringName = "resource/dungeon_prefab/l_block.txt"
+const PATH_TO_PREFAB: StringName = "resource/dungeon_prefab/"
+const MAX_PREFABS_PER_ROW: int = 3
+const MAX_PREFABS: int = 9
+const EDIT_TAGS: Array = [
+    DungeonPrefab.VERTICAL_FLIP, DungeonPrefab.HORIZONTAL_FLIP
+]
 
 const WALL_CHAR: StringName = "#"
 const TRAP_CHAR: StringName = "?"
 const GRUNT_CHAR: StringName = "G"
+
+
+var _ref_RandomNumber: RandomNumber
 
 
 func create_world() -> void:
@@ -30,24 +38,41 @@ func _create_pc(tagged_sprites: Array[TaggedSprite]) -> Vector2i:
 
 
 func _create_from_file(tagged_sprites: Array[TaggedSprite]) -> void:
-    var parsed: ParsedFile = FileIo.read_as_line(PATH_TO_PREFAB)
-    if not parsed.parse_success:
-        return
+    var prefabs: Array = FileIo.get_files(PATH_TO_PREFAB)
+    var file_name: String
+    var parsed: ParsedFile
+    var packed_prefab: DungeonPrefab.PackedPrefab
+    var shift_coord: Vector2i = Vector2i(0, 0)
+    var row: int = 0
 
-    var packed_prefab: DungeonPrefab.PackedPrefab = DungeonPrefab.get_prefab(
-            parsed.output_line,
-            [
-                # DungeonPrefab.VERTICAL_FLIP,
-                # DungeonPrefab.HORIZONTAL_FLIP,
-                # DungeonPrefab.ROTATE_RIGHT,
-            ])
+    ArrayHelper.shuffle(prefabs, _ref_RandomNumber)
+    prefabs.resize(MAX_PREFABS)
+    for i: int in range(0, prefabs.size()):
+        file_name = prefabs[i]
+        parsed = FileIo.read_as_line(file_name)
+        if not parsed.parse_success:
+            return
+
+        packed_prefab = DungeonPrefab.get_prefab(parsed.output_line,
+                _get_edit_tags())
+
+        if (i > 0) and (i % MAX_PREFABS_PER_ROW == 0):
+            row += 1
+        shift_coord.x = (i - MAX_PREFABS_PER_ROW * row) * packed_prefab.max_x
+        shift_coord.y = row * packed_prefab.max_y
+
+        _create_sprite(packed_prefab, shift_coord, tagged_sprites)
+
+
+func _create_sprite(packed_prefab: DungeonPrefab.PackedPrefab,
+        shift_coord: Vector2i, tagged_sprites: Array[TaggedSprite]) -> void:
     var new_x: int
     var new_y: int
 
     for y: int in range(0, packed_prefab.max_y):
         for x: int in range(0, packed_prefab.max_x):
-            new_x = x + 3
-            new_y = y + 3
+            new_x = x + shift_coord.x
+            new_y = y + shift_coord.y
             match packed_prefab.prefab[x][y]:
                 WALL_CHAR:
                     tagged_sprites.push_back(CreateSprite.create_building(
@@ -89,3 +114,12 @@ func _create_indicator(coord: Vector2i, tagged_sprites: Array[TaggedSprite]) \
         new_offset = indicators[i][1]
         tagged_sprites.push_back(CreateSprite.create(MainTag.INDICATOR,
                 i, new_coord, new_offset))
+
+
+func _get_edit_tags() -> Array:
+    var tags: Array = []
+
+    for i: int in EDIT_TAGS:
+        if _ref_RandomNumber.get_percent_chance(50):
+            tags.push_back(i)
+    return tags
