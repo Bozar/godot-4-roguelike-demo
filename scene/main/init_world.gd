@@ -12,6 +12,7 @@ const EDIT_TAGS: Array = [
 ]
 
 const WALL_CHAR: StringName = "#"
+const RANDOM_WALL_CHAR: StringName = "+"
 const TRAP_CHAR: StringName = "?"
 const GRUNT_CHAR: StringName = "G"
 
@@ -21,23 +22,38 @@ var _ref_RandomNumber: RandomNumber
 
 func create_world() -> void:
     var tagged_sprites: Array[TaggedSprite] = []
+    var occupied_grids: Dictionary = Map2D.init_map(false)
     var pc_coord: Vector2i
 
-    pc_coord = _create_pc(tagged_sprites)
     _create_floor(tagged_sprites)
-    _create_from_file(tagged_sprites)
+    _create_from_file(occupied_grids, tagged_sprites)
+    pc_coord = _create_pc(occupied_grids, tagged_sprites)
     _create_indicator(pc_coord, tagged_sprites)
 
     SpriteFactory.create_sprites(tagged_sprites)
 
 
-func _create_pc(tagged_sprites: Array[TaggedSprite]) -> Vector2i:
-    var pc_coord: Vector2i = Vector2i(0, 0)
+func _create_pc(occupied_grids: Dictionary,
+        tagged_sprites: Array[TaggedSprite]) -> Vector2i:
+    var coords: Array = []
+    var row: Array
+    var pc_coord: Vector2i
+
+    for x: int in range(0, occupied_grids.size()):
+        row = occupied_grids[x]
+        for y: int in range(row.size()):
+            if occupied_grids[x][y]:
+                continue
+            coords.push_back(Vector2i(x, y))
+    ArrayHelper.shuffle(coords, _ref_RandomNumber)
+
+    pc_coord = coords[0]
     tagged_sprites.push_back(CreateSprite.create_actor(SubTag.PC, pc_coord))
     return pc_coord
 
 
-func _create_from_file(tagged_sprites: Array[TaggedSprite]) -> void:
+func _create_from_file(occupied_grids: Dictionary,
+        tagged_sprites: Array[TaggedSprite]) -> void:
     var prefabs: Array = FileIo.get_files(PATH_TO_PREFAB)
     var file_name: String
     var parsed: ParsedFile
@@ -53,6 +69,7 @@ func _create_from_file(tagged_sprites: Array[TaggedSprite]) -> void:
         if not parsed.parse_success:
             return
 
+        print(file_name)
         packed_prefab = DungeonPrefab.get_prefab(parsed.output_line,
                 _get_edit_tags())
 
@@ -61,13 +78,16 @@ func _create_from_file(tagged_sprites: Array[TaggedSprite]) -> void:
         shift_coord.x = (i - MAX_PREFABS_PER_ROW * row) * packed_prefab.max_x
         shift_coord.y = row * packed_prefab.max_y
 
-        _create_sprite(packed_prefab, shift_coord, tagged_sprites)
+        _create_sprite(packed_prefab, shift_coord, occupied_grids,
+                tagged_sprites)
 
 
 func _create_sprite(packed_prefab: DungeonPrefab.PackedPrefab,
-        shift_coord: Vector2i, tagged_sprites: Array[TaggedSprite]) -> void:
+        shift_coord: Vector2i, occupied_grids: Dictionary,
+        tagged_sprites: Array[TaggedSprite]) -> void:
     var new_x: int
     var new_y: int
+    var random_wall_coords: Array = []
 
     for y: int in range(0, packed_prefab.max_y):
         for x: int in range(0, packed_prefab.max_x):
@@ -75,6 +95,7 @@ func _create_sprite(packed_prefab: DungeonPrefab.PackedPrefab,
             new_y = y + shift_coord.y
             match packed_prefab.prefab[x][y]:
                 WALL_CHAR:
+                    occupied_grids[new_x][new_y] = true
                     tagged_sprites.push_back(CreateSprite.create_building(
                             SubTag.WALL, Vector2i(new_x, new_y)))
                 GRUNT_CHAR:
@@ -83,6 +104,9 @@ func _create_sprite(packed_prefab: DungeonPrefab.PackedPrefab,
                 TRAP_CHAR:
                     tagged_sprites.push_back(CreateSprite.create_trap(
                             SubTag.AMMO, Vector2i(new_x, new_y)))
+                RANDOM_WALL_CHAR:
+                    random_wall_coords.push_back(Vector2i(new_x, new_y))
+    _create_random_wall(random_wall_coords, occupied_grids, tagged_sprites)
 
 
 func _create_floor(tagged_sprites: Array[TaggedSprite]) -> void:
@@ -123,3 +147,14 @@ func _get_edit_tags() -> Array:
         if _ref_RandomNumber.get_percent_chance(50):
             tags.push_back(i)
     return tags
+
+
+func _create_random_wall(coords: Array, occupied_grids: Dictionary,
+        tagged_sprites: Array[TaggedSprite]) -> void:
+    var max_walls: int = floor(coords.size() / 2.0)
+
+    ArrayHelper.shuffle(coords, _ref_RandomNumber)
+    coords.resize(max_walls)
+    for i: Vector2i in coords:
+        occupied_grids[i.x][i.y] = true
+        tagged_sprites.push_back(CreateSprite.create_building(SubTag.WALL, i))
