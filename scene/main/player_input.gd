@@ -12,6 +12,8 @@ enum InputMode {
 }
 
 
+var _ref_RandomNumber: RandomNumber
+
 var _input_mode: int = InputMode.START_GAME
 
 
@@ -21,11 +23,21 @@ func _unhandled_input(event: InputEvent) -> void:
             if event.is_action_pressed(InputTag.START_GAME):
                 action_pressed.emit(InputTag.START_GAME)
                 _input_mode = InputMode.NORMAL
+            elif _handle_quit_game_input(event):
+                return
         InputMode.END_GAME:
             if event.is_action_pressed(InputTag.START_GAME):
                 EndGame.reload()
+            elif _handle_quit_game_input(event):
+                return
+            elif _handle_copy_seed_input(event):
+                return
         InputMode.NORMAL:
-            if _handle_move_input(event):
+            if _handle_quit_game_input(event):
+                return
+            elif _handle_copy_seed_input(event):
+                return
+            elif _handle_move_input(event):
                 return
             elif event.is_action_pressed(InputTag.AIM):
                 action_pressed.emit(InputTag.AIM)
@@ -45,4 +57,18 @@ func _handle_move_input(event: InputEvent) -> bool:
         if event.is_action_pressed(i):
             action_pressed.emit(i)
             return true
+    return false
+
+
+func _handle_quit_game_input(event: InputEvent) -> bool:
+    if event.is_action_pressed(InputTag.QUIT_GAME):
+        get_tree().quit()
+        return true
+    return false
+
+
+func _handle_copy_seed_input(event: InputEvent) -> bool:
+    if event.is_action_pressed(InputTag.COPY_SEED):
+        DisplayServer.clipboard_set(str(_ref_RandomNumber.get_seed()))
+        return true
     return false
