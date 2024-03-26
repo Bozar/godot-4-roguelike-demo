@@ -12,35 +12,40 @@ enum InputMode {
 }
 
 
-var _ref_RandomNumber: RandomNumber
-
 var _input_mode: int = InputMode.START_GAME
 
 
 func _unhandled_input(event: InputEvent) -> void:
     match _input_mode:
         InputMode.START_GAME:
-            if event.is_action_pressed(InputTag.START_GAME):
-                action_pressed.emit(InputTag.START_GAME)
-                _input_mode = InputMode.NORMAL
-            elif _handle_quit_game_input(event):
+            if _is_start_game(event, _input_mode):
+                return
+            elif _is_quit_game(event):
                 return
         InputMode.END_GAME:
-            if event.is_action_pressed(InputTag.START_GAME):
-                EndGame.reload()
-            elif _handle_quit_game_input(event):
+            if _is_start_game(event, _input_mode):
                 return
-            elif _handle_copy_seed_input(event):
+            elif _is_quit_game(event):
+                return
+            elif _is_copy_seed(event):
+                return
+            elif _is_restart_game(event):
+                return
+            elif _is_replay_game(event):
                 return
         InputMode.NORMAL:
-            if _handle_quit_game_input(event):
+            if _is_quit_game(event):
                 return
-            elif _handle_copy_seed_input(event):
+            elif _is_copy_seed(event):
                 return
-            elif _handle_move_input(event):
+            elif _is_move_inputs(event):
                 return
-            elif event.is_action_pressed(InputTag.AIM):
-                action_pressed.emit(InputTag.AIM)
+            elif _is_aim(event):
+                return
+            elif _is_restart_game(event):
+                return
+            elif _is_replay_game(event):
+                return
 
 
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
@@ -52,7 +57,7 @@ func _on_GameProgress_game_over(_player_win: bool) -> void:
     _input_mode = InputMode.END_GAME
 
 
-func _handle_move_input(event: InputEvent) -> bool:
+func _is_move_inputs(event: InputEvent) -> bool:
     for i: StringName in InputTag.MOVE_INPUTS:
         if event.is_action_pressed(i):
             action_pressed.emit(i)
@@ -60,15 +65,58 @@ func _handle_move_input(event: InputEvent) -> bool:
     return false
 
 
-func _handle_quit_game_input(event: InputEvent) -> bool:
+func _is_start_game(event: InputEvent, input_mode: int) -> bool:
+    if event.is_action_pressed(InputTag.START_GAME):
+        match input_mode:
+            InputMode.START_GAME:
+                action_pressed.emit(InputTag.START_GAME)
+                _input_mode = InputMode.NORMAL
+                return true
+            InputMode.END_GAME:
+                EndGame.reload()
+                return true
+    return false
+
+
+func _is_quit_game(event: InputEvent) -> bool:
     if event.is_action_pressed(InputTag.QUIT_GAME):
-        get_tree().quit()
+        EndGame.quit()
         return true
     return false
 
 
-func _handle_copy_seed_input(event: InputEvent) -> bool:
+func _is_copy_seed(event: InputEvent) -> bool:
     if event.is_action_pressed(InputTag.COPY_SEED):
-        DisplayServer.clipboard_set(str(_ref_RandomNumber.get_seed()))
+        action_pressed.emit(InputTag.COPY_SEED)
         return true
     return false
+
+
+func _is_aim(event: InputEvent) -> bool:
+    if event.is_action_pressed(InputTag.AIM):
+        action_pressed.emit(InputTag.AIM)
+        return true
+    return false
+
+
+func _is_restart_game(event: InputEvent) -> bool:
+    if event.is_action_pressed(InputTag.RESTART_GAME):
+        _set_transfer_data(false)
+        EndGame.reload()
+        return true
+    return false
+
+
+func _is_replay_game(event: InputEvent) -> bool:
+    if event.is_action_pressed(InputTag.REPLAY_GAME):
+        _set_transfer_data(true)
+        EndGame.reload()
+        return true
+    return false
+
+
+func _set_transfer_data(is_replay: bool) -> void:
+    if is_replay:
+        action_pressed.emit(InputTag.REPLAY_GAME)
+    else:
+        action_pressed.emit(InputTag.RESTART_GAME)

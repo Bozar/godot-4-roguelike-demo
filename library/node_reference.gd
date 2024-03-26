@@ -37,7 +37,6 @@ const NODE_CONNECTIONS: Dictionary = {
     ],
     RANDOM_NUMBER: [
         FOOTNOTE_LABEL, ACTOR_ACTION, NEW_GAME, GAME_PROGRESS, INIT_WORLD,
-        PLAYER_INPUT,
     ],
     PC_ACTION: [
         GAME_STATE_LABEL, ACTOR_ACTION,
@@ -64,7 +63,7 @@ const NODE_CONNECTIONS: Dictionary = {
 const SIGNAL_CONNECTIONS: Dictionary = {
     PLAYER_INPUT: {
         SIGNAL_ACTION_PRESSED: [
-            PC_ACTION, NEW_GAME, SPLASH_SCREEN,
+            PC_ACTION, NEW_GAME, SPLASH_SCREEN, RANDOM_NUMBER,
         ],
     },
     SPRITE_FACTORY: {

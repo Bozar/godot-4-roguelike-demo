@@ -14,3 +14,7 @@ func reload() -> void:
 
     get_tree().root.remove_child(old_scene)
     old_scene.queue_free()
+
+
+func quit() -> void:
+    get_tree().quit()
