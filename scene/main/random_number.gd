@@ -32,6 +32,6 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
         InputTag.COPY_SEED:
             DisplayServer.clipboard_set(str(get_seed()))
         InputTag.REPLAY_GAME:
-            TransferData.rng_seed = get_seed()
+            TransferData.set_rng_seed(get_seed())
         InputTag.RESTART_GAME:
-            TransferData.rng_seed = 0
+            TransferData.set_rng_seed(0)

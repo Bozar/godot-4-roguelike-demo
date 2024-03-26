@@ -18,8 +18,10 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
 
 
 func _start_game() -> void:
-    # TODO: Get seed from user settings.
-    # _ref_RandomNumber.set_initial_seed(0)
+    if TransferData.load_setting_file:
+        SettingFile.load()
+        TransferData.set_load_setting_file(false)
+
     _ref_RandomNumber.set_initial_seed(TransferData.rng_seed)
     _ref_InitWorld.create_world()
     _ref_Sidebar.init_gui()
