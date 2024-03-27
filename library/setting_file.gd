@@ -11,6 +11,7 @@ enum VALUE_TYPE {
 }
 
 const RNG_SEED: String = "rng_seed"
+const SHOW_FULL_MAP: String = "show_full_map"
 
 
 static func load() -> void:
@@ -22,6 +23,14 @@ static func load() -> void:
             break
 
     _set_rng_seed(json.output_json)
+    _set_show_full_map(json.output_json)
+
+
+static func _set_show_full_map(setting: Dictionary) -> void:
+    var setting_value: SettingValue = _parse_setting(setting, SHOW_FULL_MAP,
+            VALUE_TYPE.BOOL)
+    if setting_value.is_valid:
+        TransferData.set_show_full_map(setting_value.bool_value)
 
 
 static func _set_rng_seed(setting: Dictionary) -> void:

@@ -7,6 +7,11 @@ var rng_seed: int:
         return _rng_seed
 
 
+var show_full_map: bool:
+    get:
+        return _show_full_map
+
+
 var load_setting_file: bool:
     get:
         return _load_setting_file
@@ -14,6 +19,7 @@ var load_setting_file: bool:
 
 var _rng_seed: int = 0
 var _load_setting_file: bool = true
+var _show_full_map: bool = false
 
 
 func set_rng_seed(value: int) -> void:
@@ -22,3 +28,7 @@ func set_rng_seed(value: int) -> void:
 
 func set_load_setting_file(value: bool) -> void:
     _load_setting_file = value
+
+
+func set_show_full_map(value: bool) -> void:
+    _show_full_map = value

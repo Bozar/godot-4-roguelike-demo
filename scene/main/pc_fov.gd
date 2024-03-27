@@ -2,7 +2,7 @@ class_name PcFov
 extends Node2D
 
 
-const NO_FOV: bool = false
+# const NO_FOV: bool = false
 const MEMORY_TAGS: Array = [
     MainTag.GROUND,
     MainTag.BUILDING,
@@ -39,7 +39,8 @@ func _ready() -> void:
 
 
 func render_fov(is_aiming: bool) -> void:
-    if NO_FOV:
+    # if NO_FOV:
+    if TransferData.show_full_map:
         return
 
     var pc_coord: Vector2i = ConvertCoord.get_coord(_pc)
