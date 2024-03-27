@@ -12,6 +12,11 @@ var show_full_map: bool:
         return _show_full_map
 
 
+var wizard_mode: bool:
+    get:
+        return _wizard_mode
+
+
 var load_setting_file: bool:
     get:
         return _load_setting_file
@@ -20,6 +25,7 @@ var load_setting_file: bool:
 var _rng_seed: int = 0
 var _load_setting_file: bool = true
 var _show_full_map: bool = false
+var _wizard_mode: bool = false
 
 
 func set_rng_seed(value: int) -> void:
@@ -32,3 +38,7 @@ func set_load_setting_file(value: bool) -> void:
 
 func set_show_full_map(value: bool) -> void:
     _show_full_map = value
+
+
+func set_wizard_mode(value: bool) -> void:
+    _wizard_mode = value

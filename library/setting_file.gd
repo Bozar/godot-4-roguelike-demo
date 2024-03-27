@@ -1,17 +1,18 @@
 class_name SettingFile
 
 
+enum VALUE_TYPE {
+    INT, BOOL, STRING,
+}
+
 const PATHS_TO_SETTING: Array = [
     "data/setting.json",
     "res://bin/setting.json",
 ]
 
-enum VALUE_TYPE {
-    INT, BOOL, STRING,
-}
-
 const RNG_SEED: String = "rng_seed"
 const SHOW_FULL_MAP: String = "show_full_map"
+const WIZARD_MODE: String = "wizard_mode"
 
 
 static func load() -> void:
@@ -24,6 +25,14 @@ static func load() -> void:
 
     _set_rng_seed(json.output_json)
     _set_show_full_map(json.output_json)
+    _set_wizard_mode(json.output_json)
+
+
+static func _set_wizard_mode(setting: Dictionary) -> void:
+    var setting_value: SettingValue = _parse_setting(setting, WIZARD_MODE,
+            VALUE_TYPE.BOOL)
+    if setting_value.is_valid:
+        TransferData.set_wizard_mode(setting_value.bool_value)
 
 
 static func _set_show_full_map(setting: Dictionary) -> void:

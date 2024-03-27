@@ -28,3 +28,7 @@ func update_label() -> void:
         end_game = YOU_WIN if player_win else YOU_LOSE
 
     text = "%s%s%s" % [ammo, enemy, end_game]
+
+
+func _on_PcAction_ui_force_updated() -> void:
+    update_label()

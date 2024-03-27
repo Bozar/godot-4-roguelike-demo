@@ -25,8 +25,9 @@ const SIGNAL_SPRITE_REMOVED: String = "sprite_removed"
 const SIGNAL_SPRITE_MOVED: String = "sprite_moved"
 const SIGNAL_SPRITE_SWAPPED: String = "sprite_swapped"
 const SIGNAL_ACTION_PRESSED: String = "action_pressed"
-const SIGNAL_GAME_OVER: String = "game_over"
+const SIGNAL_UI_FORCE_UPDATED: String = "ui_force_updated"
 
+const SIGNAL_GAME_OVER: String = "game_over"
 const SIGNAL_TURN_STARTED: String = "turn_started"
 
 
@@ -82,6 +83,11 @@ const SIGNAL_CONNECTIONS: Dictionary = {
     GAME_PROGRESS: {
         SIGNAL_GAME_OVER: [
             SCHEDULE, PC_ACTION, PLAYER_INPUT, SIDEBAR,
+        ],
+    },
+    PC_ACTION: {
+        SIGNAL_UI_FORCE_UPDATED: [
+            GAME_STATE_LABEL,
         ],
     },
 }

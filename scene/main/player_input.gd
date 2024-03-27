@@ -46,6 +46,10 @@ func _unhandled_input(event: InputEvent) -> void:
                 return
             elif _is_replay_game(event):
                 return
+            elif _is_add_ammo(event):
+                return
+            elif _is_add_combo(event):
+                return
 
 
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
@@ -111,6 +115,20 @@ func _is_replay_game(event: InputEvent) -> bool:
     if event.is_action_pressed(InputTag.REPLAY_GAME):
         _set_transfer_data(true)
         EndGame.reload()
+        return true
+    return false
+
+
+func _is_add_ammo(event: InputEvent) -> bool:
+    if TransferData.wizard_mode and event.is_action_pressed(InputTag.ADD_AMMO):
+        action_pressed.emit(InputTag.ADD_AMMO)
+        return true
+    return false
+
+
+func _is_add_combo(event: InputEvent) -> bool:
+    if TransferData.wizard_mode and event.is_action_pressed(InputTag.ADD_COMBO):
+        action_pressed.emit(InputTag.ADD_COMBO)
         return true
     return false
 
