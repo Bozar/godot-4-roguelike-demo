@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="godot_4_roguelike_demo"
-run/main_scene="res://scene/main/main_game.tscn"
+run/main_scene="res://scene/main/main_screen.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 run/low_processor_mode=true
 config/icon="res://resource/hammer_wrench.png"

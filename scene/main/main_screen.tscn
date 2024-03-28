@@ -1,0 +1,91 @@
+[gd_scene load_steps=21 format=3 uid="uid://dhbrp45e0fesa"]
+
+[ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_pifdv"]
+[ext_resource type="Script" path="res://scene/main/init_world.gd" id="2_ebito"]
+[ext_resource type="Script" path="res://scene/main/player_input.gd" id="3_ly38i"]
+[ext_resource type="Script" path="res://scene/main/sprite_root.gd" id="4_uhoq2"]
+[ext_resource type="Script" path="res://scene/main/sprite_state.gd" id="5_wct2l"]
+[ext_resource type="Script" path="res://scene/main/sprite_tag.gd" id="6_2haod"]
+[ext_resource type="Script" path="res://scene/main/dungeon_board.gd" id="7_frhsf"]
+[ext_resource type="Script" path="res://scene/main/pc_action.gd" id="8_vyyhy"]
+[ext_resource type="Script" path="res://scene/main/pc_fov.gd" id="9_d13d7"]
+[ext_resource type="Script" path="res://scene/main/schedule.gd" id="10_lsdpn"]
+[ext_resource type="Theme" uid="uid://bkqmmahujknn0" path="res://resource/default_theme.tres" id="11_3yleh"]
+[ext_resource type="Script" path="res://scene/main/sidebar.gd" id="12_uvqp0"]
+[ext_resource type="Script" path="res://scene/main/game_state_label.gd" id="13_ynwy6"]
+[ext_resource type="Script" path="res://scene/main/footnote_label.gd" id="14_1wnrt"]
+[ext_resource type="Script" path="res://scene/main/random_number.gd" id="15_v6f6x"]
+[ext_resource type="Script" path="res://scene/main/actor_action.gd" id="16_tw8y4"]
+[ext_resource type="Script" path="res://scene/main/game_progress.gd" id="17_grbdp"]
+[ext_resource type="Script" path="res://scene/main/new_game.gd" id="18_4bbc4"]
+[ext_resource type="PackedScene" uid="uid://clvlo4gojqa80" path="res://scene/splash/splash_screen.tscn" id="19_bmxir"]
+[ext_resource type="PackedScene" uid="uid://0hnbio3e38gf" path="res://scene/debug/debug_screen.tscn" id="21_7tllf"]
+
+[node name="MainRoot" type="Node2D"]
+script = ExtResource("1_pifdv")
+
+[node name="InitWorld" type="Node2D" parent="."]
+script = ExtResource("2_ebito")
+
+[node name="PlayerInput" type="Node2D" parent="."]
+script = ExtResource("3_ly38i")
+
+[node name="SpriteRoot" type="Node2D" parent="."]
+script = ExtResource("4_uhoq2")
+
+[node name="SpriteState" type="Node2D" parent="."]
+script = ExtResource("5_wct2l")
+
+[node name="SpriteTag" type="Node2D" parent="SpriteState"]
+script = ExtResource("6_2haod")
+
+[node name="DungeonBoard" type="Node2D" parent="SpriteState"]
+script = ExtResource("7_frhsf")
+
+[node name="PcAction" type="Node2D" parent="."]
+script = ExtResource("8_vyyhy")
+
+[node name="PcFov" type="Node2D" parent="PcAction"]
+script = ExtResource("9_d13d7")
+
+[node name="Schedule" type="Node2D" parent="."]
+script = ExtResource("10_lsdpn")
+
+[node name="Sidebar" type="MarginContainer" parent="."]
+offset_right = 800.0
+offset_bottom = 600.0
+theme = ExtResource("11_3yleh")
+theme_override_constants/margin_left = 600
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+script = ExtResource("12_uvqp0")
+
+[node name="SidebarVBox" type="VBoxContainer" parent="Sidebar"]
+layout_mode = 2
+
+[node name="GameStateLabel" type="Label" parent="Sidebar/SidebarVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("13_ynwy6")
+
+[node name="FootnoteLabel" type="Label" parent="Sidebar/SidebarVBox"]
+layout_mode = 2
+horizontal_alignment = 2
+script = ExtResource("14_1wnrt")
+
+[node name="RandomNumber" type="Node2D" parent="."]
+script = ExtResource("15_v6f6x")
+
+[node name="ActorAction" type="Node2D" parent="."]
+script = ExtResource("16_tw8y4")
+
+[node name="GameProgress" type="Node2D" parent="."]
+script = ExtResource("17_grbdp")
+
+[node name="NewGame" type="Node2D" parent="."]
+script = ExtResource("18_4bbc4")
+
+[node name="SplashScreen" parent="." instance=ExtResource("19_bmxir")]
+
+[node name="DebugScreen" parent="." instance=ExtResource("21_7tllf")]

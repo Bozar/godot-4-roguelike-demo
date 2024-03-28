@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://clvlo4gojqa80"]
+
+[ext_resource type="Theme" uid="uid://bkqmmahujknn0" path="res://resource/default_theme.tres" id="1_3ue30"]
+[ext_resource type="Script" path="res://scene/splash/splash_screen.gd" id="2_qg4v3"]
+[ext_resource type="Script" path="res://scene/splash/welcome_label.gd" id="3_c5j32"]
+
+[node name="SplashScreen" type="MarginContainer"]
+offset_right = 800.0
+offset_bottom = 600.0
+theme = ExtResource("1_3ue30")
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 520
+script = ExtResource("2_qg4v3")
+
+[node name="WelcomeLabel" type="Label" parent="."]
+layout_mode = 2
+script = ExtResource("3_c5j32")

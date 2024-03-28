@@ -2,7 +2,7 @@
 extends Node2D
 
 
-const PATH_TO_ROOT: String = "res://scene/main/main_game.tscn"
+const PATH_TO_ROOT: String = "res://scene/main/main_screen.tscn"
 
 
 func reload() -> void:
