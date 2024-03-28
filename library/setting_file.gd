@@ -2,7 +2,7 @@ class_name SettingFile
 
 
 enum VALUE_TYPE {
-    INT, BOOL, STRING,
+    INT, BOOL, STRING, DICTIONARY,
 }
 
 const PATHS_TO_SETTING: Array = [
@@ -13,6 +13,7 @@ const PATHS_TO_SETTING: Array = [
 const RNG_SEED: String = "rng_seed"
 const SHOW_FULL_MAP: String = "show_full_map"
 const WIZARD_MODE: String = "wizard_mode"
+const PALETTE: String = "palette"
 
 
 static func load() -> void:
@@ -26,6 +27,7 @@ static func load() -> void:
     _set_rng_seed(json.output_json)
     _set_show_full_map(json.output_json)
     _set_wizard_mode(json.output_json)
+    _set_palette(json.output_json)
 
 
 static func _set_wizard_mode(setting: Dictionary) -> void:
@@ -54,11 +56,22 @@ static func _set_rng_seed(setting: Dictionary) -> void:
     TransferData.set_rng_seed(rng_seed)
 
 
+static func _set_palette(setting: Dictionary) -> void:
+    var setting_value: SettingValue = _parse_setting(setting, PALETTE,
+            VALUE_TYPE.DICTIONARY)
+    var palette: Dictionary
+
+    if setting_value.is_valid:
+        palette = Palette.get_verified_palette(setting_value.dictionary_value)
+        TransferData.set_palette(palette)
+
+
 static func _parse_setting(setting: Dictionary, key: String, value_type: int) \
         -> SettingValue:
     var float_value: float
     var bool_value: bool
     var string_value: String
+    var dictionary_value: Dictionary
     var setting_value: SettingValue = SettingValue.new()
 
     setting_value.is_valid = false
@@ -88,6 +101,12 @@ static func _parse_setting(setting: Dictionary, key: String, value_type: int) \
                     string_value = setting[key]
                     setting_value.string_value = string_value
                     setting_value.is_valid = true
+        VALUE_TYPE.DICTIONARY:
+            match typeof(setting[key]):
+                TYPE_DICTIONARY:
+                    dictionary_value = setting[key]
+                    setting_value.dictionary_value = dictionary_value
+                    setting_value.is_valid = true
     return setting_value
 
 
@@ -97,3 +116,4 @@ class SettingValue:
     var int_value: int
     var bool_value: bool
     var string_value: String
+    var dictionary_value: Dictionary

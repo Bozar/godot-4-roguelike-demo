@@ -15,7 +15,7 @@ func update_label() -> void:
 
 
 func _set_font_color(is_light_color: bool) -> void:
-    # TODO: Get palette from GameSetting node.
-    var palette: Dictionary = {}
+    # var palette: Dictionary = {}
+    var palette: Dictionary = TransferData.palette
     add_theme_color_override("font_color", Palette.get_color(palette,
             MainTag.GUI_TEXT, is_light_color))
