@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=26 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_ed0ep"]
 [ext_resource type="Script" path="res://scene/main/player_input.gd" id="2_hj4ky"]
@@ -20,6 +20,11 @@
 [ext_resource type="Script" path="res://scene/main/new_game.gd" id="18_kub1o"]
 [ext_resource type="Script" path="res://scene/main/splash_screen.gd" id="19_wux3w"]
 [ext_resource type="Script" path="res://scene/main/welcome_label.gd" id="20_hkr0g"]
+[ext_resource type="Script" path="res://scene/main/debug_screen.gd" id="21_ylpvd"]
+[ext_resource type="Script" path="res://scene/main/title_label.gd" id="22_n085v"]
+[ext_resource type="Script" path="res://scene/main/seed_label.gd" id="23_vaq43"]
+[ext_resource type="Script" path="res://scene/main/wizard_label.gd" id="24_127xh"]
+[ext_resource type="Script" path="res://scene/main/map_label.gd" id="25_khara"]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource("1_ed0ep")
@@ -52,10 +57,10 @@ script = ExtResource("9_mn2d1")
 script = ExtResource("9_kd12i")
 
 [node name="Sidebar" type="MarginContainer" parent="."]
-offset_left = 600.0
 offset_right = 800.0
 offset_bottom = 600.0
 theme = ExtResource("9_cjp20")
+theme_override_constants/margin_left = 600
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
@@ -87,19 +92,68 @@ script = ExtResource("17_f52dv")
 script = ExtResource("18_kub1o")
 
 [node name="SplashScreen" type="MarginContainer" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = 560.0
 offset_right = 800.0
 offset_bottom = 600.0
-grow_vertical = 0
 theme = ExtResource("9_cjp20")
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 520
 script = ExtResource("19_wux3w")
 
 [node name="WelcomeLabel" type="Label" parent="SplashScreen"]
 layout_mode = 2
 script = ExtResource("20_hkr0g")
+
+[node name="DebugScreen" type="MarginContainer" parent="."]
+offset_right = 800.0
+offset_bottom = 600.0
+grow_vertical = 0
+theme = ExtResource("9_cjp20")
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
+script = ExtResource("21_ylpvd")
+
+[node name="DebugVBox" type="VBoxContainer" parent="DebugScreen"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="TitleLabel" type="Label" parent="DebugScreen/DebugVBox"]
+layout_mode = 2
+text = "hello
+
+world"
+script = ExtResource("22_n085v")
+
+[node name="SettingGrid" type="GridContainer" parent="DebugScreen/DebugVBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="SeedLabel" type="Label" parent="DebugScreen/DebugVBox/SettingGrid"]
+layout_mode = 2
+text = "hello"
+script = ExtResource("23_vaq43")
+
+[node name="SeedLineEdit" type="LineEdit" parent="DebugScreen/DebugVBox/SettingGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WizardLabel" type="Label" parent="DebugScreen/DebugVBox/SettingGrid"]
+layout_mode = 2
+text = "world"
+script = ExtResource("24_127xh")
+
+[node name="WizardLineEdit" type="LineEdit" parent="DebugScreen/DebugVBox/SettingGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MapLabel" type="Label" parent="DebugScreen/DebugVBox/SettingGrid"]
+layout_mode = 2
+text = "world"
+script = ExtResource("25_khara")
+
+[node name="MapLineEdit" type="LineEdit" parent="DebugScreen/DebugVBox/SettingGrid"]
+layout_mode = 2
+size_flags_horizontal = 3

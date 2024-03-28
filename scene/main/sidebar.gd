@@ -25,3 +25,13 @@ func _on_GameProgress_game_over(player_win: bool) -> void:
     _ref_GameStateLabel.game_over = true
     _ref_GameStateLabel.player_win = player_win
     _ref_GameStateLabel.update_label()
+
+
+func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
+    match input_tag:
+        InputTag.CLOSE_MENU:
+            visible = true
+        InputTag.OPEN_DEBUG_MENU:
+            visible = false
+        InputTag.OPEN_HELP_MENU:
+            visible = false

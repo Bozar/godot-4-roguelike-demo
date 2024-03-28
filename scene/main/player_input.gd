@@ -9,6 +9,8 @@ enum InputMode {
     START_GAME,
     END_GAME,
     NORMAL,
+    DEBUG,
+    HELP,
 }
 
 
@@ -49,6 +51,14 @@ func _unhandled_input(event: InputEvent) -> void:
             elif _is_add_ammo(event):
                 return
             elif _is_add_combo(event):
+                return
+            elif _is_open_debug_menu(event):
+                return
+        InputMode.DEBUG:
+            if _is_close_menu(event):
+                return
+        InputMode.HELP:
+            if _is_close_menu(event):
                 return
 
 
@@ -129,6 +139,22 @@ func _is_add_ammo(event: InputEvent) -> bool:
 func _is_add_combo(event: InputEvent) -> bool:
     if TransferData.wizard_mode and event.is_action_pressed(InputTag.ADD_COMBO):
         action_pressed.emit(InputTag.ADD_COMBO)
+        return true
+    return false
+
+
+func _is_open_debug_menu(event: InputEvent) -> bool:
+    if event.is_action_pressed(InputTag.OPEN_DEBUG_MENU):
+        action_pressed.emit(InputTag.OPEN_DEBUG_MENU)
+        _input_mode = InputMode.DEBUG
+        return true
+    return false
+
+
+func _is_close_menu(event: InputEvent) -> bool:
+    if event.is_action_pressed(InputTag.CLOSE_MENU):
+        action_pressed.emit(InputTag.CLOSE_MENU)
+        _input_mode = InputMode.NORMAL
         return true
     return false
 
