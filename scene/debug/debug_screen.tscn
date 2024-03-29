@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://0hnbio3e38gf"]
+[gd_scene load_steps=10 format=3 uid="uid://0hnbio3e38gf"]
 
 [ext_resource type="Theme" uid="uid://bkqmmahujknn0" path="res://resource/default_theme.tres" id="1_a41jd"]
 [ext_resource type="Script" path="res://scene/debug/debug_screen.gd" id="2_uqve0"]
 [ext_resource type="Script" path="res://scene/debug/title_label.gd" id="3_yab54"]
 [ext_resource type="Script" path="res://scene/debug/seed_label.gd" id="4_chm2j"]
+[ext_resource type="Script" path="res://scene/debug/seed_line_edit.gd" id="5_go5t3"]
 [ext_resource type="Script" path="res://scene/debug/wizard_label.gd" id="5_ppnb2"]
 [ext_resource type="Script" path="res://scene/debug/map_label.gd" id="6_swbf4"]
+[ext_resource type="Script" path="res://scene/debug/wizard_line_edit.gd" id="7_mhx4x"]
+[ext_resource type="Script" path="res://scene/debug/map_line_edit.gd" id="9_8jgxo"]
 
 [node name="DebugScreen" type="MarginContainer"]
 offset_right = 800.0
@@ -43,6 +46,7 @@ script = ExtResource("4_chm2j")
 [node name="SeedLineEdit" type="LineEdit" parent="DebugVBox/SettingGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("5_go5t3")
 
 [node name="WizardLabel" type="Label" parent="DebugVBox/SettingGrid"]
 layout_mode = 2
@@ -52,6 +56,7 @@ script = ExtResource("5_ppnb2")
 [node name="WizardLineEdit" type="LineEdit" parent="DebugVBox/SettingGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("7_mhx4x")
 
 [node name="MapLabel" type="Label" parent="DebugVBox/SettingGrid"]
 layout_mode = 2
@@ -61,3 +66,4 @@ script = ExtResource("6_swbf4")
 [node name="MapLineEdit" type="LineEdit" parent="DebugVBox/SettingGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("9_8jgxo")
