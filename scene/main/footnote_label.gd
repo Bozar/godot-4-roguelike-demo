@@ -10,7 +10,7 @@ const DEBUG: String = "Debug: V"
 var _ref_RandomNumber: RandomNumber
 
 
-func init_label() -> void:
+func init_gui() -> void:
     _set_font_color(false)
     text = "%s\n%s\n%s\n%s" % [_get_version(), HELP, DEBUG, _get_seed()]
 

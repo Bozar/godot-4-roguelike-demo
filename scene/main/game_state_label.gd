@@ -13,12 +13,12 @@ var player_win: bool = false
 var _ref_PcAction: PcAction
 
 
-func init_label() -> void:
+func init_gui() -> void:
     _set_font_color(true)
-    update_label()
+    update_gui()
 
 
-func update_label() -> void:
+func update_gui() -> void:
     var ammo: String = "Ammo: %d" % [_ref_PcAction.ammo]
     var enemy: String = "\nCombo: %d-%d" % [_ref_PcAction.enemy_count,
             _ref_PcAction.progress_bar]
@@ -31,4 +31,4 @@ func update_label() -> void:
 
 
 func _on_PcAction_ui_force_updated() -> void:
-    update_label()
+    update_gui()

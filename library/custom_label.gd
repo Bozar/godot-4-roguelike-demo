@@ -6,11 +6,11 @@ func _ready() -> void:
     text = ""
 
 
-func init_label() -> void:
+func init_gui() -> void:
     pass
 
 
-func update_label() -> void:
+func update_gui() -> void:
     pass
 
 

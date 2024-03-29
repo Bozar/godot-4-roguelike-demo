@@ -10,7 +10,7 @@ func _ready() -> void:
 
 
 func init_gui() -> void:
-    _ref_WelcomeLabel.init_label()
+    _ref_WelcomeLabel.init_gui()
 
 
 func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:

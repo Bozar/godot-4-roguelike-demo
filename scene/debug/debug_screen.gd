@@ -21,7 +21,7 @@ func init_gui() -> void:
 
     for i: String in LABEL_NODES:
         custom_label = get_node(i)
-        custom_label.init_label()
+        custom_label.init_gui()
 
 
 func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
