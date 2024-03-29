@@ -58,6 +58,9 @@ const NODE_CONNECTIONS: Dictionary = {
     SIDEBAR: [
         NEW_GAME,
     ],
+    DEBUG_SCREEN: [
+        NEW_GAME,
+    ],
 }
 
 

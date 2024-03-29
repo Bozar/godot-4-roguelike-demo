@@ -6,6 +6,7 @@ var _ref_RandomNumber: RandomNumber
 var _ref_InitWorld: InitWorld
 var _ref_Sidebar: Sidebar
 var _ref_Schedule: Schedule
+var _ref_DebugScreen: DebugScreen
 
 
 func _ready() -> void:
@@ -25,4 +26,5 @@ func _start_game() -> void:
     _ref_RandomNumber.set_initial_seed(TransferData.rng_seed)
     _ref_InitWorld.create_world()
     _ref_Sidebar.init_gui()
+    _ref_DebugScreen.init_gui()
     _ref_Schedule.start_first_turn()

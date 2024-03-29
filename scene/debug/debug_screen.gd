@@ -17,8 +17,6 @@ const FALSE: String = "false"
 const MAX_INT: int = 2 ** 32 - 1
 
 
-var _is_initialized: bool = false
-
 @onready var _ref_SeedLineEdit: CustomLineEdit = \
         $DebugVBox/SettingGrid/SeedLineEdit
 @onready var _ref_WizardLineEdit: CustomLineEdit = \
@@ -47,19 +45,16 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
         InputTag.CLOSE_MENU:
             visible = false
         InputTag.OPEN_DEBUG_MENU:
-            if not _is_initialized:
-                init_gui()
-                _is_initialized = true
             _ref_SeedLineEdit.grab_focus()
             visible = true
         InputTag.REPLAY_GAME:
-            _set_transfer_data(true)
+            _set_transfer_data(input_tag)
         InputTag.RESTART_GAME:
-            _set_transfer_data(false)
+            _set_transfer_data(input_tag)
 
 
-func _set_transfer_data(is_replay: bool) -> void:
-    if not is_replay:
+func _set_transfer_data(input_tag: StringName) -> void:
+    if input_tag != InputTag.REPLAY_GAME:
         TransferData.set_rng_seed(_get_int(_ref_SeedLineEdit.text))
     TransferData.set_wizard_mode(_get_bool(_ref_WizardLineEdit.text))
     TransferData.set_show_full_map(_get_bool(_ref_MapLineEdit.text))
