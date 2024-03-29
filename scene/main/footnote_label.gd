@@ -2,7 +2,8 @@ class_name FootnoteLabel
 extends CustomLabel
 
 
-const VERSION: String = "1.2.3"
+const VERSION: String = "1.0.0"
+const WIZARD_MODE: String = "+"
 const HELP: String = "Help: C"
 const DEBUG: String = "Debug: V"
 
@@ -16,6 +17,8 @@ func init_gui() -> void:
 
 
 func _get_version() -> String:
+    if TransferData.wizard_mode:
+        return WIZARD_MODE + VERSION
     return VERSION
 
 
