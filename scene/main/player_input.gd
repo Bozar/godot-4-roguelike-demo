@@ -15,6 +15,7 @@ enum InputMode {
 
 
 var _input_mode: int = InputMode.START_GAME
+var _previous_input_mode: int
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -35,6 +36,8 @@ func _unhandled_input(event: InputEvent) -> void:
                 return
             elif _is_replay_game(event):
                 return
+            elif _is_open_debug_menu(event, _input_mode):
+                return
         InputMode.NORMAL:
             if _is_quit_game(event):
                 return
@@ -52,13 +55,13 @@ func _unhandled_input(event: InputEvent) -> void:
                 return
             elif _is_add_combo(event):
                 return
-            elif _is_open_debug_menu(event):
+            elif _is_open_debug_menu(event, _input_mode):
                 return
         InputMode.DEBUG:
-            if _is_close_menu(event):
+            if _is_close_menu(event, _previous_input_mode):
                 return
         InputMode.HELP:
-            if _is_close_menu(event):
+            if _is_close_menu(event, _previous_input_mode):
                 return
 
 
@@ -87,6 +90,7 @@ func _is_start_game(event: InputEvent, input_mode: int) -> bool:
                 _input_mode = InputMode.NORMAL
                 return true
             InputMode.END_GAME:
+                _set_transfer_data(false)
                 EndGame.reload()
                 return true
     return false
@@ -143,18 +147,19 @@ func _is_add_combo(event: InputEvent) -> bool:
     return false
 
 
-func _is_open_debug_menu(event: InputEvent) -> bool:
+func _is_open_debug_menu(event: InputEvent, previous_mode: int) -> bool:
     if event.is_action_pressed(InputTag.OPEN_DEBUG_MENU):
         action_pressed.emit(InputTag.OPEN_DEBUG_MENU)
+        _previous_input_mode = previous_mode
         _input_mode = InputMode.DEBUG
         return true
     return false
 
 
-func _is_close_menu(event: InputEvent) -> bool:
+func _is_close_menu(event: InputEvent, previous_mode: int) -> bool:
     if event.is_action_pressed(InputTag.CLOSE_MENU):
         action_pressed.emit(InputTag.CLOSE_MENU)
-        _input_mode = InputMode.NORMAL
+        _input_mode = previous_mode
         return true
     return false
 
