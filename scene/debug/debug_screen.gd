@@ -12,10 +12,19 @@ const GUI_NODES: Array = [
     "DebugVBox/SettingGrid/MapLineEdit",
 ]
 
-const FOCUS_NODE: String = "DebugVBox/SettingGrid/SeedLineEdit"
+const TRUE: String = "true"
+const FALSE: String = "false"
+const MAX_INT: int = 2 ** 32 - 1
 
 
 var _is_initialized: bool = false
+
+@onready var _ref_SeedLineEdit: CustomLineEdit = \
+        $DebugVBox/SettingGrid/SeedLineEdit
+@onready var _ref_WizardLineEdit: CustomLineEdit = \
+        $DebugVBox/SettingGrid/WizardLineEdit
+@onready var _ref_MapLineEdit: CustomLineEdit = \
+        $DebugVBox/SettingGrid/MapLineEdit
 
 
 func _ready() -> void:
@@ -41,5 +50,36 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
             if not _is_initialized:
                 init_gui()
                 _is_initialized = true
-            (get_node(FOCUS_NODE) as LineEdit).grab_focus()
+            _ref_SeedLineEdit.grab_focus()
             visible = true
+        InputTag.REPLAY_GAME:
+            _set_transfer_data(true)
+        InputTag.RESTART_GAME:
+            _set_transfer_data(false)
+
+
+func _set_transfer_data(is_replay: bool) -> void:
+    if not is_replay:
+        TransferData.set_rng_seed(_get_int(_ref_SeedLineEdit.text))
+    TransferData.set_wizard_mode(_get_bool(_ref_WizardLineEdit.text))
+    TransferData.set_show_full_map(_get_bool(_ref_MapLineEdit.text))
+
+
+func _get_int(line_edit_text: String) -> int:
+    var text_to_int: int = int(line_edit_text)
+
+    if text_to_int > MAX_INT:
+        return 0
+    return text_to_int
+
+
+func _get_bool(line_edit_text: String) -> bool:
+    var text: String = line_edit_text.strip_edges().to_lower()
+
+    match text:
+        TRUE:
+            return true
+        FALSE:
+            return false
+        _:
+            return bool(int(text))

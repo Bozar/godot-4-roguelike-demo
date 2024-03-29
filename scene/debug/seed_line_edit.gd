@@ -3,6 +3,6 @@ extends CustomLineEdit
 
 
 func init_gui() -> void:
-    text = "%s" % TransferData.rng_seed
-    placeholder_text = "Default: 0"
+    text = "0"
+    placeholder_text = "DEFAULT: 0"
     _set_font_color()

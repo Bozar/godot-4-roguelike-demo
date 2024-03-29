@@ -4,5 +4,5 @@ extends CustomLineEdit
 
 func init_gui() -> void:
     text = "%s" % TransferData.show_full_map
-    placeholder_text = "Default: false"
+    placeholder_text = "DEFAULT: FALSE OR 0"
     _set_font_color()
