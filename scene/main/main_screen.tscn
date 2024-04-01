@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dhbrp45e0fesa"]
+[gd_scene load_steps=22 format=3 uid="uid://dhbrp45e0fesa"]
 
 [ext_resource type="Script" path="res://scene/main/main_root.gd" id="1_pifdv"]
 [ext_resource type="Script" path="res://scene/main/init_world.gd" id="2_ebito"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://scene/main/new_game.gd" id="18_4bbc4"]
 [ext_resource type="PackedScene" uid="uid://clvlo4gojqa80" path="res://scene/splash/splash_screen.tscn" id="19_bmxir"]
 [ext_resource type="PackedScene" uid="uid://0hnbio3e38gf" path="res://scene/debug/debug_screen.tscn" id="21_7tllf"]
+[ext_resource type="PackedScene" uid="uid://dohdujc4la7ip" path="res://scene/help/help_screen.tscn" id="21_l53gk"]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource("1_pifdv")
@@ -89,3 +90,5 @@ script = ExtResource("18_4bbc4")
 [node name="SplashScreen" parent="." instance=ExtResource("19_bmxir")]
 
 [node name="DebugScreen" parent="." instance=ExtResource("21_7tllf")]
+
+[node name="HelpScreen" parent="." instance=ExtResource("21_l53gk")]

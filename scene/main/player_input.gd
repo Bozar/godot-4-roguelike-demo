@@ -38,6 +38,8 @@ func _unhandled_input(event: InputEvent) -> void:
                 return
             elif _is_open_debug_menu(event, _input_mode):
                 return
+            elif _is_open_help_menu(event, _input_mode):
+                return
         InputMode.NORMAL:
             if _is_quit_game(event):
                 return
@@ -57,11 +59,15 @@ func _unhandled_input(event: InputEvent) -> void:
                 return
             elif _is_open_debug_menu(event, _input_mode):
                 return
+            elif _is_open_help_menu(event, _input_mode):
+                return
         InputMode.DEBUG:
             if _is_close_menu(event, _previous_input_mode):
                 return
         InputMode.HELP:
             if _is_close_menu(event, _previous_input_mode):
+                return
+            elif _is_switch_screen_inputs(event):
                 return
 
 
@@ -76,6 +82,14 @@ func _on_GameProgress_game_over(_player_win: bool) -> void:
 
 func _is_move_inputs(event: InputEvent) -> bool:
     for i: StringName in InputTag.MOVE_INPUTS:
+        if event.is_action_pressed(i):
+            action_pressed.emit(i)
+            return true
+    return false
+
+
+func _is_switch_screen_inputs(event: InputEvent) -> bool:
+    for i: StringName in InputTag.SWITCH_SCREEN_INPUTS:
         if event.is_action_pressed(i):
             action_pressed.emit(i)
             return true
@@ -152,6 +166,15 @@ func _is_open_debug_menu(event: InputEvent, previous_mode: int) -> bool:
         action_pressed.emit(InputTag.OPEN_DEBUG_MENU)
         _previous_input_mode = previous_mode
         _input_mode = InputMode.DEBUG
+        return true
+    return false
+
+
+func _is_open_help_menu(event: InputEvent, previous_mode: int) -> bool:
+    if event.is_action_pressed(InputTag.OPEN_HELP_MENU):
+        action_pressed.emit(InputTag.OPEN_HELP_MENU)
+        _previous_input_mode = previous_mode
+        _input_mode = InputMode.HELP
         return true
     return false
 

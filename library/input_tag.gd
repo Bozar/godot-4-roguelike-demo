@@ -22,10 +22,18 @@ const OPEN_HELP_MENU: StringName = &"open_help_menu"
 const OPEN_DEBUG_MENU: StringName = &"open_debug_menu"
 const CLOSE_MENU: StringName = &"close_menu"
 
+const NEXT_SCREEN: StringName = &"next_screen"
+const PREVIOUS_SCREEN: StringName = &"previous_screen"
+
 
 const MOVE_INPUTS: Array[StringName] = [
     MOVE_LEFT,
     MOVE_RIGHT,
     MOVE_UP,
     MOVE_DOWN,
+]
+
+const SWITCH_SCREEN_INPUTS: Array[StringName] = [
+    NEXT_SCREEN,
+    PREVIOUS_SCREEN,
 ]
