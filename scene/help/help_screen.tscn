@@ -16,10 +16,10 @@ theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 script = ExtResource("1_mknvg")
 
-[node name="Keybinding" type="ScrollContainer" parent="."]
+[node name="KeybindingScroll" type="ScrollContainer" parent="."]
 layout_mode = 2
 
-[node name="KeybindingLabel" type="Label" parent="Keybinding"]
+[node name="KeybindingLabel" type="Label" parent="KeybindingScroll"]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -27,10 +27,10 @@ size_flags_vertical = 3
 autowrap_mode = 3
 script = ExtResource("2_wg2yu")
 
-[node name="General" type="ScrollContainer" parent="."]
+[node name="GeneralScroll" type="ScrollContainer" parent="."]
 layout_mode = 2
 
-[node name="GeneralLabel" type="Label" parent="General"]
+[node name="GeneralLabel" type="Label" parent="GeneralScroll"]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -38,10 +38,10 @@ size_flags_vertical = 3
 autowrap_mode = 3
 script = ExtResource("3_c6ibq")
 
-[node name="Gameplay" type="ScrollContainer" parent="."]
+[node name="GameplayScroll" type="ScrollContainer" parent="."]
 layout_mode = 2
 
-[node name="GameplayLabel" type="Label" parent="Gameplay"]
+[node name="GameplayLabel" type="Label" parent="GameplayScroll"]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3

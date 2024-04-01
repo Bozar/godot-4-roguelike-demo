@@ -25,6 +25,13 @@ const CLOSE_MENU: StringName = &"close_menu"
 const NEXT_SCREEN: StringName = &"next_screen"
 const PREVIOUS_SCREEN: StringName = &"previous_screen"
 
+const PAGE_DOWN: StringName = &"page_down"
+const PAGE_UP: StringName = &"page_up"
+const LINE_DOWN: StringName = &"line_down"
+const LINE_UP: StringName = &"line_up"
+const PAGE_TOP: StringName = &"page_top"
+const PAGE_BOTTOM: StringName = &"page_bottom"
+
 
 const MOVE_INPUTS: Array[StringName] = [
     MOVE_LEFT,
@@ -36,4 +43,14 @@ const MOVE_INPUTS: Array[StringName] = [
 const SWITCH_SCREEN_INPUTS: Array[StringName] = [
     NEXT_SCREEN,
     PREVIOUS_SCREEN,
+]
+
+const SCROLL_PAGE_INPUTS: Array[StringName] = [
+    PAGE_DOWN,
+    PAGE_UP,
+    LINE_DOWN,
+    LINE_UP,
+    # PAGE_BOTTOM goes before PAGE_TOP.
+    PAGE_BOTTOM,
+    PAGE_TOP,
 ]

@@ -69,6 +69,8 @@ func _unhandled_input(event: InputEvent) -> void:
                 return
             elif _is_switch_screen_inputs(event):
                 return
+            elif _is_scroll_page_inputs(event):
+                return
 
 
 func _on_Schedule_turn_started(sprite: Sprite2D) -> void:
@@ -90,6 +92,14 @@ func _is_move_inputs(event: InputEvent) -> bool:
 
 func _is_switch_screen_inputs(event: InputEvent) -> bool:
     for i: StringName in InputTag.SWITCH_SCREEN_INPUTS:
+        if event.is_action_pressed(i):
+            action_pressed.emit(i)
+            return true
+    return false
+
+
+func _is_scroll_page_inputs(event: InputEvent) -> bool:
+    for i: StringName in InputTag.SCROLL_PAGE_INPUTS:
         if event.is_action_pressed(i):
             action_pressed.emit(i)
             return true

@@ -2,18 +2,21 @@ class_name HelpScreen
 extends CustomMarginContainer
 
 
-var _current_index: int = 0
+const SCROLL_LINE: int = 20
+const SCROLL_PAGE: int = 300
 
+const SCROLL_TEMPLATE: String = "%sScroll"
+const LABEL_TEMPLATE: String = "%sScroll/%sLabel"
 
-@onready var _ref_KeybindingLabel: KeybindingLabel = $Keybinding/KeybindingLabel
-@onready var _ref_GeneralLabel: GeneralLabel = $General/GeneralLabel
-@onready var _ref_GameplayLabel: GameplayLabel = $Gameplay/GameplayLabel
-
-@onready var _labels: Array = [
-    _ref_KeybindingLabel,
-    _ref_GeneralLabel,
-    _ref_GameplayLabel,
+const ORDERED_GUIS: Array = [
+    "Keybinding",
+    "General",
+    "Gameplay",
 ]
+
+
+var _current_index: int = 0
+var _guis: Array = []
 
 
 func _ready() -> void:
@@ -21,9 +24,16 @@ func _ready() -> void:
 
 
 func init_gui() -> void:
-    _ref_KeybindingLabel.init_gui()
-    _ref_GeneralLabel.init_gui()
-    _ref_GameplayLabel.init_gui()
+    var label: CustomLabel
+
+    for i: String in ORDERED_GUIS:
+        _guis.push_back([
+            get_node(SCROLL_TEMPLATE % i),
+            get_node(LABEL_TEMPLATE % [i, i]),
+        ])
+    for i: int in range(0, ORDERED_GUIS.size()):
+        label = _get_label(i)
+        label.init_gui()
 
 
 func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
@@ -37,25 +47,55 @@ func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:
             _switch_screen(input_tag)
         InputTag.PREVIOUS_SCREEN:
             _switch_screen(input_tag)
-        # InputTag.MOVE_DOWN:
-        #     $Keybinding.scroll_vertical += 10
+        InputTag.PAGE_DOWN:
+            _scroll_screen(input_tag)
+        InputTag.PAGE_UP:
+            _scroll_screen(input_tag)
+        InputTag.LINE_DOWN:
+            _scroll_screen(input_tag)
+        InputTag.LINE_UP:
+            _scroll_screen(input_tag)
+        InputTag.PAGE_TOP:
+            _scroll_screen(input_tag)
+        InputTag.PAGE_BOTTOM:
+            _scroll_screen(input_tag)
 
 
 func _switch_screen(input_tag: StringName) -> void:
     var move_step: int = 0
-    var custom_label: CustomLabel
+    var label: CustomLabel
+    var scroll: ScrollContainer
 
     match input_tag:
         InputTag.NEXT_SCREEN:
             move_step = 1
         InputTag.PREVIOUS_SCREEN:
             move_step = -1
+        # Move to screen 0.
+        InputTag.OPEN_HELP_MENU:
+            move_step = -_current_index
 
-    custom_label = _labels[_current_index]
-    custom_label.visible = false
-    _current_index = _get_new_index(_current_index, move_step, _labels.size())
-    custom_label = _labels[_current_index]
-    custom_label.visible = true
+    label = _get_label(_current_index)
+    label.visible = false
+
+    _current_index = _get_new_index(_current_index, move_step, _guis.size())
+    label = _get_label(_current_index)
+    label.visible = true
+    scroll = _get_scroll(_current_index)
+    scroll.scroll_vertical = 0
+
+
+func _scroll_screen(input_tag: StringName) -> void:
+    var scroll: ScrollContainer = _get_scroll(_current_index)
+
+    match input_tag:
+        InputTag.PAGE_TOP:
+            scroll.scroll_vertical = 0
+        InputTag.PAGE_BOTTOM:
+            scroll.scroll_vertical = \
+                    scroll.get_v_scroll_bar().max_value as int
+        _:
+            scroll.scroll_vertical += _get_scroll_distance(input_tag)
 
 
 func _get_new_index(this_index: int, move_step: int, max_index: int) -> int:
@@ -66,3 +106,26 @@ func _get_new_index(this_index: int, move_step: int, max_index: int) -> int:
     elif next_index < 0:
         return max_index - 1
     return next_index
+
+
+func _get_scroll_distance(input_tag: StringName) -> int:
+    var distance: int = 0
+
+    match input_tag:
+        InputTag.LINE_DOWN:
+            distance = SCROLL_LINE
+        InputTag.LINE_UP:
+            distance = -SCROLL_LINE
+        InputTag.PAGE_DOWN:
+            distance = SCROLL_PAGE
+        InputTag.PAGE_UP:
+            distance = -SCROLL_PAGE
+    return distance
+
+
+func _get_scroll(gui_index: int) -> ScrollContainer:
+    return _guis[gui_index][0]
+
+
+func _get_label(gui_index: int) -> CustomLabel:
+    return _guis[gui_index][1]
