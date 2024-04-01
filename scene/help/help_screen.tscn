@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scene/help/help_screen.gd" id="1_mknvg"]
 [ext_resource type="Theme" uid="uid://bkqmmahujknn0" path="res://resource/default_theme.tres" id="1_y5i0q"]
 [ext_resource type="Script" path="res://scene/help/keybinding_label.gd" id="2_wg2yu"]
-[ext_resource type="Script" path="res://scene/help/general_label.gd" id="3_c6ibq"]
+[ext_resource type="Script" path="res://scene/help/introduction_label.gd" id="4_8beml"]
 [ext_resource type="Script" path="res://scene/help/gameplay_label.gd" id="4_8t43f"]
 
 [node name="HelpScreen" type="MarginContainer"]
@@ -27,16 +27,16 @@ size_flags_vertical = 3
 autowrap_mode = 3
 script = ExtResource("2_wg2yu")
 
-[node name="GeneralScroll" type="ScrollContainer" parent="."]
+[node name="IntroductionScroll" type="ScrollContainer" parent="."]
 layout_mode = 2
 
-[node name="GeneralLabel" type="Label" parent="GeneralScroll"]
+[node name="IntroductionLabel" type="Label" parent="IntroductionScroll"]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 autowrap_mode = 3
-script = ExtResource("3_c6ibq")
+script = ExtResource("4_8beml")
 
 [node name="GameplayScroll" type="ScrollContainer" parent="."]
 layout_mode = 2

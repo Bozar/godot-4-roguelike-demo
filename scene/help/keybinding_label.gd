@@ -8,7 +8,6 @@ func _ready() -> void:
 
 func init_gui() -> void:
     _set_font_color(true)
-    text = "keybinding"
     visible = false
 
 

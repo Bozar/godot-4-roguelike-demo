@@ -10,8 +10,13 @@ const LABEL_TEMPLATE: String = "%sScroll/%sLabel"
 
 const ORDERED_GUIS: Array = [
     "Keybinding",
-    "General",
+    "Introduction",
     "Gameplay",
+]
+const ORDERED_HELP_FILES: Array = [
+    "res://user/doc/keybinding.md",
+    "res://user/doc/introduction.md",
+    "res://user/doc/gameplay.md",
 ]
 
 
@@ -25,15 +30,23 @@ func _ready() -> void:
 
 func init_gui() -> void:
     var label: CustomLabel
+    var file_name: String
+    var parsed_file: ParsedFile
 
     for i: String in ORDERED_GUIS:
         _guis.push_back([
             get_node(SCROLL_TEMPLATE % i),
             get_node(LABEL_TEMPLATE % [i, i]),
         ])
+
     for i: int in range(0, ORDERED_GUIS.size()):
         label = _get_label(i)
         label.init_gui()
+
+        file_name = ORDERED_HELP_FILES[i]
+        parsed_file = FileIo.read_as_text(file_name)
+        if parsed_file.parse_success:
+            label.text = parsed_file.output_text
 
 
 func _on_PlayerInput_action_pressed(input_tag: StringName) -> void:

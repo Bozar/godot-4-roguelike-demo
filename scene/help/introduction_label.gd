@@ -1,4 +1,4 @@
-class_name GeneralLabel
+class_name IntroductionLabel
 extends CustomLabel
 
 
@@ -8,7 +8,6 @@ func _ready() -> void:
 
 func init_gui() -> void:
     _set_font_color(true)
-    text = "general"
     visible = false
 
 
