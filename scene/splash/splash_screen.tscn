@@ -9,9 +9,15 @@ offset_right = 800.0
 offset_bottom = 600.0
 theme = ExtResource("1_3ue30")
 theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 520
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 0
 script = ExtResource("2_qg4v3")
 
 [node name="WelcomeLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
+size_flags_vertical = 1
+vertical_alignment = 2
+autowrap_mode = 3
 script = ExtResource("3_c5j32")
