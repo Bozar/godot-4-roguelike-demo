@@ -10,13 +10,13 @@ const LABEL_TEMPLATE: String = "%sScroll/%sLabel"
 
 const ORDERED_GUIS: Array = [
     "Keybinding",
-    "Introduction",
     "Gameplay",
+    "Introduction",
 ]
 const ORDERED_HELP_FILES: Array = [
     "res://user/doc/keybinding.md",
-    "res://user/doc/introduction.md",
     "res://user/doc/gameplay.md",
+    "res://user/doc/introduction.md",
 ]
 
 

@@ -1,15 +1,14 @@
 # Key Bindings
 
-[→: Introduction| ←: Gameplay]
+[→: Gameplay| ←: Introduction]
 [↑, PgUp: Scroll up | ↓, PgDn: Scroll down]
 [Esc: Exit help]
 
 General gameplay:
 
 * Move: Arrow keys, Vi keys, ASDW.
-* Switch Aim Mode: Space.
-* Switch Sight Mode: Tab, Enter, M.
-* Exit to Normal Mode: Esc, Ctrl + [.
+* Switch to Aim Mode: Space.
+* Exit to Normal Mode: Space.
 * Reload after win/lose: Space.
 * Quit: Ctrl + W.
 
@@ -24,6 +23,11 @@ Function keys:
 * Force reload: O.
 * Replay dungeon: R.
 * Copy RNG seed to clipboard: Ctrl + C.
+
+These keys are available in Wizard Mode.
+
+* Add 1 ammo: 1.
+* Add 1 combo: 2.
 
 Following keys are available in Help menu.
 
@@ -48,12 +52,3 @@ Following keys are available in Debug menu. Quote from Godot Docs with slight mo
 * Select all text: Ctrl + A.
 * Move the cursor to the beginning/end of the line: Up/Down arrow.
 
-These keys are available in Wizard Mode (see Game Settings).
-
-* Add 1 Mana Point: 1.
-* Raise to full Mana Points: 2.
-* Add 1 Ghost: 3.
-* Add Rum: Shift + 1.
-* Add Parrot: Shift + 2.
-* Add Accordion: Shift + 3.
-* Teleport to the final island: 4.

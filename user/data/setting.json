@@ -17,12 +17,7 @@
         "actor": ["56add8", "0e628c"]
     },
     "grey_palette": {
-        "background": ["#212529", "#212529"],
-        "gui_text": ["#ADB5BD", "#6C757D"],
-        "ground": ["#6C757D", "#343A40"],
         "trap": ["#6C757D", "#343A40"],
-        "building": ["#6C757D", "#343A40"],
-        "actor": ["#ADB5BD", "#6C757D"],
-        "indicator": ["#6C757D", "#6C757D"]
+        "actor": ["#ADB5BD", "#6C757D"]
     }
 }
