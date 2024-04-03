@@ -4,7 +4,7 @@ extends Node2D
 
 const INDICATOR_OFFSET: int = 32
 
-const PATH_TO_PREFAB: StringName = "resource/dungeon_prefab/"
+const PATH_TO_PREFAB: StringName = "res://resource/dungeon_prefab/"
 const MAX_PREFABS_PER_ROW: int = 3
 const MAX_PREFABS: int = 9
 const EDIT_TAGS: Array = [
